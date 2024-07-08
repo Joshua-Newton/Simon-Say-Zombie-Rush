@@ -1,26 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuPause;
-    [SerializeField] GameObject menuWin;
-    [SerializeField] GameObject menuLose;
+    [SerializeField] private GameObject menuActive;
+    [SerializeField] private GameObject menuPause;
+    [SerializeField] private GameObject menuWin;
+    [SerializeField] private GameObject menuLose;
 
     public GameObject player;
     public Player playerScript;
     public bool isPaused;
-    
-    float initialTimeScale;
 
-    int enemyCount = 0;
+    [SerializeField] private List<string> possibleItems; // List of possible items
+    [SerializeField] private int commandLength = 3; // Length of the command sequence
+    [SerializeField] private TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
+    [SerializeField] private TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
 
+    private List<string> commandSequence; // The generated command sequence
+    private List<string> playerSequence; // The player's collected sequence
 
-    // Start is called before the first frame update
+    private float initialTimeScale;
+    private int enemyCount = 0;
+
     void Awake()
     {
         instance = this;
@@ -29,12 +35,17 @@ public class GameManager : MonoBehaviour
         initialTimeScale = Time.timeScale;
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        GenerateCommand();
+        DisplayCommand();
+    }
+
     void Update()
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            if(menuActive == null)
+            if (menuActive == null)
             {
                 menuActive = menuPause;
                 PauseAndOpenActiveMenu();
@@ -68,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         enemyCount += amount;
 
-        if(enemyCount <= 0)
+        if (enemyCount <= 0)
         {
             WinGame();
         }
@@ -92,4 +103,76 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(isPaused);
     }
 
+    // Command System Methods
+
+    // Generate a random command sequence
+    void GenerateCommand()
+    {
+        commandSequence = new List<string>();
+        for (int i = 0; i < commandLength; i++)
+        {
+            if (possibleItems.Count == 0) break; // No more items to add
+
+            int randomIndex = Random.Range(0, possibleItems.Count);
+            commandSequence.Add(possibleItems[randomIndex]);
+        }
+    }
+
+    // Display the command sequence
+    void DisplayCommand()
+    {
+        commandDisplay.text = "Command: " + string.Join(", ", commandSequence);
+    }
+
+    // Call this function when the player collects an item
+    public void CollectItem(string item)
+    {
+        if (playerSequence == null)
+        {
+            playerSequence = new List<string>();
+        }
+
+        playerSequence.Add(item);
+        possibleItems.Remove(item); // Remove the item from the possibleItems list
+        CheckPlayerSequence();
+    }
+
+    // Validate the player's collected sequence
+    void CheckPlayerSequence()
+    {
+        if (playerSequence.Count != commandSequence.Count)
+        {
+            return; // Not enough items collected yet
+        }
+
+        for (int i = 0; i < commandSequence.Count; i++)
+        {
+            if (playerSequence[i] != commandSequence[i])
+            {
+                StartCoroutine(ShowResult("Result: Incorrect sequence!"));
+                ResetGame();
+                return;
+            }
+        }
+
+        StartCoroutine(ShowResult("Result: Correct sequence!"));
+        ResetGame();
+    }
+
+    // Reset the game for a new command
+    void ResetGame()
+    {
+        playerSequence.Clear();
+        GenerateCommand();
+        DisplayCommand();
+    }
+
+    // Coroutine to show the result for 2 seconds
+    IEnumerator ShowResult(string message)
+    {
+        resultDisplay.text = message;
+        resultDisplay.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        resultDisplay.gameObject.SetActive(false);
+    }
 }
