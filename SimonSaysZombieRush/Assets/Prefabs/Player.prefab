@@ -167,7 +167,7 @@ MonoBehaviour:
   shootDamage: 1
   shootDelay: 0.5
   shootRange: 20
-  HP: 0
+  HP: 5
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
