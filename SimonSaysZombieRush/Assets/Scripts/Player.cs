@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamage
+public class Player : MonoBehaviour, IDamage, IJumpPad
 {
     [SerializeField] CharacterController characterController;
     
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour, IDamage
 
     void Shooting()
     {
-        if(Input.GetButton("Fire1") && !isShooting)
+        if(Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused)
         {
             StartCoroutine(Shoot());
         }
@@ -113,5 +113,11 @@ public class Player : MonoBehaviour, IDamage
         {
             GameManager.instance.LoseGame();
         }
+    }
+
+    public void JumpPad(float jumpPadStrength)
+    {
+        ++numJumps; // TODO: Design question, should a jump pad count as the player's first jump? I assumed yes - Josh N.
+        playerVelocity.y = jumpPadStrength;
     }
 }
