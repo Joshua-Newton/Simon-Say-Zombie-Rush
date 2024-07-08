@@ -80,7 +80,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     void Shooting()
     {
-        if(Input.GetButton("Fire1") && !isShooting)
+        if(Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused)
         {
             StartCoroutine(Shoot());
         }
