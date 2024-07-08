@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController characterController;
     
@@ -11,18 +11,23 @@ public class Player : MonoBehaviour
     [SerializeField] float gravity;
     [SerializeField] float jumpStrength;
     [SerializeField] int maxJumps;
+    [SerializeField] int shootDamage;
     [SerializeField] float shootDelay;
     [SerializeField] float shootRange;
+    [SerializeField] int HP;
     [SerializeField] LayerMask ignoreLayer;
+    
     Vector3 movementDirection;
     Vector3 playerVelocity;
     int numJumps;
     bool isShooting;
+    int HPOriginal;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        HPOriginal = HP;
     }
 
     // Update is called once per frame
@@ -89,6 +94,11 @@ public class Player : MonoBehaviour
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
+            IDamage damageTarget = hit.collider.GetComponent<IDamage>();
+            if (hit.transform != transform && damageTarget != null)
+            {
+                damageTarget.TakeDamage(shootDamage);            
+            }
         }
 
         yield return new WaitForSeconds(shootDelay);
@@ -96,4 +106,12 @@ public class Player : MonoBehaviour
 
     }
 
+    public void TakeDamage(int amount)
+    {
+        HP -= amount;
+        if(HP <= 0)
+        {
+            GameManager.instance.LoseGame();
+        }
+    }
 }
