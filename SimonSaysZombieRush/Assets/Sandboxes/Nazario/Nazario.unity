@@ -597,9 +597,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3452829623294480202, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5108391339760759546, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5108391339760759546, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5108391339760759546, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -94
+      objectReference: {fileID: 0}
     - target: {fileID: 5458617556080650720, guid: d3808735bf229f642963b718b1a8b106, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087879501224194326, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_text
+      value: New Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087879501224194326, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_margin.z
+      value: -152.80914
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471107002491720401, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_text
+      value: Correct sequence!
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471107002491720401, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_margin.z
+      value: -142.22833
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471107002491720401, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805590598942631242, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -78.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

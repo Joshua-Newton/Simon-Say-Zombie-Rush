@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
         {
             if (playerSequence[i] != commandSequence[i])
             {
-                StartCoroutine(ShowResult("Result: Incorrect sequence!"));
+                StartCoroutine(ShowResult("Incorrect sequence!"));
                 ResetGame();
                 return;
             }
@@ -173,13 +173,13 @@ public class GameManager : MonoBehaviour
 
         if (playerSequence.Count == commandSequence.Count)
         {
-            StartCoroutine(ShowResult("Result: Correct sequence!"));
+            StartCoroutine(ShowResult("Correct sequence!"));
             ResetGame();
         }
 
         if (possibleItems.Count == 0)
         {
-            StartCoroutine(ShowResultAndWin("Result: All items collected"));
+            StartCoroutine(ShowResultAndWin("All items collected"));
         }
     }
 
