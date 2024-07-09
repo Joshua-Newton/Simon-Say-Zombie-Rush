@@ -713,7 +713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2902124898047647095, guid: dd64439755d263743a9a0db462b0a710, type: 3}
       propertyPath: m_Name
-      value: FantasyCompass
+      value: Compass
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -884,7 +884,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4321536676831232903, guid: 04f1b8d135c335643a6b453c8b6e5858, type: 3}
       propertyPath: m_Name
-      value: Survival_BackPack
+      value: Survival BackPack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -998,7 +998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3965546946574949386, guid: b6ec864695dd2d148ad4aebe80cd2949, type: 3}
       propertyPath: m_Name
-      value: Water_bottle
+      value: Water bottle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
