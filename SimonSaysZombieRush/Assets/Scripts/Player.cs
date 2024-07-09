@@ -34,6 +34,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     void Start()
     {
         HPOriginal = HP;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -152,6 +153,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     public void TakeDamage(int amount)
     {
         HP -= amount;
+        updatePlayerUI();
+        StartCoroutine(flashScreenDamage());
+
         if(HP <= 0)
         {
             GameManager.instance.LoseGame();
@@ -162,5 +166,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         ++numJumps; // TODO: Design question, should a jump pad count as the player's first jump? I assumed yes - Josh N.
         playerVelocity.y = jumpPadStrength;
+    }
+
+    IEnumerator flashScreenDamage()
+    {
+        GameManager.instance.dmgFlashBckgrnd.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        GameManager.instance.dmgFlashBckgrnd.SetActive(false);
+    }
+
+    public void updatePlayerUI()
+    {
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
     }
 }

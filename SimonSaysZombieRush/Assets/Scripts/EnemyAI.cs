@@ -13,10 +13,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] float shootDelay;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
+    [SerializeField] int viewAngle;
 
     Color originalColor;
     bool isShooting;
     bool playerInRange;
+    float angleToPlayer;
     Vector3 playerDir;
 
     // Start is called before the first frame update
@@ -29,22 +31,44 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (playerInRange)
+        if (playerInRange && canSeePlayer())
         {
-            playerDir = GameManager.instance.player.transform.position - transform.position;
-            agent.SetDestination(GameManager.instance.player.transform.position);
-
-            if(agent.remainingDistance <= agent.stoppingDistance)
-            {
-                FaceTarget();
-            }
             
-            if(!isShooting)
-            {
-                StartCoroutine(Shoot());
-            }
 
         }
+    }
+
+    bool canSeePlayer()
+    {
+        playerDir = GameManager.instance.player.transform.position - transform.position;
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+
+        Debug.Log(angleToPlayer);
+        Debug.DrawRay(transform.position, playerDir);
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, playerDir, out hit))
+        {
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+            {
+                agent.SetDestination(GameManager.instance.player.transform.position);
+
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    FaceTarget();
+                }
+
+                if (!isShooting)
+                {
+                    StartCoroutine(Shoot());
+                }
+
+                return true;
+            }
+            
+        }
+
+        return false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -66,6 +90,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void TakeDamage(int amount)
     {
         HP -= amount;
+        agent.SetDestination(GameManager.instance.player.transform.position);
         StartCoroutine(FlashDamage());
         if (HP <= 0)
         {

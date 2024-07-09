@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -11,7 +12,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuPause;
     [SerializeField] private GameObject menuWin;
     [SerializeField] private GameObject menuLose;
+    [SerializeField] TMP_Text enemyCountText;
 
+    public Image playerHPBar;
+    public GameObject dmgFlashBckgrnd;
     public GameObject player;
     public Player playerScript;
     public bool isPaused;
@@ -78,6 +82,7 @@ public class GameManager : MonoBehaviour
     public void UpdateGameGoal(int amount)
     {
         enemyCount += amount;
+        enemyCountText.text = enemyCount.ToString("F0");
 
         if (enemyCount <= 0)
         {
@@ -175,4 +180,5 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         resultDisplay.gameObject.SetActive(false);
     }
+
 }
