@@ -16,11 +16,11 @@ public class GameManager : MonoBehaviour
     public Player playerScript;
     public bool isPaused;
 
-    [SerializeField] private List<string> possibleItems; // List of possible items
     [SerializeField] private int commandLength = 3; // Length of the command sequence
     [SerializeField] private TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
     [SerializeField] private TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
 
+    private List<string> possibleItems; // List of possible items
     private List<string> commandSequence; // The generated command sequence
     private List<string> playerSequence; // The player's collected sequence
 
@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        InitializePossibleItems();
         GenerateCommand();
         DisplayCommand();
     }
@@ -100,10 +101,23 @@ public class GameManager : MonoBehaviour
     void PauseAndOpenActiveMenu()
     {
         StatePause();
-        menuActive.SetActive(isPaused);
+        menuActive.SetActive(true);
     }
 
-    // Command System Methods
+    // Initialize the possible items list based on objects with the tag "Pickup" in the scene
+    void InitializePossibleItems()
+    {
+        possibleItems = new List<string>();
+        GameObject[] pickups = GameObject.FindGameObjectsWithTag("Pickup");
+        foreach (GameObject pickup in pickups)
+        {
+            string itemName = pickup.name; // Use the name of the game object
+            if (!possibleItems.Contains(itemName))
+            {
+                possibleItems.Add(itemName);
+            }
+        }
+    }
 
     // Generate a random command sequence
     void GenerateCommand()
@@ -140,12 +154,9 @@ public class GameManager : MonoBehaviour
     // Validate the player's collected sequence
     void CheckPlayerSequence()
     {
-        if (playerSequence.Count != commandSequence.Count)
-        {
-            return; // Not enough items collected yet
-        }
+        
 
-        for (int i = 0; i < commandSequence.Count; i++)
+        for (int i = 0; i < playerSequence.Count; i++)
         {
             if (playerSequence[i] != commandSequence[i])
             {
@@ -155,14 +166,23 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        StartCoroutine(ShowResult("Result: Correct sequence!"));
-        ResetGame();
+        if (playerSequence.Count == commandSequence.Count)
+        {
+            StartCoroutine(ShowResult("Result: Correct sequence!"));
+            ResetGame();
+        }
+
+        if (possibleItems.Count == 0)
+        {
+            StartCoroutine(ShowResultAndWin("Result: All items collected"));
+        }
     }
 
     // Reset the game for a new command
     void ResetGame()
     {
         playerSequence.Clear();
+        InitializePossibleItems();
         GenerateCommand();
         DisplayCommand();
     }
@@ -172,7 +192,17 @@ public class GameManager : MonoBehaviour
     {
         resultDisplay.text = message;
         resultDisplay.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         resultDisplay.gameObject.SetActive(false);
+    }
+
+    // Coroutine to show the result and then display the win menu
+    IEnumerator ShowResultAndWin(string message)
+    {
+        resultDisplay.text = message;
+        resultDisplay.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        resultDisplay.gameObject.SetActive(false);
+        WinGame();
     }
 }

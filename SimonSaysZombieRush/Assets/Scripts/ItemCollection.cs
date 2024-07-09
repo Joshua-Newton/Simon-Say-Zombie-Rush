@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class ItemCollection : MonoBehaviour
 {
-    [SerializeField] private string itemName; // The name of this item
-
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            string itemName = gameObject.name; // Use the name of the game object as its item name
             GameManager.instance.CollectItem(itemName);
             Destroy(gameObject); // Remove the item after collection
         }
