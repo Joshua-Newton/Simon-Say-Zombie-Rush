@@ -187,7 +187,6 @@ public class GameManager : MonoBehaviour
     void ResetGame()
     {
         playerSequence.Clear();
-        InitializePossibleItems();
         GenerateCommand();
         DisplayCommand();
     }
