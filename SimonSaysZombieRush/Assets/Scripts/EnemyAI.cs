@@ -37,7 +37,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             meleeHitBox.enabled = false;
         }
-        GameManager.instance.UpdateGameGoal(1);
     }
 
     // Update is called once per frame
