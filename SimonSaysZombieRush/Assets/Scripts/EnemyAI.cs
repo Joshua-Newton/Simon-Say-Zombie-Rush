@@ -11,12 +11,21 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
     [SerializeField] float shootDelay;
+    [SerializeField] float meleeHitTime;
+    [SerializeField] float meleeDelay;
+    [SerializeField] float meleeTriggerRange;
+
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int viewAngle;
+    [SerializeField] Collider meleeHitBox;
+
+    [SerializeField] enum EnemyType { Shooter, Melee, Spitter };
+    [SerializeField] EnemyType enemyType;
 
     Color originalColor;
     bool isShooting;
+    bool isMeleeing;
     bool playerInRange;
     float angleToPlayer;
     Vector3 playerDir;
@@ -24,7 +33,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(meleeHitBox != null)
+        {
+            meleeHitBox.enabled = false;
+        }
         GameManager.instance.UpdateGameGoal(1);
     }
 
@@ -53,15 +65,19 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
 
-                if (agent.remainingDistance <= agent.stoppingDistance)
-                {
-                    FaceTarget();
-                }
+            if(agent.remainingDistance <= agent.stoppingDistance)
+            {
+                FaceTarget();
+            }
 
-                if (!isShooting)
-                {
-                    StartCoroutine(Shoot());
-                }
+            if (enemyType == EnemyType.Shooter && !isShooting)
+            {
+                StartCoroutine(Shoot());
+            }
+            else if (enemyType == EnemyType.Melee && !isMeleeing && playerDir.magnitude < meleeTriggerRange)
+            {
+                StartCoroutine(Melee());
+            }
 
                 return true;
             }
@@ -111,6 +127,16 @@ public class EnemyAI : MonoBehaviour, IDamage
         Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(shootDelay);
         isShooting = false;
+    }
+
+    IEnumerator Melee()
+    {
+        isMeleeing = true;
+        meleeHitBox.enabled = true;
+        yield return new WaitForSeconds(meleeHitTime);
+        meleeHitBox.enabled = false;
+        yield return new WaitForSeconds(meleeDelay);
+        isMeleeing = false;
     }
 
     IEnumerator FlashDamage()

@@ -549,6 +549,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4693666994576906850, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8117207031737159191, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.75
@@ -559,7 +563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8117207031737159191, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.25
+      value: -58.49
       objectReference: {fileID: 0}
     - target: {fileID: 8117207031737159191, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -593,19 +597,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8979203312248720591, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
-      propertyPath: grappleRange
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8979203312248720591, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
-      propertyPath: grappleSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8979203312248720591, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
-      propertyPath: grappleMaxConsecutiveUses
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4693666994576906850, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -702,6 +695,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7585653227626103221, guid: d3808735bf229f642963b718b1a8b106, type: 3}
+      propertyPath: commandLength
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -774,7 +771,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.95
+      value: 15.12
       objectReference: {fileID: 0}
     - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -782,7 +779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.24
+      value: -58.15
       objectReference: {fileID: 0}
     - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -815,6 +812,10 @@ PrefabInstance:
     - target: {fileID: 7029355455798826344, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
       propertyPath: m_Name
       value: Lava
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532939881765243318, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: damageAmount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1071,7 +1072,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2904873273459719231, guid: 112c947b102066a44b585333941bf835, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.16
+      value: 7.52
       objectReference: {fileID: 0}
     - target: {fileID: 2904873273459719231, guid: 112c947b102066a44b585333941bf835, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1079,7 +1080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2904873273459719231, guid: 112c947b102066a44b585333941bf835, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.7299999
+      value: -31.85
       objectReference: {fileID: 0}
     - target: {fileID: 2904873273459719231, guid: 112c947b102066a44b585333941bf835, type: 3}
       propertyPath: m_LocalRotation.w
