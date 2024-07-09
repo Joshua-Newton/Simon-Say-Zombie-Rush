@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     private List<string> playerSequence; // The player's collected sequence
 
     private float initialTimeScale;
-    private int enemyCount = 0;
+    private int enemyCount;
 
     void Awake()
     {
@@ -78,6 +78,12 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(isPaused);
         menuActive = null;
+    }
+
+    public void UpdateEnemyCount(int amount)
+    {
+        enemyCount += amount;
+        enemyCountText.text = enemyCount.ToString("F0");
     }
 
     public void LoseGame()

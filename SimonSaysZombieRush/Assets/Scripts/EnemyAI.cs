@@ -37,6 +37,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             meleeHitBox.enabled = false;
         }
+        GameManager.instance.UpdateEnemyCount(1);
     }
 
     // Update is called once per frame
@@ -109,6 +110,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         StartCoroutine(FlashDamage());
         if (HP <= 0)
         {
+            GameManager.instance.UpdateEnemyCount(-1);
             Destroy(gameObject);
         }
     }

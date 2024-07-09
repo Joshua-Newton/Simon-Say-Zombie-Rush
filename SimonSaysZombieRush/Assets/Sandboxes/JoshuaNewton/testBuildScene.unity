@@ -227,33 +227,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3451909040018256533, guid: 112c947b102066a44b585333941bf835, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4121048885801009876, guid: 112c947b102066a44b585333941bf835, type: 3}
       propertyPath: m_Name
       value: Enemy3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636519819416495624, guid: 112c947b102066a44b585333941bf835, type: 3}
-      propertyPath: enemyType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636519819416495624, guid: 112c947b102066a44b585333941bf835, type: 3}
-      propertyPath: meleeDelay
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636519819416495624, guid: 112c947b102066a44b585333941bf835, type: 3}
-      propertyPath: meleeHitBox
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636519819416495624, guid: 112c947b102066a44b585333941bf835, type: 3}
-      propertyPath: meleeHitTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4636519819416495624, guid: 112c947b102066a44b585333941bf835, type: 3}
-      propertyPath: meleeTriggerRange
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
