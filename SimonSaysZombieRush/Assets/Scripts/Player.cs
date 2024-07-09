@@ -104,9 +104,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
                 grappleHitPoint = hit.point;
                 grappleDirection = grappleHitPoint - transform.position;
                 isGrappling = true;
-
-                Debug.Log("Grapple target: " + hit.collider.name);
-                Debug.Log("Target Transform: " + hit.point.x + " " + hit.point.y + " " + hit.point.z);
             }
         }
         else if (Input.GetButtonUp("Fire2"))
