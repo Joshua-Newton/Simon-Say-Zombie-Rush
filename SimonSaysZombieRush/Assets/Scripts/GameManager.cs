@@ -80,17 +80,6 @@ public class GameManager : MonoBehaviour
         menuActive = null;
     }
 
-    public void UpdateGameGoal(int amount)
-    {
-        enemyCount += amount;
-        enemyCountText.text = enemyCount.ToString("F0");
-
-        if (enemyCount <= 0)
-        {
-            WinGame();
-        }
-    }
-
     public void LoseGame()
     {
         menuActive = menuLose;

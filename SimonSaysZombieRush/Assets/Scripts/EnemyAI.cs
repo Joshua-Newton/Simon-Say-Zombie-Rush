@@ -25,7 +25,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Start()
     {
         
-        GameManager.instance.UpdateGameGoal(1);
     }
 
     // Update is called once per frame
@@ -94,7 +93,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         StartCoroutine(FlashDamage());
         if (HP <= 0)
         {
-            GameManager.instance.UpdateGameGoal(-1);
             Destroy(gameObject);
         }
     }
