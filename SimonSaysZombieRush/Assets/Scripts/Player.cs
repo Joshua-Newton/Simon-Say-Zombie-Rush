@@ -15,14 +15,20 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] float shootDelay;
     [SerializeField] float shootRange;
     [SerializeField] int HP;
+    [SerializeField] int grappleSpeed;
+    [SerializeField] int grappleRange;
+    [SerializeField] int grappleMaxConsecutiveUses;
     [SerializeField] LayerMask ignoreLayer;
     
     Vector3 movementDirection;
+    Vector3 grappleDirection;
+    Vector3 grappleHitPoint;
     Vector3 playerVelocity;
     int numJumps;
     bool isShooting;
+    bool isGrappling;
     int HPOriginal;
-
+    int numGrapples;
 
     // Start is called before the first frame update
     void Start()
@@ -34,9 +40,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     void Update()
     {
         Movement();
+        Grounded();
         Jump();
         Sprint();
         Shooting();
+        GrappleHook();
     }
 
     void Movement()
@@ -50,20 +58,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     void Jump()
     {
-        if (characterController.isGrounded)
-        {
-            numJumps = 0;
-            playerVelocity = Vector3.zero;
-        }
-
-        if (Input.GetButtonDown("Jump") && numJumps < maxJumps)
+        if (Input.GetButtonDown("Jump") && numJumps < maxJumps && !isGrappling)
         {
             ++numJumps;
             playerVelocity.y = jumpStrength;
         }
 
-        characterController.Move(playerVelocity * Time.deltaTime);
-        playerVelocity.y -= gravity * Time.deltaTime;
+        if(!isGrappling)
+        {
+            characterController.Move(playerVelocity * Time.deltaTime);
+            playerVelocity.y -= gravity * Time.deltaTime;
+        }
     }
 
     void Sprint()
@@ -83,6 +88,47 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         if(Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused)
         {
             StartCoroutine(Shoot());
+        }
+    }
+
+    void GrappleHook()
+    {
+        // Use GetButtonDown and GetButtonUp in conjunction with a bool to set grapple target, but allow player to look away while grappling
+        // Then use the bool assigned to actually move the player. If they let go of the grapple button, they stop grappling
+        if (Input.GetButtonDown("Fire2") && numGrapples < grappleMaxConsecutiveUses)
+        {
+            RaycastHit hit;
+            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grappleRange, ~ignoreLayer))
+            {
+                ++numGrapples;
+                grappleHitPoint = hit.point;
+                grappleDirection = grappleHitPoint - transform.position;
+                isGrappling = true;
+
+                Debug.Log("Grapple target: " + hit.collider.name);
+                Debug.Log("Target Transform: " + hit.point.x + " " + hit.point.y + " " + hit.point.z);
+            }
+        }
+        else if (Input.GetButtonUp("Fire2"))
+        {
+            isGrappling = false;
+        }
+
+        if(isGrappling)
+        {
+            grappleDirection = grappleHitPoint - transform.position;
+            characterController.Move(grappleDirection * grappleSpeed * Time.deltaTime);
+        }
+
+    }
+
+    void Grounded()
+    {
+        if (characterController.isGrounded)
+        {
+            numJumps = 0;
+            numGrapples = 0;
+            playerVelocity = Vector3.zero;
         }
     }
 

@@ -168,6 +168,9 @@ MonoBehaviour:
   shootDelay: 0.5
   shootRange: 20
   HP: 5
+  grappleSpeed: 1
+  grappleRange: 20
+  grappleMaxConsecutiveUses: 1
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
