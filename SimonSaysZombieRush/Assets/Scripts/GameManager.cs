@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         InitializePossibleItems();
         GenerateCommand();
         DisplayCommand();
-        UpdateScore(0); // Initialize score display
     }
 
     void Update()
@@ -174,6 +173,7 @@ public class GameManager : MonoBehaviour
         if (possibleItems.Count == 0)
         {
             StartCoroutine(ShowResultAndWin("All items collected"));
+            UpdateScore(100);
         }
         else if (playerSequence.Count == commandSequence.Count)
         {
@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
 
     // Update the score and display it
     void UpdateScore(int points)
-    {
+    { 
         score += points;
         scoreText.text = "Score: " + score;
     }

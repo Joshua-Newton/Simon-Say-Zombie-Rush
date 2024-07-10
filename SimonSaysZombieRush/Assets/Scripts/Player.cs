@@ -28,6 +28,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     // WallRun Related Fields
     [SerializeField] int wallRunSpeed;
     [SerializeField] float maxWallRunTime;
+    // Grenade related fields
+    public GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
+    public Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
+    public float throwForce = 15f; // Throwing force of the grenade
 
     Vector3 movementDirection;
     Vector3 grappleDirection;
@@ -59,6 +63,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         Shooting();
         GrappleHook();
         WallRun();
+        ThrowGrenade();
     }
 
     void Movement()
@@ -170,6 +175,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             characterController.Move(grappleDirection * grappleSpeed * Time.deltaTime);
         }
 
+    }
+
+    void ThrowGrenade()
+    {
+        if (Input.GetButtonDown("Grenade")) // Assign a button to throw the grenade (e.g., E button)
+        {
+            GameObject grenade = Instantiate(gravityGrenadePrefab, grenadeSpawnPoint.position, grenadeSpawnPoint.rotation);
+            Rigidbody rb = grenade.GetComponent<Rigidbody>();
+            rb.AddForce(grenadeSpawnPoint.forward * throwForce, ForceMode.VelocityChange);
+        }
+        
     }
 
     void Grounded()
