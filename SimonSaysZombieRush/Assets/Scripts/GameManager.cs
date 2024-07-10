@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public Player playerScript;
     public bool isPaused;
+    public Collider playerCollider;
 
     [SerializeField] private int commandLength = 3; // Length of the command sequence
     [SerializeField] private TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<Player>();
+        playerCollider = player.GetComponent<Collider>();
         initialTimeScale = Time.timeScale;
     }
 

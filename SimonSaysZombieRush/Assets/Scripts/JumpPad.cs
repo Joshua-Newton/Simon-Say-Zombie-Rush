@@ -8,12 +8,9 @@ public class JumpPad : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ENTERED JUMP PAD");
         IJumpPad jumpPadTarget = other.GetComponent<IJumpPad>();
         if(jumpPadTarget != null )
         {
-            Debug.Log("JUMP PAD NOT NULL");
-
             jumpPadTarget.JumpPad(jumpStrength);
         }
     }

@@ -137,7 +137,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange, ~ignoreLayer))
         {
-            Debug.Log(hit.collider.name);
             IDamage damageTarget = hit.collider.GetComponent<IDamage>();
             if (hit.transform != transform && damageTarget != null)
             {
