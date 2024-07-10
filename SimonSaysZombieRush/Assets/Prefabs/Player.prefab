@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 8113391142125545971}
+  HP: 5
   speed: 8
   sprintMultiplier: 2
   gravity: 20
@@ -166,13 +167,14 @@ MonoBehaviour:
   shootDamage: 1
   shootDelay: 0.5
   shootRange: 20
-  HP: 5
   grappleSpeed: 1
   grappleRange: 20
   grappleMaxConsecutiveUses: 1
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
+  wallRunSpeed: 8
+  maxWallRunTime: 2
 --- !u!143 &8113391142125545971
 CharacterController:
   m_ObjectHideFlags: 0

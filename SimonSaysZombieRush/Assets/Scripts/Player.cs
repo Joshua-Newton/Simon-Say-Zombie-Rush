@@ -1,25 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour, IDamage, IJumpPad
 {
     [SerializeField] CharacterController characterController;
-    
+    // Player Stats
+    [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMultiplier;
+    // Jump related fields
     [SerializeField] float gravity;
     [SerializeField] float jumpStrength;
     [SerializeField] int maxJumps;
+    // Shooting related fields
     [SerializeField] int shootDamage;
     [SerializeField] float shootDelay;
     [SerializeField] float shootRange;
-    [SerializeField] int HP;
+    
+    // Grapple related fields
     [SerializeField] int grappleSpeed;
     [SerializeField] int grappleRange;
     [SerializeField] int grappleMaxConsecutiveUses;
+    // Layer for shooting raycast to ignore
     [SerializeField] LayerMask ignoreLayer;
-    
+    // WallRun Related Fields
+    [SerializeField] int wallRunSpeed;
+    [SerializeField] float maxWallRunTime;
+
     Vector3 movementDirection;
     Vector3 grappleDirection;
     Vector3 grappleHitPoint;
@@ -27,6 +36,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     int numJumps;
     bool isShooting;
     bool isGrappling;
+    bool isWallRunning;
+    Collider wallRunCollider;
+    float initialWallRunAngle;
     int HPOriginal;
     int numGrapples;
 
@@ -46,14 +58,18 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         Sprint();
         Shooting();
         GrappleHook();
+        WallRun();
     }
 
     void Movement()
     {
-        movementDirection = Input.GetAxis("Vertical") * transform.forward +
-                            Input.GetAxis("Horizontal") * transform.right;
+        if (!isWallRunning)
+        {
+            movementDirection = Input.GetAxis("Vertical") * transform.forward +
+                                Input.GetAxis("Horizontal") * transform.right;
 
-        characterController.Move(movementDirection * speed * Time.deltaTime);
+            characterController.Move(movementDirection * speed * Time.deltaTime);
+        }
 
     }
 
@@ -63,9 +79,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         {
             ++numJumps;
             playerVelocity.y = jumpStrength;
+            if (isWallRunning)
+            {
+                AbruptEndWallRun();
+            }
         }
-
-        if(!isGrappling)
+        
+        if(!isGrappling && !isWallRunning)
         {
             characterController.Move(playerVelocity * Time.deltaTime);
             playerVelocity.y -= gravity * Time.deltaTime;
@@ -89,6 +109,38 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         if(Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused)
         {
             StartCoroutine(Shoot());
+        }
+    }
+
+    void WallRun()
+    {
+        if (isWallRunning)
+        {
+            float angle = Vector3.Angle(Camera.main.transform.forward, wallRunCollider.transform.forward);
+            
+            float input = Input.GetAxis("Vertical");
+            if(input <= 0 )
+            {
+                AbruptEndWallRun();
+            }
+            else if (angle < 90 && initialWallRunAngle < 90)
+            {
+                movementDirection = input * wallRunCollider.transform.forward * Time.deltaTime;
+            }
+            else if (angle >= 90 && initialWallRunAngle >= 90)
+            {
+                movementDirection = input * -wallRunCollider.transform.forward * Time.deltaTime;
+            }
+            else
+            {
+                // Player changed look direction, so stop wall running
+                AbruptEndWallRun();
+            }
+            characterController.Move(movementDirection * wallRunSpeed);
+        }
+        else
+        {
+            wallRunCollider = null;
         }
     }
 
@@ -174,8 +226,36 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         GameManager.instance.dmgFlashBckgrnd.SetActive(false);
     }
 
+    IEnumerator WallRunTimer()
+    {
+        yield return new WaitForSeconds(maxWallRunTime);
+        EndWallRun();
+    }
+
+    public void AbruptEndWallRun()
+    {
+        StopCoroutine(WallRunTimer());
+        EndWallRun();
+    }
+
     public void updatePlayerUI()
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
+    }
+
+    public void InitiateWallRun(Collider wallTrigger)
+    {
+        wallRunCollider = wallTrigger;
+        isWallRunning = true;
+        numJumps = 0; // Reset jumps so that the player can jump off the wall, otherwise they might run out of jumps while wall running
+        initialWallRunAngle = Vector3.Angle(Camera.main.transform.forward, wallRunCollider.transform.forward);
+        StartCoroutine(WallRunTimer());
+    }
+
+    void EndWallRun()
+    {
+        isWallRunning = false;
+        wallRunCollider = null;
+        initialWallRunAngle = 0;
     }
 }
