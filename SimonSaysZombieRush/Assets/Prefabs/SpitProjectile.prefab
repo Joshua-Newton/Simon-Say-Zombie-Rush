@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4730036690490732152
+--- !u!1 &5197720612276227783
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,61 +8,61 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4112846337667591663}
-  - component: {fileID: 7930132100966461174}
-  - component: {fileID: 8299091647182229118}
-  - component: {fileID: 8166365040149606910}
-  - component: {fileID: 948872856080710576}
+  - component: {fileID: 3551955078758843513}
+  - component: {fileID: 8065983264921182020}
+  - component: {fileID: 3197329376116836574}
+  - component: {fileID: 8307762558418374229}
+  - component: {fileID: 1858486763675241282}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: SpitProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4112846337667591663
+--- !u!4 &3551955078758843513
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4730036690490732152}
+  m_GameObject: {fileID: 5197720612276227783}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.18, y: 2.08, z: -6.18}
+  m_LocalPosition: {x: -0.62, y: 2.08, z: -11.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7930132100966461174
+--- !u!114 &8065983264921182020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4730036690490732152}
+  m_GameObject: {fileID: 5197720612276227783}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3403d5b1a2710b4c958a6f436ac49e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  rb: {fileID: 8166365040149606910}
+  type: 2
+  rb: {fileID: 8307762558418374229}
   damageAmount: 1
   speed: 25
   destroyTime: 3
-  acid: {fileID: 0}
-  acidDuration: 0
+  acid: {fileID: 4678745998563304432, guid: a709e41a91c6218438589303df1e1e37, type: 3}
+  acidDuration: 5
   repeatDamage: 0
   repeatDelay: 0
---- !u!135 &8299091647182229118
+--- !u!135 &3197329376116836574
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4730036690490732152}
+  m_GameObject: {fileID: 5197720612276227783}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -77,13 +77,13 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: -0.000027418137, y: 0.000029325485, z: 0}
---- !u!54 &8166365040149606910
+--- !u!54 &8307762558418374229
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4730036690490732152}
+  m_GameObject: {fileID: 5197720612276227783}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -104,14 +104,14 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!96 &948872856080710576
+--- !u!96 &1858486763675241282
 TrailRenderer:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4730036690490732152}
+  m_GameObject: {fileID: 5197720612276227783}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -146,11 +146,11 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -177,7 +177,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0.08972883, a: 1}
+      key0: {r: 0, g: 1, b: 0.23263979, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}

@@ -9,8 +9,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Color hitColor;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject spitProjectile;
     [SerializeField] Transform shootPos;
     [SerializeField] float shootDelay;
+    [SerializeField] float spitDelay;
     [SerializeField] float meleeHitTime;
     [SerializeField] float meleeDelay;
     [SerializeField] float meleeTriggerRange;
@@ -26,6 +28,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     Color originalColor;
     bool isShooting;
     bool isMeleeing;
+    bool isSpitting;
     bool playerInRange;
     float angleToPlayer;
     Vector3 playerDir;
@@ -65,19 +68,23 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
 
-            if(agent.remainingDistance <= agent.stoppingDistance)
-            {
-                FaceTarget();
-            }
+                if(agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    FaceTarget();
+                }
 
-            if (enemyType == EnemyType.Shooter && !isShooting)
-            {
-                StartCoroutine(Shoot());
-            }
-            else if (enemyType == EnemyType.Melee && !isMeleeing && playerDir.magnitude < meleeTriggerRange)
-            {
-                StartCoroutine(Melee());
-            }
+                if (enemyType == EnemyType.Shooter && !isShooting)
+                {
+                    StartCoroutine(Shoot());
+                }
+                else if (enemyType == EnemyType.Melee && !isMeleeing && playerDir.magnitude < meleeTriggerRange)
+                {
+                    StartCoroutine(Melee());
+                }
+                else if (enemyType == EnemyType.Spitter && !isSpitting)
+                {
+                    StartCoroutine(Spit());
+                }
 
                 return true;
             }
@@ -144,6 +151,14 @@ public class EnemyAI : MonoBehaviour, IDamage
         model.material.color = hitColor;
         yield return new WaitForSeconds(.1f);
         model.material.color = originalColor;
+    }
+
+    IEnumerator Spit()
+    {
+        isSpitting = true;
+        Instantiate(spitProjectile, shootPos.position, transform.rotation);
+        yield return new WaitForSeconds(spitDelay);
+        isSpitting = false;
     }
 
 }

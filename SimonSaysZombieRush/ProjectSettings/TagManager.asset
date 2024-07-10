@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pickup
+  - Bullet
+  - Spit
+  - Enemy
   layers:
   - Default
   - TransparentFX

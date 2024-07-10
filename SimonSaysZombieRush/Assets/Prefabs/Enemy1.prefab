@@ -83,12 +83,19 @@ MonoBehaviour:
   model: {fileID: 396680988369039747}
   hitColor: {r: 1, g: 0, b: 0, a: 0}
   agent: {fileID: 9139125531226603734}
-  bullet: {fileID: 4730036690490732152, guid: 44c74124242374f4c9a2bb2cec8609e8, type: 3}
+  bullet: {fileID: 0}
+  spitProjectile: {fileID: 5197720612276227783, guid: 22f4386bdf9e3fd4baaa3f72c1d683d8, type: 3}
   shootPos: {fileID: 4870959282976574419}
   shootDelay: 1
+  spitDelay: 2
+  meleeHitTime: 0
+  meleeDelay: 0
+  meleeTriggerRange: 0
   HP: 3
   faceTargetSpeed: 5
   viewAngle: 90
+  meleeHitBox: {fileID: 0}
+  enemyType: 2
 --- !u!136 &5485381378493403346
 CapsuleCollider:
   m_ObjectHideFlags: 0
