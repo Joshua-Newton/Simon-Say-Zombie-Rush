@@ -70,9 +70,9 @@ public class Damage : MonoBehaviour
 
     void OnTriggerStay (Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.isTrigger || other.CompareTag("Enemy"))
         {
-            return; // ignore enemies for ontriggerstay interactions
+            return; // ignore enemies and other triggers for ontriggerstay interactions
         }
 
         if (type == damageType.stationary && repeatDamage && !isDamaging)

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2502110172772059428}
   m_Layer: 0
   m_Name: Enemy2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,11 +53,18 @@ MonoBehaviour:
   hitColor: {r: 1, g: 0, b: 0, a: 0}
   agent: {fileID: 1394699279059878855}
   bullet: {fileID: 4730036690490732152, guid: 44c74124242374f4c9a2bb2cec8609e8, type: 3}
+  spitProjectile: {fileID: 0}
   shootPos: {fileID: 4236647475509864459}
   shootDelay: 1
+  spitDelay: 0
+  meleeHitTime: 0
+  meleeDelay: 0
+  meleeTriggerRange: 0
   HP: 3
   faceTargetSpeed: 5
   viewAngle: 90
+  meleeHitBox: {fileID: 0}
+  enemyType: 0
 --- !u!136 &5073181739468987772
 CapsuleCollider:
   m_ObjectHideFlags: 0
