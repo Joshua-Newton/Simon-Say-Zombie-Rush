@@ -61,7 +61,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         Debug.DrawRay(transform.position, playerDir);
 
         RaycastHit hit;
-        if(GameManager.instance.playerCollider.Raycast(new Ray(transform.position, playerDir), out hit, Mathf.Infinity))
+        if(Physics.Raycast(transform.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
