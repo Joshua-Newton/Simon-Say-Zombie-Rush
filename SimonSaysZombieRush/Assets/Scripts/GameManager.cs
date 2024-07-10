@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuWin;
     [SerializeField] private GameObject menuLose;
     [SerializeField] TMP_Text enemyCountText;
+    [SerializeField] TMP_Text scoreText; // TextMeshProUGUI to display the score
 
     public Image playerHPBar;
     public GameObject dmgFlashBckgrnd;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private float initialTimeScale;
     private int enemyCount;
+    private int score; // Player's score
 
     void Awake()
     {
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
         InitializePossibleItems();
         GenerateCommand();
         DisplayCommand();
+        UpdateScore(0); // Initialize score display
     }
 
     void Update()
@@ -156,8 +159,7 @@ public class GameManager : MonoBehaviour
     // Validate the player's collected sequence
     void CheckPlayerSequence()
     {
-        
-
+        // Check if the player's collected sequence matches the command sequence so far
         for (int i = 0; i < playerSequence.Count; i++)
         {
             if (playerSequence[i] != commandSequence[i])
@@ -168,15 +170,17 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (playerSequence.Count == commandSequence.Count)
-        {
-            StartCoroutine(ShowResult("Correct sequence!"));
-            ResetGame();
-        }
-
+        // If all items are collected and the sequence is correct
         if (possibleItems.Count == 0)
         {
             StartCoroutine(ShowResultAndWin("All items collected"));
+        }
+        else if (playerSequence.Count == commandSequence.Count)
+        {
+            // If the current sequence is correct but not all items are collected yet
+            UpdateScore(100); // Update score for correct sequence
+            StartCoroutine(ShowResult("Correct sequence!"));
+            ResetGame();
         }
     }
 
@@ -186,6 +190,13 @@ public class GameManager : MonoBehaviour
         playerSequence.Clear();
         GenerateCommand();
         DisplayCommand();
+    }
+
+    // Update the score and display it
+    void UpdateScore(int points)
+    {
+        score += points;
+        scoreText.text = "Score: " + score;
     }
 
     // Coroutine to show the result for 2 seconds
