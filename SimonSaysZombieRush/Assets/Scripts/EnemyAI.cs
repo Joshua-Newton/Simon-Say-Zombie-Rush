@@ -41,6 +41,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             meleeHitBox.enabled = false;
         }
         GameManager.instance.UpdateEnemyCount(1);
+        originalColor = model.material.color;
     }
 
     // Update is called once per frame
