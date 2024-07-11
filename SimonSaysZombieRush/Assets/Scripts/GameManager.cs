@@ -227,6 +227,6 @@ public class GameManager : MonoBehaviour
     IEnumerator LoadNextLevel()
     {
         yield return new WaitForSeconds(2); // Optional delay before loading the next scene
-        SceneManager.LoadScene("Level2");
+        SceneManager.LoadScene(nextSceneName);
     }
 }

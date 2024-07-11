@@ -28,7 +28,32 @@ public class ButtonManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene("Level2");
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        int currentLevelNumber;
+
+        // Extract the current level number from the scene name
+        if (int.TryParse(currentSceneName.Replace("Level", ""), out currentLevelNumber))
+        {
+            int nextLevelNumber = currentLevelNumber + 1;
+            string nextSceneName = "Level" + nextLevelNumber;
+
+            // Check if the next level exists in the build settings
+            if (Application.CanStreamedLevelBeLoaded(nextSceneName))
+            {
+                SceneManager.LoadScene(nextSceneName);
+            }
+            else
+            {
+                Debug.Log("Next level not found: " + nextSceneName);
+                // Handle what happens if there are no more levels
+                // For example, you might want to show a game over screen or loop back to the first level
+            }
+        }
+        else
+        {
+            Debug.LogError("Current scene name does not follow the 'LevelX' format: " + currentSceneName);
+        }
     }
+
 
 }
