@@ -172,7 +172,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
         if(isGrappling)
         {
-            grappleDirection = grappleHitPoint - transform.position;
+            grappleDirection = (grappleHitPoint - transform.position).normalized;
             characterController.Move(grappleDirection * grappleSpeed * Time.deltaTime);
         }
 

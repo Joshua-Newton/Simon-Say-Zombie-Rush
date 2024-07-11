@@ -167,7 +167,7 @@ MonoBehaviour:
   shootDamage: 1
   shootDelay: 0.5
   shootRange: 20
-  grappleSpeed: 1
+  grappleSpeed: 10
   grappleRange: 20
   grappleMaxConsecutiveUses: 1
   ignoreLayer:
