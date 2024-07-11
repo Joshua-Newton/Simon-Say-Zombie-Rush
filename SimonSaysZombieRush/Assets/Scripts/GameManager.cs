@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuActive;
     [SerializeField] private GameObject menuPause;
     [SerializeField] private GameObject menuWin;
+    [SerializeField] private GameObject menuWinLastLevel;
     [SerializeField] private GameObject menuLose;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text scoreText; // TextMeshProUGUI to display the score
@@ -36,7 +38,8 @@ public class GameManager : MonoBehaviour
     private int score; // Player's score
 
     // Name of the next scene to load
-    [SerializeField] private string nextSceneName;
+    private string nextScenePath;
+    bool lastLevel;
 
     void Awake()
     {
@@ -44,7 +47,17 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<Player>();
         playerCollider = player.GetComponent<Collider>();
+
         initialTimeScale = Time.timeScale;
+        int currentBuildIndex = SceneUtility.GetBuildIndexByScenePath(SceneManager.GetActiveScene().path);
+        if (currentBuildIndex < SceneManager.sceneCountInBuildSettings - 1)
+        {
+            nextScenePath = SceneUtility.GetScenePathByBuildIndex(currentBuildIndex + 1);
+        }
+        else
+        {
+            lastLevel = true;
+        }
     }
 
     void Start()
@@ -102,7 +115,14 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        menuActive = menuWin;
+        if (lastLevel)
+        {
+            menuActive = menuWinLastLevel;
+        }
+        else
+        {
+            menuActive = menuWin;
+        }
         PauseAndOpenActiveMenu();
     }
 
@@ -227,6 +247,6 @@ public class GameManager : MonoBehaviour
     IEnumerator LoadNextLevel()
     {
         yield return new WaitForSeconds(2); // Optional delay before loading the next scene
-        SceneManager.LoadScene(nextSceneName);
+        SceneManager.LoadScene(SceneManager.GetSceneByPath(nextScenePath).name);
     }
 }
