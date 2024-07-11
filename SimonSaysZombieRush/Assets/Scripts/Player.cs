@@ -57,9 +57,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     // Update is called once per frame
     void Update()
     {
-        Movement();
-        Grounded();
         Jump();
+        Movement();
         Sprint();
         Shooting();
         GrappleHook();
@@ -76,7 +75,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
             characterController.Move(movementDirection * speed * Time.deltaTime);
         }
-
+        
     }
 
     void Jump()
@@ -96,6 +95,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             characterController.Move(playerVelocity * Time.deltaTime);
             playerVelocity.y -= gravity * Time.deltaTime;
         }
+
+        // Grounded() has to come immediately after jump in order to properly check characterController.isGrounded
+        Grounded();
     }
 
     void Sprint()
