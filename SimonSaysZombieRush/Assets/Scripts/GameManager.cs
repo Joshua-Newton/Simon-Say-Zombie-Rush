@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    // TODO: Combine menuWin and menuWinLastLevel and just programmatically change the buttons
     [SerializeField] private GameObject menuActive;
     [SerializeField] private GameObject menuPause;
     [SerializeField] private GameObject menuWin;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuLose;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text scoreText; // TextMeshProUGUI to display the score
+    [SerializeField] TMP_Text scoreTextFinalLevel; // TextMeshProUGUI to display the score
 
     public Image playerHPBar;
     public GameObject dmgFlashBckgrnd;
@@ -221,6 +223,7 @@ public class GameManager : MonoBehaviour
     { 
         score += points;
         scoreText.text = "Score: " + score;
+        scoreTextFinalLevel.text = "Score: " + score;
     }
 
     // Coroutine to show the result for 2 seconds

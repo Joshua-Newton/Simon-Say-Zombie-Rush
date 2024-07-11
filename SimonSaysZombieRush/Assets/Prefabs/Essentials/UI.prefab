@@ -2213,6 +2213,7 @@ MonoBehaviour:
   menuLose: {fileID: 5071012003697896060}
   enemyCountText: {fileID: 8802826675989113314}
   scoreText: {fileID: 4123699071689452661}
+  scoreTextFinalLevel: {fileID: 7860882706938394412}
   playerHPBar: {fileID: 3768641551683657596}
   dmgFlashBckgrnd: {fileID: 8289139530405093451}
   player: {fileID: 0}
