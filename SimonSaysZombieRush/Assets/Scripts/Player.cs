@@ -31,7 +31,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     // Grenade related fields
     public GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
     public Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
-    public float throwForce = 15f; // Throwing force of the grenade
+    [SerializeField] float throwForce = 15f; // Throwing force of the grenade
+    [SerializeField] float raycastDistance = 100f; // Maximum distance for the raycast
 
     Vector3 movementDirection;
     Vector3 grappleDirection;
@@ -181,12 +182,31 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         if (Input.GetButtonDown("Grenade")) // Assign a button to throw the grenade (e.g., E button)
         {
+            Ray ray = new Ray(grenadeSpawnPoint.position, grenadeSpawnPoint.forward);
+            RaycastHit hit;
+
+            Vector3 targetPoint;
+            if (Physics.Raycast(ray, out hit, raycastDistance))
+            {
+                targetPoint = hit.point;
+            }
+            else
+            {
+                targetPoint = ray.GetPoint(raycastDistance);
+            }
+
+            // Instantiate the grenade at the spawn point
             GameObject grenade = Instantiate(gravityGrenadePrefab, grenadeSpawnPoint.position, grenadeSpawnPoint.rotation);
             Rigidbody rb = grenade.GetComponent<Rigidbody>();
-            rb.AddForce(grenadeSpawnPoint.forward * throwForce, ForceMode.VelocityChange);
+
+            // Calculate the direction to the target point
+            Vector3 direction = (targetPoint - grenadeSpawnPoint.position).normalized;
+
+            // Apply force to throw the grenade towards the target point
+            rb.AddForce(direction * throwForce, ForceMode.VelocityChange);
         }
-        
     }
+
 
     void Grounded()
     {

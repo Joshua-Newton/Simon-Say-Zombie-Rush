@@ -4,17 +4,33 @@ using UnityEngine;
 
 public class GravityGrenade : MonoBehaviour
 {
-    public float explosionDelay = 3f; // Delay before the explosion
-    public float explosionRadius = 5f; // Radius of the explosion
-    public float explosionForce = 700f; // Force of the explosion
-    public float attractionDuration = 2f; // Duration of the gravitational attraction
+    [SerializeField] private float explosionDelay; // Delay before the explosion
+    [SerializeField] private float explosionRadius; // Radius of the explosion
+    [SerializeField] private float explosionForce; // Force of the explosion
+    [SerializeField] private float attractionDuration; // Duration of the gravitational attraction
+    [SerializeField] private float attractionStrength; // Strength of the gravitational attraction
+    [SerializeField] private float floatHeight; // Height to float before the explosion
+    [SerializeField] private float floatDuration; // Duration of the float before the explosion
+    [SerializeField] private float elapsedTime;
 
     private bool hasExploded = false;
+    private Rigidbody rb; // Reference to the Rigidbody component
+    private Vector3 originalPosition;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         // Start the countdown for the explosion
+        originalPosition = rb.transform.position;
         StartCoroutine(ExplodeAfterDelay());
+        // Make the grenade float
+        FloatBeforeExplosion();
+    }
+
+    void FloatBeforeExplosion()
+    {
+        // Apply an upward force to make the grenade float
+        rb.AddForce(Vector3.up * floatHeight, ForceMode.Impulse);
     }
 
     IEnumerator ExplodeAfterDelay()
@@ -29,37 +45,92 @@ public class GravityGrenade : MonoBehaviour
 
         hasExploded = true;
 
-        // Find all colliders in the radius of the explosion
+        // Find all colliders within the explosion radius
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
+        // If there are enemies in range, deactivate the Rigidbody and ascend
+        bool enemyInRange = false;
         foreach (Collider nearbyObject in colliders)
         {
-            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-            if (rb != null)
+            if (nearbyObject.CompareTag("Enemy")) // Check if the object is an enemy
             {
-                // Apply an outward explosive force
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
-
-                // Start the gravitational attraction
-                StartCoroutine(Attract(rb));
+                enemyInRange = true;
+                break;
             }
+        }
+
+        if (enemyInRange)
+        {
+            foreach (Collider nearbyObject in colliders)
+            {
+                if (nearbyObject.CompareTag("Enemy")) // Check if the object is an enemy
+                {
+                    // Start the gravitational attraction
+                    StartCoroutine(Attract(nearbyObject.transform));
+
+                    // Set isGrenadeEffectActive to true for the affected enemy
+                    EnemyAI enemyAI = nearbyObject.GetComponent<EnemyAI>();
+                    if (enemyAI != null)
+                    {
+                        enemyAI.isGrenadeEffectActive = true;
+                    }
+                }
+            }
+
+            // Deactivate the Rigidbody so the grenade doesn't move
+            rb.isKinematic = true;
+            // Ascend the grenade 2 units
+            StartCoroutine(Ascend());
+
+            // Set isGrenadeEffectActive back to false for the affected enemies after the grenade effect has ended
+            StartCoroutine(ResetGrenadeEffect(colliders));
         }
 
         // Destroy the grenade after the explosion
         Destroy(gameObject, attractionDuration + 1f);
     }
 
-    IEnumerator Attract(Rigidbody rb)
+    IEnumerator ResetGrenadeEffect(Collider[] affectedEnemies)
+    {
+        yield return new WaitForSeconds(attractionDuration);
+
+        foreach (Collider enemy in affectedEnemies)
+        {
+            EnemyAI enemyAI = enemy.GetComponent<EnemyAI>();
+            if (enemyAI != null)
+            {
+                enemyAI.isGrenadeEffectActive = false;
+            }
+        }
+    }
+
+
+    IEnumerator Ascend()
+    {
+        Vector3 startPosition = rb.transform.position;
+        Vector3 endPosition = new Vector3(startPosition.x, startPosition.y + floatHeight, startPosition.z);
+        float startTime = Time.time;
+
+        while (Time.time < startTime + floatDuration)
+        {
+            // Interpolate the position on the Y-axis over the floatDuration
+            float t = (Time.time - startTime) / floatDuration;
+            rb.transform.position = Vector3.Lerp(startPosition, endPosition, t);
+            yield return null;
+        }
+    }
+
+    IEnumerator Attract(Transform target)
     {
         float elapsedTime = 0f;
-        Vector3 originalPosition = rb.position;
 
         while (elapsedTime < attractionDuration)
         {
             elapsedTime += Time.deltaTime;
-            float strength = Mathf.Lerp(1f, 0f, elapsedTime / attractionDuration);
-            Vector3 direction = (transform.position - rb.position).normalized;
-            rb.MovePosition(rb.position + direction * strength * Time.deltaTime);
+            // Use the attractionStrength variable to determine the force applied
+            float strength = Mathf.Lerp(attractionStrength, 0f, elapsedTime / attractionDuration);
+            Vector3 direction = (transform.position - target.position).normalized;
+            target.position += direction * strength * Time.deltaTime;
             yield return null;
         }
     }

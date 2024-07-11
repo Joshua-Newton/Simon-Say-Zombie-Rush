@@ -32,6 +32,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     bool playerInRange;
     float angleToPlayer;
     Vector3 playerDir;
+   public bool isGrenadeEffectActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -62,13 +63,17 @@ public class EnemyAI : MonoBehaviour, IDamage
         Debug.DrawRay(transform.position, playerDir);
 
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, playerDir, out hit))
+        if (Physics.Raycast(transform.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
-                agent.SetDestination(GameManager.instance.player.transform.position);
+                // Verifica si el efecto de la granada está activo antes de establecer un nuevo destino
+                if (!isGrenadeEffectActive)
+                {
+                    agent.SetDestination(GameManager.instance.player.transform.position);
+                }
 
-                if(agent.remainingDistance <= agent.stoppingDistance)
+                if (agent.remainingDistance <= agent.stoppingDistance)
                 {
                     FaceTarget();
                 }
@@ -88,11 +93,12 @@ public class EnemyAI : MonoBehaviour, IDamage
 
                 return true;
             }
-            
+
         }
 
         return false;
     }
+
 
     void OnTriggerEnter(Collider other)
     {

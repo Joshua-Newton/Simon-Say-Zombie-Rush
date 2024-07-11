@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,6 +34,9 @@ public class GameManager : MonoBehaviour
     private float initialTimeScale;
     private int enemyCount;
     private int score; // Player's score
+
+    // Name of the next scene to load
+    [SerializeField] private string nextSceneName;
 
     void Awake()
     {
@@ -204,7 +208,7 @@ public class GameManager : MonoBehaviour
     {
         resultDisplay.text = message;
         resultDisplay.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         resultDisplay.gameObject.SetActive(false);
     }
 
@@ -213,9 +217,16 @@ public class GameManager : MonoBehaviour
     {
         resultDisplay.text = message;
         resultDisplay.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         resultDisplay.gameObject.SetActive(false);
         WinGame();
+        StartCoroutine(LoadNextLevel());
     }
 
+    // Coroutine to load the next level
+    IEnumerator LoadNextLevel()
+    {
+        yield return new WaitForSeconds(2); // Optional delay before loading the next scene
+        SceneManager.LoadScene(nextSceneName);
+    }
 }
