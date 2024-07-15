@@ -169,6 +169,10 @@ MonoBehaviour:
   viewAngle: 90
   meleeHitBox: {fileID: 3451909040018256533}
   enemyType: 1
+  alwaysChasePlayer: 0
+  isGrenadeEffectActive: 0
+  sourceWaveSpawner: {fileID: 0}
+  sourceRandomSpawner: {fileID: 0}
 --- !u!136 &8606165564208615789
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -5,6 +5,24 @@ using UnityEngine;
 public class HordeModeManager : GameManager
 {
     public static new HordeModeManager instance;
+    [SerializeField] bool infiniteWaves;
+    [SerializeField] int totalWaves;
+    [SerializeField] int secondsBetweenWaves;
+    [SerializeField] RandomSpawner enemySpawner;
+
+    int currentWave;
+    int enemiesInWave;
+    int enemiesKilled;
+    protected override void Awake()
+    {
+        base.Awake();
+        instance = this;
+    }
+
+    public void Start()
+    {
+        StartCoroutine(StartWave());
+    }
 
     public override void CollectItem(string item)
     {
@@ -13,23 +31,45 @@ public class HordeModeManager : GameManager
 
     public override void LoseGame()
     {
-        throw new System.NotImplementedException();
+        menuActive = menuLose;
+        PauseAndOpenActiveMenu();
     }
 
     public override void WinGame()
     {
-        throw new System.NotImplementedException();
+        menuActive = menuWin;
+        PauseAndOpenActiveMenu();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void StartNextWave()
     {
-        
+        StartCoroutine(StartWave());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator StartWave()
     {
-        
+        ++currentWave;
+        enemiesInWave = currentWave; // TODO: Replace with a more complex system. For now just have the player kill as many enemies as are in the wave
+        yield return new WaitForSeconds(secondsBetweenWaves);
+
+        if (!infiniteWaves && currentWave <= totalWaves)
+        {
+            ResetAndStartSpawning();
+        }
+        else if(!infiniteWaves && currentWave > totalWaves)
+        {
+            WinGame();
+        }
+        else // Only case left is if infiniteWaves is true
+        {
+            ResetAndStartSpawning();
+        }
+    }
+
+    private void ResetAndStartSpawning()
+    {
+        enemySpawner.ResetSpawner();
+        enemySpawner.maxSpawns = enemiesInWave;
+        enemySpawner.StartSpawning();
     }
 }

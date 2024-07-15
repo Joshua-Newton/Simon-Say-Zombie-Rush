@@ -24,6 +24,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     [SerializeField] enum EnemyType { Shooter, Melee, Spitter };
     [SerializeField] EnemyType enemyType;
+    [SerializeField] bool alwaysChasePlayer;
 
     Color originalColor;
     bool isShooting;
@@ -34,7 +35,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     Vector3 playerDir;
     public bool isGrenadeEffectActive = false;
 
+    // Replace with a system that take advantage of inheritance so that we only need one of these
     public WaveSpawner sourceWaveSpawner;
+    public RandomSpawner sourceRandomSpawner;
 
     // Start is called before the first frame update
     void Start()
@@ -50,11 +53,16 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (playerInRange && canSeePlayer())
+        if(alwaysChasePlayer)
         {
-            
+            Move();
+            Attack();
+        }
+        else if (playerInRange && canSeePlayer())
+        {
 
         }
+
     }
 
     bool canSeePlayer()
@@ -65,40 +73,49 @@ public class EnemyAI : MonoBehaviour, IDamage
         Debug.DrawRay(transform.position, playerDir);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, playerDir, out hit))
+        if (Physics.Raycast(transform.position, playerDir, out hit) || alwaysChasePlayer)
         {
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+            if ((hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle) || alwaysChasePlayer)
             {
-                // Verifica si el efecto de la granada está activo antes de establecer un nuevo destino
-                if (!isGrenadeEffectActive)
-                {
-                    agent.SetDestination(GameManager.instance.player.transform.position);
-                }
-
-                if (agent.remainingDistance <= agent.stoppingDistance)
-                {
-                    FaceTarget();
-                }
-
-                if (enemyType == EnemyType.Shooter && !isShooting)
-                {
-                    StartCoroutine(Shoot());
-                }
-                else if (enemyType == EnemyType.Melee && !isMeleeing && playerDir.magnitude < meleeTriggerRange)
-                {
-                    StartCoroutine(Melee());
-                }
-                else if (enemyType == EnemyType.Spitter && !isSpitting)
-                {
-                    StartCoroutine(Spit());
-                }
-
+                Move();
+                Attack();
                 return true;
             }
 
         }
 
         return false;
+    }
+
+    private void Move()
+    {
+        // TODO: Can we translate this comment to English please? Or delete it
+        // Verifica si el efecto de la granada está activo antes de establecer un nuevo destino
+        if (!isGrenadeEffectActive)
+        {
+            agent.SetDestination(GameManager.instance.player.transform.position);
+        }
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            FaceTarget();
+        }
+    }
+
+    private void Attack()
+    {
+        if (enemyType == EnemyType.Shooter && !isShooting)
+        {
+            StartCoroutine(Shoot());
+        }
+        else if (enemyType == EnemyType.Melee && !isMeleeing && playerDir.magnitude < meleeTriggerRange)
+        {
+            StartCoroutine(Melee());
+        }
+        else if (enemyType == EnemyType.Spitter && !isSpitting)
+        {
+            StartCoroutine(Spit());
+        }
     }
 
 
@@ -136,6 +153,10 @@ public class EnemyAI : MonoBehaviour, IDamage
         if(sourceWaveSpawner)
         {
             sourceWaveSpawner.UpdateEnemyNumber();
+        }
+        if(sourceRandomSpawner)
+        {
+            sourceRandomSpawner.EnemyKilled();
         }
 
         Destroy(gameObject);

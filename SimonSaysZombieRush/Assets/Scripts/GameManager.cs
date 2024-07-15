@@ -27,10 +27,6 @@ public abstract class GameManager : MonoBehaviour
     public bool isPaused;
     public Collider playerCollider;
 
-    protected List<string> possibleItems; // List of possible items
-    protected List<string> commandSequence; // The generated command sequence
-    protected List<string> playerSequence; // The player's collected sequence
-
     protected float initialTimeScale;
     protected int enemyCount;
     protected int score; // Player's score

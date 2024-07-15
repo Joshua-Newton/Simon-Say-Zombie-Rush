@@ -13,10 +13,13 @@ public class TimeTrialModeManager : GameManager
     [SerializeField] protected TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
     [SerializeField] protected TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
 
+    protected List<string> possibleItems; // List of possible items
+    protected List<string> commandSequence; // The generated command sequence
+    protected List<string> playerSequence; // The player's collected sequence
+
     protected override void Awake()
     {
         base.Awake();
-        Debug.Log("Awake called Time Trial");
         instance = this;
 
 
@@ -24,7 +27,6 @@ public class TimeTrialModeManager : GameManager
 
     void Start()
     {
-        Debug.Log("Start called Time Trial");
         InitializePossibleItems();
         GenerateCommand();
         DisplayCommand();
