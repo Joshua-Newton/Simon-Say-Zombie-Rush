@@ -32,7 +32,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     bool playerInRange;
     float angleToPlayer;
     Vector3 playerDir;
-   public bool isGrenadeEffectActive = false;
+    public bool isGrenadeEffectActive = false;
+
+    public WaveSpawner sourceWaveSpawner;
 
     // Start is called before the first frame update
     void Start()
@@ -123,9 +125,20 @@ public class EnemyAI : MonoBehaviour, IDamage
         StartCoroutine(FlashDamage());
         if (HP <= 0)
         {
-            GameManager.instance.UpdateEnemyCount(-1);
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        GameManager.instance.UpdateEnemyCount(-1);
+
+        if(sourceWaveSpawner)
+        {
+            sourceWaveSpawner.UpdateEnemyNumber();
+        }
+
+        Destroy(gameObject);
     }
 
     void FaceTarget()
