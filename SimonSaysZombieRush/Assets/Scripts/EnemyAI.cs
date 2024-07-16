@@ -8,9 +8,11 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] Color hitColor;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Animator anim;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject spitProjectile;
     [SerializeField] Transform shootPos;
+    [SerializeField] Transform headPos;
     [SerializeField] float shootDelay;
     [SerializeField] float spitDelay;
     [SerializeField] float meleeHitTime;
@@ -21,6 +23,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] Collider meleeHitBox;
+    [SerializeField] int animSpeedTransition;
+    [SerializeField] int roamDistance;
+    [SerializeField] int roamTimer;
 
     [SerializeField] enum EnemyType { Shooter, Melee, Spitter };
     [SerializeField] EnemyType enemyType;
@@ -30,10 +35,16 @@ public class EnemyAI : MonoBehaviour, IDamage
     bool isShooting;
     bool isMeleeing;
     bool isSpitting;
+    bool isRoaming;
     bool playerInRange;
-    float angleToPlayer;
-    Vector3 playerDir;
     public bool isGrenadeEffectActive = false;
+
+    float angleToPlayer;
+    float stoppingDistOrig;
+    
+    Vector3 playerDir;
+    Vector3 startingPos;
+
 
     // Replace with a system that take advantage of inheritance so that we only need one of these
     public WaveSpawner sourceWaveSpawner;
@@ -46,6 +57,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             meleeHitBox.enabled = false;
         }
+        startingPos = transform.position;
+        stoppingDistOrig = agent.stoppingDistance;
         GameManager.instance.UpdateEnemyCount(1);
         originalColor = model.material.color;
     }
@@ -53,37 +66,60 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        float agentSpeed = agent.velocity.normalized.magnitude;
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTransition));
+
         if(alwaysChasePlayer)
         {
             Move();
             Attack();
         }
-        else if (playerInRange && canSeePlayer())
+        else if (!playerInRange || (playerInRange && canSeePlayer()))
         {
-
+            if(!isRoaming && agent.remainingDistance < 0.05f)
+            {
+                StartCoroutine(Roam());
+            }
         }
 
     }
 
+    IEnumerator Roam()
+    {
+        isRoaming = true;
+        yield return new WaitForSeconds(roamTimer);
+
+        agent.stoppingDistance = 0;
+        Vector3 ranPos = Random.insideUnitSphere * roamDistance;
+        ranPos += startingPos;
+
+        NavMeshHit hit;
+        NavMesh.SamplePosition(ranPos, out hit, roamDistance, 1);
+        agent.SetDestination(hit.position);
+
+        isRoaming = false;
+    }
+
     bool canSeePlayer()
     {
-        playerDir = GameManager.instance.player.transform.position - transform.position;
+        playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        Debug.DrawRay(transform.position, playerDir);
+        //Debug.DrawRay(transform.position, playerDir);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, playerDir, out hit) || alwaysChasePlayer)
+        if (Physics.Raycast(headPos.position, playerDir, out hit) || alwaysChasePlayer)
         {
             if ((hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle) || alwaysChasePlayer)
             {
                 Move();
                 Attack();
+                agent.stoppingDistance = stoppingDistOrig;
                 return true;
             }
 
         }
-
+        agent.stoppingDistance = 0;
         return false;
     }
 
@@ -131,6 +167,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player"))
         {
+            agent.stoppingDistance = 0;
             playerInRange = false;
         }
     }
