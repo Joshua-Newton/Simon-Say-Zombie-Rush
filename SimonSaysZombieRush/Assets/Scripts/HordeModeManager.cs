@@ -17,6 +17,7 @@ public class HordeModeManager : GameManager
     {
         base.Awake();
         instance = this;
+        enemySpawner = FindObjectOfType<RandomSpawner>();
     }
 
     public void Start()
@@ -26,7 +27,7 @@ public class HordeModeManager : GameManager
 
     public override void CollectItem(string item)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Picked up: " + item);
     }
 
     public override void LoseGame()
