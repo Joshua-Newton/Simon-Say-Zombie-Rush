@@ -18,7 +18,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] int shootDamage;
     [SerializeField] float shootDelay;
     [SerializeField] float shootRange;
-    
+
     // Grapple related fields
     [SerializeField] int grappleSpeed;
     [SerializeField] int grappleRange;
@@ -33,6 +33,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     public Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
     [SerializeField] float throwForce = 15f; // Throwing force of the grenade
     [SerializeField] float raycastDistance = 100f; // Maximum distance for the raycast
+
+    // Healing related fields
+    [SerializeField] int healAmount; // Amount to heal per tick
+    [SerializeField] float healInterval; // Interval between each healing tick
+    [SerializeField] int healDuration; // Total duration for the healing effect
 
     Vector3 movementDirection;
     Vector3 grappleDirection;
@@ -50,6 +55,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     float heightOriginal;
     float origPosY;
     float origScaleY;
+    Coroutine healingCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -83,7 +89,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
             characterController.Move(movementDirection * speed * Time.deltaTime);
         }
-        
     }
 
     void Jump()
@@ -97,8 +102,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
                 AbruptEndWallRun();
             }
         }
-        
-        if(!isGrappling && !isWallRunning)
+
+        if (!isGrappling && !isWallRunning)
         {
             characterController.Move(playerVelocity * Time.deltaTime);
             playerVelocity.y -= gravity * Time.deltaTime;
@@ -122,7 +127,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     void Shooting()
     {
-        if(Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused)
+        if (Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused)
         {
             StartCoroutine(Shoot());
         }
@@ -133,9 +138,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         if (isWallRunning)
         {
             float angle = Vector3.Angle(Camera.main.transform.forward, wallRunCollider.transform.forward);
-            
+
             float input = Input.GetAxis("Vertical");
-            if(input <= 0 )
+            if (input <= 0)
             {
                 AbruptEndWallRun();
             }
@@ -167,7 +172,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         if (Input.GetButtonDown("Fire2") && numGrapples < grappleMaxConsecutiveUses)
         {
             RaycastHit hit;
-            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grappleRange, ~ignoreLayer))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grappleRange, ~ignoreLayer))
             {
                 ++numGrapples;
                 grappleHitPoint = hit.point;
@@ -180,12 +185,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             isGrappling = false;
         }
 
-        if(isGrappling)
+        if (isGrappling)
         {
             grappleDirection = (grappleHitPoint - transform.position).normalized;
             characterController.Move(grappleDirection * grappleSpeed * Time.deltaTime);
         }
-
     }
 
     void ThrowGrenade()
@@ -217,7 +221,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
     }
 
-
     void Grounded()
     {
         if (characterController.isGrounded)
@@ -233,18 +236,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         isShooting = true;
 
         RaycastHit hit;
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange, ~ignoreLayer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange, ~ignoreLayer))
         {
             IDamage damageTarget = hit.collider.GetComponent<IDamage>();
             if (hit.transform != transform && damageTarget != null)
             {
-                damageTarget.TakeDamage(shootDamage);            
+                damageTarget.TakeDamage(shootDamage);
             }
         }
 
         yield return new WaitForSeconds(shootDelay);
         isShooting = false;
-
     }
 
     public void SpawnPlayer()
@@ -262,9 +264,18 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         UpdatePlayerUI();
         StartCoroutine(flashScreenDamage());
 
-        if(HP <= 0)
+        if (HP <= 0)
         {
             GameManager.instance.LoseGame();
+        }
+        else
+        {
+            // Start healing over time after taking damage
+            if (healingCoroutine != null)
+            {
+                StopCoroutine(healingCoroutine);
+            }
+            healingCoroutine = StartCoroutine(HealOverTime());
         }
     }
 
@@ -333,5 +344,25 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
 
 
+    }
+
+    // Coroutine for healing over time
+    IEnumerator HealOverTime()
+    {
+        float elapsedTime = 0;
+
+        while (elapsedTime < healDuration)
+        {
+            HP += healAmount;
+            if (HP > HPOriginal)
+            {
+                HP = HPOriginal;
+                updatePlayerUI();
+                yield break;
+            }
+            updatePlayerUI();
+            yield return new WaitForSeconds(healInterval);
+            elapsedTime += healInterval;
+        }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class TimeTrialModeManager : GameManager
 {
@@ -12,6 +11,10 @@ public class TimeTrialModeManager : GameManager
     [SerializeField] protected int commandLength = 3; // Length of the command sequence
     [SerializeField] protected TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
     [SerializeField] protected TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
+    [SerializeField] protected TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
+    [SerializeField] protected float levelTime = 60f; // Total time for the level in seconds
+
+    private float remainingTime;
 
     protected List<string> possibleItems; // List of possible items
     protected List<string> commandSequence; // The generated command sequence
@@ -21,8 +24,6 @@ public class TimeTrialModeManager : GameManager
     {
         base.Awake();
         instance = this;
-
-
     }
 
     void Start()
@@ -30,6 +31,7 @@ public class TimeTrialModeManager : GameManager
         InitializePossibleItems();
         GenerateCommand();
         DisplayCommand();
+        StartLevelTimer();
     }
 
     void InitializePossibleItems()
@@ -62,7 +64,38 @@ public class TimeTrialModeManager : GameManager
     // Display the command sequence
     void DisplayCommand()
     {
-        commandDisplay.text = "Command: " + string.Join(", ", commandSequence);
+        commandDisplay.text = string.Join(", ", commandSequence);
+    }
+
+    // Display the timer in MM:SS format
+    void UpdateTimerDisplay()
+    {
+        int minutes = Mathf.FloorToInt(remainingTime / 60);
+        int seconds = Mathf.FloorToInt(remainingTime % 60);
+        timerDisplay.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+    }
+
+    // Start the level timer
+    void StartLevelTimer()
+    {
+        remainingTime = levelTime;
+        StartCoroutine(LevelTimerCoroutine());
+    }
+
+    // Coroutine to manage the level timer
+    IEnumerator LevelTimerCoroutine()
+    {
+        while (remainingTime > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            remainingTime -= 1f;
+            UpdateTimerDisplay();
+        }
+
+        // Time is up, player loses the game
+        remainingTime = 0;
+        UpdateTimerDisplay();
+        LoseGame();
     }
 
     // Call this function when the player collects an item
@@ -168,5 +201,4 @@ public class TimeTrialModeManager : GameManager
         }
         PauseAndOpenActiveMenu();
     }
-
 }
