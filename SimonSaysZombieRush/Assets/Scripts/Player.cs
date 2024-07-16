@@ -357,10 +357,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             if (HP > HPOriginal)
             {
                 HP = HPOriginal;
-                updatePlayerUI();
+                UpdatePlayerUI();
                 yield break;
             }
-            updatePlayerUI();
+            UpdatePlayerUI();
             yield return new WaitForSeconds(healInterval);
             elapsedTime += healInterval;
         }
