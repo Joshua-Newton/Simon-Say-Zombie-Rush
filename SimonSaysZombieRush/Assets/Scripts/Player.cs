@@ -42,15 +42,22 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isShooting;
     bool isGrappling;
     bool isWallRunning;
+    bool isCrouching;
     Collider wallRunCollider;
     float initialWallRunAngle;
     int HPOriginal;
     int numGrapples;
+    float heightOriginal;
+    float origPosY;
+    float origScaleY;
 
     // Start is called before the first frame update
     void Start()
     {
         HPOriginal = HP;
+        heightOriginal = characterController.height;
+        origPosY = transform.position.y;
+        origScaleY = transform.localScale.y;
         updatePlayerUI();
     }
 
@@ -64,6 +71,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         GrappleHook();
         WallRun();
         ThrowGrenade();
+        Crouch();
     }
 
     void Movement()
@@ -295,5 +303,26 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         isWallRunning = false;
         wallRunCollider = null;
         initialWallRunAngle = 0;
+    }
+
+    void Crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            characterController.height = heightOriginal / 2;
+            transform.localScale = new Vector3(transform.localScale.x, origScaleY / 2, transform.localScale.z);
+            transform.position = new Vector3(transform.position.x, origPosY / 2, transform.position.z);
+            isCrouching = true;
+            
+        }
+        else if (Input.GetButtonUp("Crouch") && isCrouching)
+        {
+            characterController.height = heightOriginal;
+            transform.localScale = new Vector3(transform.localScale.x, origScaleY, transform.localScale.z);
+            transform.position = new Vector3(transform.position.x, origPosY, transform.position.z);
+            isCrouching = false;
+        }
+
+
     }
 }
