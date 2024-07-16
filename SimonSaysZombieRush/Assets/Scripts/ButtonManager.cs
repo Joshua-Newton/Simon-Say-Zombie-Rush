@@ -45,4 +45,10 @@ public class ButtonManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
+    public void Respawn()
+    {
+        GameManager.instance.playerScript.SpawnPlayer();
+        GameManager.instance.StateUnpause();
+    }
+
 }

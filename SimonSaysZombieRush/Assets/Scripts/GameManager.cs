@@ -26,6 +26,8 @@ public abstract class GameManager : MonoBehaviour
     public Player playerScript;
     public bool isPaused;
     public Collider playerCollider;
+    public GameObject playerSpawnPos;
+    public GameObject checkpointPopup;
 
     protected float initialTimeScale;
     protected int enemyCount;
@@ -41,6 +43,7 @@ public abstract class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<Player>();
         playerCollider = player.GetComponent<Collider>();
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
 
         initialTimeScale = Time.timeScale;
         int currentBuildIndex = SceneUtility.GetBuildIndexByScenePath(SceneManager.GetActiveScene().path);

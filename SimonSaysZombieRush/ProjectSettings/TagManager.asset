@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Spit
   - Enemy
+  - Player Spawn Pos
   layers:
   - Default
   - TransparentFX

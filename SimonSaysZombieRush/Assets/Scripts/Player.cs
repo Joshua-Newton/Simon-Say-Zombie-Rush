@@ -58,7 +58,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         heightOriginal = characterController.height;
         origPosY = transform.position.y;
         origScaleY = transform.localScale.y;
-        updatePlayerUI();
+        UpdatePlayerUI();
     }
 
     // Update is called once per frame
@@ -247,10 +247,19 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     }
 
+    public void SpawnPlayer()
+    {
+        HP = HPOriginal;
+        UpdatePlayerUI();
+        characterController.enabled = false;
+        transform.position = GameManager.instance.playerSpawnPos.transform.position;
+        characterController.enabled = true;
+    }
+
     public void TakeDamage(int amount)
     {
         HP -= amount;
-        updatePlayerUI();
+        UpdatePlayerUI();
         StartCoroutine(flashScreenDamage());
 
         if(HP <= 0)
@@ -284,7 +293,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         EndWallRun();
     }
 
-    public void updatePlayerUI()
+    public void UpdatePlayerUI()
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
     }
