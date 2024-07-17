@@ -1590,11 +1590,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2652421742586376488}
-  - component: {fileID: 1984329688497679370}
   - component: {fileID: 5073181739468987772}
   - component: {fileID: 1394699279059878855}
   - component: {fileID: 2502110172772059428}
   - component: {fileID: 1914471108281549978}
+  - component: {fileID: 305310284731164362}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Enemy
@@ -1616,46 +1616,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4616161496008102115}
-  - {fileID: 4236647475509864459}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 176.808, z: 0}
---- !u!114 &1984329688497679370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6249742090323985971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 541ee8474addd6c41bacf9b11431e404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 8402399742291235870}
-  hitColor: {r: 1, g: 0, b: 0, a: 0}
-  agent: {fileID: 1394699279059878855}
-  anim: {fileID: 1914471108281549978}
-  bullet: {fileID: 4730036690490732152, guid: 44c74124242374f4c9a2bb2cec8609e8, type: 3}
-  spitProjectile: {fileID: 0}
-  shootPos: {fileID: 4236647475509864459}
-  headPos: {fileID: 6889384643715172669}
-  shootDelay: 1
-  spitDelay: 0
-  meleeHitTime: 0
-  meleeDelay: 0
-  meleeTriggerRange: 0
-  HP: 3
-  faceTargetSpeed: 5
-  viewAngle: 90
-  meleeHitBox: {fileID: 0}
-  animSpeedTransition: 5
-  roamDistance: 10
-  roamTimer: 1
-  enemyType: 0
-  alwaysChasePlayer: 0
-  isGrenadeEffectActive: 0
-  sourceWaveSpawner: {fileID: 0}
-  sourceRandomSpawner: {fileID: 0}
 --- !u!136 &5073181739468987772
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1743,6 +1705,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &305310284731164362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6249742090323985971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d77107cc4a8b6b4f9327f9272e85749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 8402399742291235870}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  agent: {fileID: 1394699279059878855}
+  anim: {fileID: 1914471108281549978}
+  headPos: {fileID: 6889384643715172669}
+  HP: 3
+  faceTargetSpeed: 5
+  viewAngle: 90
+  animSpeedTransition: 5
+  roamDistance: 10
+  roamTimer: 1
+  alwaysChasePlayer: 0
+  isGrenadeEffectActive: 0
+  sourceWaveSpawner: {fileID: 0}
+  sourceRandomSpawner: {fileID: 0}
+  bullet: {fileID: 4730036690490732152, guid: 44c74124242374f4c9a2bb2cec8609e8, type: 3}
+  shootPos: {fileID: 4236647475509864459}
+  shootDelay: 0.5
 --- !u!1 &6254205318321615385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1933,12 +1925,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6882273329122611273}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.786, z: 0.68}
+  m_LocalRotation: {x: 2.3283062e-10, y: 0.000000061801344, z: 0.00000005214726, w: 1}
+  m_LocalPosition: {x: -0.00023079941, y: -0.033781096, z: 0.6856303}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2652421742586376488}
+  m_Father: {fileID: 6889384643715172669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7314187770544244094
 GameObject:
@@ -2036,6 +2028,7 @@ Transform:
   - {fileID: 7547103243730696994}
   - {fileID: 3400880603849779468}
   - {fileID: 8236948104110940388}
+  - {fileID: 4236647475509864459}
   m_Father: {fileID: 4152749522287748764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7600076628828826347

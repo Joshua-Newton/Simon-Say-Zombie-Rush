@@ -1075,11 +1075,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2904873273459719231}
-  - component: {fileID: 4636519819416495624}
   - component: {fileID: 8606165564208615789}
   - component: {fileID: 3842305305633061973}
   - component: {fileID: 7121621271538081822}
   - component: {fileID: 6492680309417995542}
+  - component: {fileID: 392139546353410977}
   m_Layer: 0
   m_Name: Melee
   m_TagString: Enemy
@@ -1105,43 +1105,6 @@ Transform:
   - {fileID: 3325397814799098809}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 176.808, z: 0}
---- !u!114 &4636519819416495624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4121048885801009876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 541ee8474addd6c41bacf9b11431e404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 4982160590741281935}
-  hitColor: {r: 1, g: 0, b: 0, a: 0}
-  agent: {fileID: 3842305305633061973}
-  anim: {fileID: 6492680309417995542}
-  bullet: {fileID: 4730036690490732152, guid: 44c74124242374f4c9a2bb2cec8609e8, type: 3}
-  spitProjectile: {fileID: 0}
-  shootPos: {fileID: 7911260300251257320}
-  headPos: {fileID: 8238946154238686437}
-  shootDelay: 1
-  spitDelay: 0
-  meleeHitTime: 0.5
-  meleeDelay: 2
-  meleeTriggerRange: 2
-  HP: 3
-  faceTargetSpeed: 5
-  viewAngle: 90
-  meleeHitBox: {fileID: 3451909040018256533}
-  animSpeedTransition: 5
-  roamDistance: 10
-  roamTimer: 1
-  enemyType: 1
-  alwaysChasePlayer: 0
-  isGrenadeEffectActive: 0
-  sourceWaveSpawner: {fileID: 0}
-  sourceRandomSpawner: {fileID: 0}
 --- !u!136 &8606165564208615789
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1229,6 +1192,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &392139546353410977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121048885801009876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de8b7cfc4d5ce3644858000ff8ffc66d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 4982160590741281935}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  agent: {fileID: 3842305305633061973}
+  anim: {fileID: 6492680309417995542}
+  headPos: {fileID: 8238946154238686437}
+  HP: 3
+  faceTargetSpeed: 5
+  viewAngle: 90
+  animSpeedTransition: 5
+  roamDistance: 10
+  roamTimer: 1
+  alwaysChasePlayer: 0
+  isGrenadeEffectActive: 0
+  sourceWaveSpawner: {fileID: 0}
+  sourceRandomSpawner: {fileID: 0}
+  meleeHitTime: 0.5
+  meleeDelay: 1
+  meleeTriggerRange: 2.5
+  meleeHitBox: {fileID: 3451909040018256533}
 --- !u!1 &4218423480661246999
 GameObject:
   m_ObjectHideFlags: 0

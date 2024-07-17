@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 392139546353410977, guid: 112c947b102066a44b585333941bf835, type: 3}
+      propertyPath: alwaysChasePlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2904873273459719231, guid: 112c947b102066a44b585333941bf835, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.16
@@ -50,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4121048885801009876, guid: 112c947b102066a44b585333941bf835, type: 3}
       propertyPath: m_Name
-      value: Melee Variant
+      value: MeleeChaser
       objectReference: {fileID: 0}
     - target: {fileID: 4636519819416495624, guid: 112c947b102066a44b585333941bf835, type: 3}
       propertyPath: alwaysChasePlayer

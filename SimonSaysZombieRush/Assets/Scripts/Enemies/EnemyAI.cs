@@ -3,60 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamage
+public abstract class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] Color hitColor;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Animator anim;
-    [SerializeField] GameObject bullet;
-    [SerializeField] GameObject spitProjectile;
-    [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
-    [SerializeField] float shootDelay;
-    [SerializeField] float spitDelay;
-    [SerializeField] float meleeHitTime;
-    [SerializeField] float meleeDelay;
-    [SerializeField] float meleeTriggerRange;
-
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int viewAngle;
-    [SerializeField] Collider meleeHitBox;
     [SerializeField] int animSpeedTransition;
     [SerializeField] int roamDistance;
     [SerializeField] int roamTimer;
 
-    [SerializeField] enum EnemyType { Shooter, Melee, Spitter };
-    [SerializeField] EnemyType enemyType;
     [SerializeField] bool alwaysChasePlayer;
 
-    Color originalColor;
-    bool isShooting;
-    bool isMeleeing;
-    bool isSpitting;
-    bool isRoaming;
-    bool playerInRange;
+    protected Color originalColor;
+    protected bool isRoaming;
+    protected bool playerInRange;
+    protected float angleToPlayer;
+    protected float stoppingDistOrig;
+    protected Vector3 playerDir;
+    protected Vector3 startingPos;
     public bool isGrenadeEffectActive = false;
-
-    float angleToPlayer;
-    float stoppingDistOrig;
-    
-    Vector3 playerDir;
-    Vector3 startingPos;
-
 
     // Replace with a system that take advantage of inheritance so that we only need one of these
     public WaveSpawner sourceWaveSpawner;
     public RandomSpawner sourceRandomSpawner;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        if(meleeHitBox != null)
-        {
-            meleeHitBox.enabled = false;
-        }
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
         GameManager.instance.UpdateEnemyCount(1);
@@ -64,7 +42,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTransition));
@@ -125,8 +103,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     private void Move()
     {
-        // TODO: Can we translate this comment to English please? Or delete it
-        // Verifica si el efecto de la granada está activo antes de establecer un nuevo destino
         if (!isGrenadeEffectActive)
         {
             agent.SetDestination(GameManager.instance.player.transform.position);
@@ -138,23 +114,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    private void Attack()
-    {
-        if (enemyType == EnemyType.Shooter && !isShooting)
-        {
-            StartCoroutine(Shoot());
-        }
-        else if (enemyType == EnemyType.Melee && !isMeleeing && playerDir.magnitude < meleeTriggerRange)
-        {
-            StartCoroutine(Melee());
-        }
-        else if (enemyType == EnemyType.Spitter && !isSpitting)
-        {
-            StartCoroutine(Spit());
-        }
-    }
-
-
+    protected abstract void Attack();
+    
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -205,37 +166,10 @@ public class EnemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, faceTargetSpeed * Time.deltaTime);
     }
 
-    IEnumerator Shoot()
-    {
-        isShooting = true;
-        Instantiate(bullet, shootPos.position, transform.rotation);
-        yield return new WaitForSeconds(shootDelay);
-        isShooting = false;
-    }
-
-    IEnumerator Melee()
-    {
-        isMeleeing = true;
-        meleeHitBox.enabled = true;
-        yield return new WaitForSeconds(meleeHitTime);
-        meleeHitBox.enabled = false;
-        yield return new WaitForSeconds(meleeDelay);
-        isMeleeing = false;
-    }
-
     IEnumerator FlashDamage()
     {
         model.material.color = hitColor;
         yield return new WaitForSeconds(.1f);
         model.material.color = originalColor;
     }
-
-    IEnumerator Spit()
-    {
-        isSpitting = true;
-        Instantiate(spitProjectile, shootPos.position, transform.rotation);
-        yield return new WaitForSeconds(spitDelay);
-        isSpitting = false;
-    }
-
 }
