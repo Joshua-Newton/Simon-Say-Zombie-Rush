@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,17 +12,15 @@ public class TimeTrialModeManager : GameManager
 
     [SerializeField] protected int commandLength = 3; // Length of the command sequence
     [SerializeField] protected TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
-    [SerializeField] protected GameObject commandItemDisplay; // Prefab images to display the command item
-    [SerializeField] protected Transform commandItemParent; // Parent to hold the instantiated command items
+    [SerializeField] protected GameObject[] commandImageObjects; // Possible positions for the images
     [SerializeField] protected TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
     [SerializeField] protected TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
     [SerializeField] protected float levelTime = 60f; // Total time for the level in seconds
 
     private float remainingTime;
 
-    protected List<string> possibleItems; // List of possible items
-    protected List<string> commandSequence; // The generated command sequence
-    protected List<GameObject> commandItemsDisplay; // The generated command item prefabs
+    protected List<GameObject> possibleItems; // List of possible items
+    protected List<GameObject> commandSequence; // The generated command sequence
     protected List<string> playerSequence; // The player's collected sequence
 
     protected override void Awake()
@@ -41,14 +40,13 @@ public class TimeTrialModeManager : GameManager
 
     void InitializePossibleItems()
     {
-        possibleItems = new List<string>();
+        possibleItems = new List<GameObject>();
         GameObject[] pickups = GameObject.FindGameObjectsWithTag("Pickup");
         foreach (GameObject pickup in pickups)
         {
-            string itemName = pickup.name; // Use the name of the game object
-            if (!possibleItems.Contains(itemName))
+            if (!possibleItems.Contains(pickup))
             {
-                possibleItems.Add(itemName);
+                possibleItems.Add(pickup);
             }
         }
     }
@@ -56,8 +54,7 @@ public class TimeTrialModeManager : GameManager
     // Generate a random command sequence
     void GenerateCommand()
     {
-        commandSequence = new List<string>();
-        commandItemsDisplay = new List<GameObject>();
+        commandSequence = new List<GameObject>();
         for (int i = 0; i < commandLength; i++)
         {
             if (possibleItems.Count == 0) break; // No more items to add
@@ -65,7 +62,6 @@ public class TimeTrialModeManager : GameManager
             int randomIndex = Random.Range(0, possibleItems.Count);
             commandSequence.Add(possibleItems[randomIndex]);
             GameObject itemName = Resources.Load<GameObject>("Prefabs/Essentials/SimonImg" + possibleItems[randomIndex]); // Display Simons image
-            commandItemsDisplay.Add(itemName);
         }
     }
 
@@ -77,15 +73,15 @@ public class TimeTrialModeManager : GameManager
 
     void DisplayImageCommand()
     {
-        if (commandItemsDisplay.Count > 0)
+        for (int i = 0; i < commandSequence.Count && i < commandImageObjects.Length; ++i)
         {
-            foreach (Transform child in commandItemParent)
+            Image imgComponent = commandImageObjects[i].GetComponent<Image>();
+            ItemCollection pickupComponent = commandSequence[i].GetComponent<ItemCollection>();
+            if (imgComponent && pickupComponent)
             {
-                Destroy(child.gameObject); // Clear previous command items
+                imgComponent.sprite = pickupComponent.GetItemSprite();
+                imgComponent.color = new Color(imgComponent.color.r, imgComponent.color.g, imgComponent.color.b, 255);
             }
-
-            GameObject commandItem = Instantiate(commandItemsDisplay[0], commandItemParent);
-            commandItem.SetActive(true); // Ensure the prefab is active
         }
     }
 
@@ -121,14 +117,14 @@ public class TimeTrialModeManager : GameManager
     }
 
     // Call this function when the player collects an item
-    public override void CollectItem(string item)
+    public override void CollectItem(GameObject item)
     {
         if (playerSequence == null)
         {
             playerSequence = new List<string>();
         }
 
-        playerSequence.Add(item);
+        playerSequence.Add(item.name);
         possibleItems.Remove(item); // Remove the item from the possibleItems list
 
         CheckPlayerSequence();
@@ -140,48 +136,30 @@ public class TimeTrialModeManager : GameManager
         // Check if the player's collected sequence matches the command sequence so far
         for (int i = 0; i < playerSequence.Count; i++)
         {
-            if (playerSequence[i] != commandSequence[i])
+            if (playerSequence[i] != commandSequence[i].name)
             {
                 StartCoroutine(ShowResult("Incorrect sequence!"));
-                ResetGame();
+                ResetGameSequence();
                 return;
             }
         }
-
-        // If all items are collected and the sequence is correct
-        if (playerSequence.Count == commandSequence.Count)
+        
+        if (possibleItems.Count == 0)
         {
-            if (possibleItems.Count == 0)
-            {
-                StartCoroutine(ShowResultAndWin("All items collected"));
-                UpdateScore(100);
-            }
-            else
-            {
-                // Keep the image if the sequence is correct but not all items are collected yet
-                StartCoroutine(ShowResult("Correct sequence!"));
-                UpdateScore(100); // Update score for correct sequence
-                RetainImage();
-            }
+            StartCoroutine(ShowResultAndWin("All items collected"));
+            UpdateScore(100);
         }
-    }
-
-    void RetainImage()
-    {
-        if (commandItemsDisplay.Count > playerSequence.Count)
+        else if(playerSequence.Count == commandSequence.Count)
         {
-            foreach (Transform child in commandItemParent)
-            {
-                Destroy(child.gameObject); // Clear previous command items
-            }
-
-            GameObject commandItem = Instantiate(commandItemsDisplay[playerSequence.Count], commandItemParent);
-            commandItem.SetActive(true); // Ensure the prefab is active
+            // Keep the image if the sequence is correct but not all items are collected yet
+            StartCoroutine(ShowResult("Correct sequence!"));
+            UpdateScore(100); // Update score for correct sequence
+            ResetGameSequence();
         }
     }
 
     // Reset the game for a new command
-    void ResetGame()
+    void ResetGameSequence()
     {
         playerSequence.Clear();
         GenerateCommand();

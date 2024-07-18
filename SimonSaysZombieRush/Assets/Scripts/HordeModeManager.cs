@@ -25,9 +25,9 @@ public class HordeModeManager : GameManager
         StartCoroutine(StartWave());
     }
 
-    public override void CollectItem(string item)
+    public override void CollectItem(GameObject item)
     {
-        Debug.Log("Picked up: " + item);
+        Debug.Log("Picked up: " + item.name);
     }
 
     public override void LoseGame()

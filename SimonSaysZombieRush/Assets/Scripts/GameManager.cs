@@ -101,7 +101,7 @@ public abstract class GameManager : MonoBehaviour
 
     public abstract void WinGame();
 
-    public abstract void CollectItem(string item);
+    public abstract void CollectItem(GameObject item);
 
     protected void PauseAndOpenActiveMenu()
     {
