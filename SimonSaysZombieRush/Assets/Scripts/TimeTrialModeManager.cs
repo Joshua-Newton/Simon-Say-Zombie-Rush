@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TimeTrialModeManager : GameManager
 {
@@ -10,6 +11,8 @@ public class TimeTrialModeManager : GameManager
 
     [SerializeField] protected int commandLength = 3; // Length of the command sequence
     [SerializeField] protected TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
+    [SerializeField] protected GameObject commandItemDisplay; // Prefab images to display the command item
+    [SerializeField] protected Transform commandItemParent; // Parent to hold the instantiated command items
     [SerializeField] protected TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
     [SerializeField] protected TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
     [SerializeField] protected float levelTime = 60f; // Total time for the level in seconds
@@ -18,6 +21,7 @@ public class TimeTrialModeManager : GameManager
 
     protected List<string> possibleItems; // List of possible items
     protected List<string> commandSequence; // The generated command sequence
+    protected List<GameObject> commandItemsDisplay; // The generated command item prefabs
     protected List<string> playerSequence; // The player's collected sequence
 
     protected override void Awake()
@@ -31,6 +35,7 @@ public class TimeTrialModeManager : GameManager
         InitializePossibleItems();
         GenerateCommand();
         DisplayCommand();
+        DisplayImageCommand();
         StartLevelTimer();
     }
 
@@ -52,12 +57,15 @@ public class TimeTrialModeManager : GameManager
     void GenerateCommand()
     {
         commandSequence = new List<string>();
+        commandItemsDisplay = new List<GameObject>();
         for (int i = 0; i < commandLength; i++)
         {
             if (possibleItems.Count == 0) break; // No more items to add
 
             int randomIndex = Random.Range(0, possibleItems.Count);
             commandSequence.Add(possibleItems[randomIndex]);
+            GameObject itemName = Resources.Load<GameObject>("Prefabs/Essentials/SimonImg" + possibleItems[randomIndex]); // Display Simons image
+            commandItemsDisplay.Add(itemName);
         }
     }
 
@@ -65,6 +73,20 @@ public class TimeTrialModeManager : GameManager
     void DisplayCommand()
     {
         commandDisplay.text = string.Join(", ", commandSequence);
+    }
+
+    void DisplayImageCommand()
+    {
+        if (commandItemsDisplay.Count > 0)
+        {
+            foreach (Transform child in commandItemParent)
+            {
+                Destroy(child.gameObject); // Clear previous command items
+            }
+
+            GameObject commandItem = Instantiate(commandItemsDisplay[0], commandItemParent);
+            commandItem.SetActive(true); // Ensure the prefab is active
+        }
     }
 
     // Display the timer in MM:SS format
@@ -108,6 +130,7 @@ public class TimeTrialModeManager : GameManager
 
         playerSequence.Add(item);
         possibleItems.Remove(item); // Remove the item from the possibleItems list
+
         CheckPlayerSequence();
     }
 
@@ -126,17 +149,34 @@ public class TimeTrialModeManager : GameManager
         }
 
         // If all items are collected and the sequence is correct
-        if (possibleItems.Count == 0)
+        if (playerSequence.Count == commandSequence.Count)
         {
-            StartCoroutine(ShowResultAndWin("All items collected"));
-            UpdateScore(100);
+            if (possibleItems.Count == 0)
+            {
+                StartCoroutine(ShowResultAndWin("All items collected"));
+                UpdateScore(100);
+            }
+            else
+            {
+                // Keep the image if the sequence is correct but not all items are collected yet
+                StartCoroutine(ShowResult("Correct sequence!"));
+                UpdateScore(100); // Update score for correct sequence
+                RetainImage();
+            }
         }
-        else if (playerSequence.Count == commandSequence.Count)
+    }
+
+    void RetainImage()
+    {
+        if (commandItemsDisplay.Count > playerSequence.Count)
         {
-            // If the current sequence is correct but not all items are collected yet
-            UpdateScore(100); // Update score for correct sequence
-            StartCoroutine(ShowResult("Correct sequence!"));
-            ResetGame();
+            foreach (Transform child in commandItemParent)
+            {
+                Destroy(child.gameObject); // Clear previous command items
+            }
+
+            GameObject commandItem = Instantiate(commandItemsDisplay[playerSequence.Count], commandItemParent);
+            commandItem.SetActive(true); // Ensure the prefab is active
         }
     }
 
@@ -146,6 +186,7 @@ public class TimeTrialModeManager : GameManager
         playerSequence.Clear();
         GenerateCommand();
         DisplayCommand();
+        DisplayImageCommand();
     }
 
     // Update the score and display it
