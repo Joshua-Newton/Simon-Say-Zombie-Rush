@@ -3982,56 +3982,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
-=======
-    - target: {fileID: 1398168446316944830, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1398168446316944830, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 1398168446316944830, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 1020
-      objectReference: {fileID: 0}
-    - target: {fileID: 1725951607306280576, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -70.7
-      objectReference: {fileID: 0}
->>>>>>> Stashed changes
     - target: {fileID: 5458617556080650720, guid: d3808735bf229f642963b718b1a8b106, type: 3}
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-<<<<<<< Updated upstream
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-=======
-    m_RemovedGameObjects:
-    - {fileID: 5827369709538747587, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 1574767286}
-    - targetCorrespondingSourceObject: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1345457543}
-    - targetCorrespondingSourceObject: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 973304097}
-    - targetCorrespondingSourceObject: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1807066873}
-    - targetCorrespondingSourceObject: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 915339886}
-    - targetCorrespondingSourceObject: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 926685890}
->>>>>>> Stashed changes
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3808735bf229f642963b718b1a8b106, type: 3}
 --- !u!1001 &645297984
