@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86eb52872ad28a045a7ba979ee2acd1e, type: 3}
-  m_Name: Gun - SMG
+  m_Name: Gun - Thompson
   m_EditorClassIdentifier: 
-  weaponModel: {fileID: 919132149155446097, guid: 6d1e252306cb93f419c25bc5a83ef075, type: 3}
+  weaponModel: {fileID: 5494625650325380441, guid: 944f765b84e4c4012876d61f4dfc7b5a, type: 3}
   damage: 1
-  damageRange: 200
+  damageRange: 50
   damageDelay: 0.2
-  ammoCurrent: 0
-  ammoMax: 200
-  hitEffect: {fileID: 0}
-  shootSound: {fileID: 0}
+  ammoCurrent: 82
+  ammoMax: 100
+  hitEffect: {fileID: 1301697207402410478, guid: 39f852c28f9c3fd45a427c24f3564ba7, type: 3}
+  shootSound: {fileID: 8300000, guid: bbd53c35d4d4a8f449760ffa619f79af, type: 3}
   meleeSound: {fileID: 0}
-  shootVol: 0
+  shootVol: 0.25
   meleeVol: 0.5

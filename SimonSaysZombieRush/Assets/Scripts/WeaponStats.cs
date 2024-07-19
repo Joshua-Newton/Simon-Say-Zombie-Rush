@@ -18,4 +18,5 @@ public class WeaponStats : ScriptableObject
     public AudioClip meleeSound;
     public float shootVol;
     public float meleeVol;
+
 }

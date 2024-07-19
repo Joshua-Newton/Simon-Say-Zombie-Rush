@@ -252,6 +252,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         isShooting = true;
 
+        aud.PlayOneShot(weaponList[selectedWeapon].shootSound, weaponList[selectedWeapon].shootVol);
         weaponList[selectedWeapon].ammoCurrent--;
 
         RaycastHit hit;

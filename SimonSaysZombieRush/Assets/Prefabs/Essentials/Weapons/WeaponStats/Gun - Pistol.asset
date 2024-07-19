@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86eb52872ad28a045a7ba979ee2acd1e, type: 3}
-  m_Name: Melee - Bat
+  m_Name: Gun - Pistol
   m_EditorClassIdentifier: 
-  weaponModel: {fileID: 919132149155446097, guid: b6bde238ccf09fa41b2fffd597d12ec7, type: 3}
+  weaponModel: {fileID: 919132149155446097, guid: 02c52c69c8565d841bc98b9a537243be, type: 3}
   damage: 1
-  damageRange: 8
-  damageDelay: 0.5
-  ammoCurrent: 0
-  ammoMax: 0
-  hitEffect: {fileID: 0}
-  shootSound: {fileID: 0}
+  damageRange: 100
+  damageDelay: 0.4
+  ammoCurrent: 25
+  ammoMax: 25
+  hitEffect: {fileID: 3249809072487309720, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
+  shootSound: {fileID: 8300000, guid: bbd53c35d4d4a8f449760ffa619f79af, type: 3}
   meleeSound: {fileID: 0}
-  shootVol: 0
+  shootVol: 0.25
   meleeVol: 0.5
