@@ -5,36 +5,44 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour, IDamage, IJumpPad
 {
+    [Header("----- Components -----")]
     [SerializeField] CharacterController characterController;
-    // Player Stats
+    [SerializeField] AudioSource aud;
+    [SerializeField] LayerMask ignoreLayer;
+
+    [Header("----- Player -----")]
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMultiplier;
-    // Jump related fields
+
+    [Header("----- Jump -----")]
     [SerializeField] float gravity;
     [SerializeField] float jumpStrength;
     [SerializeField] int maxJumps;
-    // Shooting related fields
-    [SerializeField] int shootDamage;
-    [SerializeField] float shootDelay;
-    [SerializeField] float shootRange;
 
-    // Grapple related fields
+    [Header("----- Weapons -----")]
+    [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
+    [SerializeField] GameObject weaponModel;
+    [SerializeField] int damage;
+    [SerializeField] float damageRange;
+    [SerializeField] float damageDelay;
+
+    [Header("----- Grapple -----")]
     [SerializeField] int grappleSpeed;
     [SerializeField] int grappleRange;
     [SerializeField] int grappleMaxConsecutiveUses;
-    // Layer for shooting raycast to ignore
-    [SerializeField] LayerMask ignoreLayer;
-    // WallRun Related Fields
+
+    [Header("----- Wall Run -----")]
     [SerializeField] int wallRunSpeed;
     [SerializeField] float maxWallRunTime;
-    // Grenade related fields
+
+    [Header("----- Grenade -----")]
     public GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
     public Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
     [SerializeField] float throwForce = 15f; // Throwing force of the grenade
     [SerializeField] float raycastDistance = 100f; // Maximum distance for the raycast
 
-    // Healing related fields
+    [Header("----- Healing -----")]
     [SerializeField] int healAmount; // Amount to heal per tick
     [SerializeField] float healInterval; // Interval between each healing tick
     [SerializeField] int healDuration; // Total duration for the healing effect
@@ -43,18 +51,23 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     Vector3 grappleDirection;
     Vector3 grappleHitPoint;
     Vector3 playerVelocity;
+
     int numJumps;
+    int HPOriginal;
+    int numGrapples;
+    int selectedWeapon;
+
     bool isShooting;
     bool isGrappling;
     bool isWallRunning;
     bool isCrouching;
-    Collider wallRunCollider;
+
     float initialWallRunAngle;
-    int HPOriginal;
-    int numGrapples;
     float heightOriginal;
     float origPosY;
     float origScaleY;
+
+    Collider wallRunCollider;
     Coroutine healingCoroutine;
 
     // Start is called before the first frame update
@@ -78,6 +91,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         WallRun();
         ThrowGrenade();
         Crouch();
+        if (!GameManager.instance.isPaused)
+        {
+            SelectWeapon();
+        }
     }
 
     void Movement()
@@ -235,17 +252,19 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         isShooting = true;
 
+        weaponList[selectedWeapon].ammoCurrent--;
+
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange, ~ignoreLayer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, damageRange, ~ignoreLayer))
         {
             IDamage damageTarget = hit.collider.GetComponent<IDamage>();
             if (hit.transform != transform && damageTarget != null)
             {
-                damageTarget.TakeDamage(shootDamage);
+                damageTarget.TakeDamage(damage);
             }
         }
 
-        yield return new WaitForSeconds(shootDelay);
+        yield return new WaitForSeconds(damageDelay);
         isShooting = false;
     }
 
@@ -364,5 +383,42 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             yield return new WaitForSeconds(healInterval);
             elapsedTime += healInterval;
         }
+    }
+
+    public void GetWeaponStats(WeaponStats weapon)
+    {
+        weaponList.Add(weapon);
+        selectedWeapon = weaponList.Count - 1;
+
+        damage = weapon.damage;
+        damageRange = weapon.damageRange;
+        damageDelay = weapon.damageDelay;
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterials = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
+    }
+
+    void SelectWeapon()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
+        {
+            selectedWeapon++;
+            ChangeWeapon();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
+        {
+            selectedWeapon--;
+            ChangeWeapon();
+        }
+    }
+
+    void ChangeWeapon()
+    {
+        damage = weaponList[selectedWeapon].damage;
+        damageRange = weaponList[selectedWeapon].damageRange;
+        damageRange = weaponList[selectedWeapon].damageRange;
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterials = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
     }
 }
