@@ -10,6 +10,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreLayer;
 
+    [Header("----- Sounds -----")]
+    [SerializeField] AudioClip[] audioSteps;
+    [Range(0, 1)] [SerializeField] float audioStepsVolume = 0.5f;
+    [SerializeField] AudioClip[] audioJumps;
+    [Range(0, 1)][SerializeField] float audioJumpsVolume = 0.5f;
+    [SerializeField] AudioClip[] audioHurt;
+    [Range(0, 1)][SerializeField] float audioHurtVolume = 0.5f;
+
     [Header("----- Player -----")]
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -61,6 +69,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isGrappling;
     bool isWallRunning;
     bool isCrouching;
+    bool isSprinting;
+    bool isPlayingStep;
+
 
     float initialWallRunAngle;
     float heightOriginal;
@@ -106,12 +117,19 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
             characterController.Move(movementDirection * speed * Time.deltaTime);
         }
+
+        if ((characterController.isGrounded && movementDirection.magnitude > 0.2f && !isPlayingStep) ||
+            !characterController.isGrounded && movementDirection.magnitude > 0.2f && isWallRunning && !isPlayingStep)
+        {
+            StartCoroutine(PlayStep());
+        }
     }
 
     void Jump()
     {
         if (Input.GetButtonDown("Jump") && numJumps < maxJumps && !isGrappling)
         {
+            aud.PlayOneShot(audioJumps[Random.Range(0, audioJumps.Length)], audioJumpsVolume);
             ++numJumps;
             playerVelocity.y = jumpStrength;
             if (isWallRunning)
@@ -135,11 +153,31 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMultiplier;
+            isSprinting = true;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMultiplier;
+            isSprinting = false;
         }
+    }
+
+    IEnumerator PlayStep()
+    {
+        isPlayingStep = true;
+
+        aud.PlayOneShot(audioSteps[Random.Range(0, audioSteps.Length)], audioStepsVolume);
+
+        if (!isSprinting)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        isPlayingStep = false;
     }
 
     void Shooting()
@@ -282,6 +320,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         HP -= amount;
         UpdatePlayerUI();
+        aud.PlayOneShot(audioHurt[Random.Range(0, audioHurt.Length)], audioHurtVolume);
         StartCoroutine(flashScreenDamage());
 
         if (HP <= 0)

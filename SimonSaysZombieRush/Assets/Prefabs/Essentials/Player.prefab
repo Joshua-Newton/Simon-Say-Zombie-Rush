@@ -336,6 +336,30 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
+  audioSteps:
+  - {fileID: 8300000, guid: 0459655a50d29174cb2ecf660ee9dc01, type: 3}
+  - {fileID: 8300000, guid: 4a8ea0d06b9edb1438c15d37e9dd23d6, type: 3}
+  - {fileID: 8300000, guid: 0ef7478a84d9f65419e51a9cb19aff0f, type: 3}
+  - {fileID: 8300000, guid: 41acc50494e6eca4ebab0ed82f6a7099, type: 3}
+  - {fileID: 8300000, guid: 2688ec0918c4bba4486e84085411f31a, type: 3}
+  - {fileID: 8300000, guid: 5015bae63a51ac24288feef8ab03842d, type: 3}
+  - {fileID: 8300000, guid: 7b13f86d713a0564aa98c3eec0854c6f, type: 3}
+  - {fileID: 8300000, guid: 92965a1002b5160449c55cad6e70d844, type: 3}
+  - {fileID: 8300000, guid: 3ced55a12345a0845936f65e0f00d60f, type: 3}
+  audioStepsVolume: 0.05
+  audioJumps:
+  - {fileID: 8300000, guid: 6068502a42c253f4ab403d184f921351, type: 3}
+  - {fileID: 8300000, guid: 09f477ebd087738439c6ace5ee2729af, type: 3}
+  - {fileID: 8300000, guid: 73a3841b3118a76429f7f527a1864dae, type: 3}
+  audioJumpsVolume: 0.5
+  audioHurt:
+  - {fileID: 8300000, guid: d60323bc98026d742b9a24e762209e7a, type: 3}
+  - {fileID: 8300000, guid: 2dca374e4fbad7a409d1a7ec9d56ed3a, type: 3}
+  - {fileID: 8300000, guid: a665e9030e78442498a3559008655520, type: 3}
+  - {fileID: 8300000, guid: d2f515d96ff6be6499149f550a1cf212, type: 3}
+  - {fileID: 8300000, guid: ef2d2769036d17d44bd0079248c78112, type: 3}
+  - {fileID: 8300000, guid: a959e649699338748a6ae6facdfc4f7d, type: 3}
+  audioHurtVolume: 0.5
   HP: 5
   speed: 8
   sprintMultiplier: 2
