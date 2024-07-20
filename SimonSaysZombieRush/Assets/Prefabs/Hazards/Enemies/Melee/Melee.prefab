@@ -1182,7 +1182,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8aa3d96b442a5e74f81e80980576dd20, type: 3}
   m_Controller: {fileID: 9100000, guid: ec87ad5888594584e9ac1754fb0bcec3, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -1219,9 +1219,9 @@ MonoBehaviour:
   isGrenadeEffectActive: 0
   sourceWaveSpawner: {fileID: 0}
   sourceRandomSpawner: {fileID: 0}
-  meleeHitTime: 0.5
+  meleeHitTime: 3
   meleeDelay: 1
-  meleeTriggerRange: 2.5
+  meleeTriggerRange: 1.5
   meleeHitBox: {fileID: 3451909040018256533}
 --- !u!1 &4218423480661246999
 GameObject:

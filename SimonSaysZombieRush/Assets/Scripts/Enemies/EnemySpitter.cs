@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpitter : EnemyAI
 {
+    [Header("----- Spitting -----")]
     [SerializeField] GameObject spitProjectile;
     [SerializeField] Transform shootPos;
     [SerializeField] float spitDelay;

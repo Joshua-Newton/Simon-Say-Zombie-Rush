@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyMelee : EnemyAI
 {
+    [Header("----- Melee Settings -----")]
     [SerializeField] float meleeHitTime;
-    [SerializeField] float meleeDelay;
     [SerializeField] float meleeTriggerRange;
     [SerializeField] Collider meleeHitBox;
     bool isMeleeing;
@@ -37,11 +37,19 @@ public class EnemyMelee : EnemyAI
     IEnumerator Melee()
     {
         isMeleeing = true;
-        meleeHitBox.enabled = true;
+        anim.SetTrigger("Attack");
         yield return new WaitForSeconds(meleeHitTime);
-        meleeHitBox.enabled = false;
-        yield return new WaitForSeconds(meleeDelay);
         isMeleeing = false;
+    }
+
+    public void EnableMeleeHitbox()
+    {
+        meleeHitBox.enabled = true;
+    }
+
+    public void DisableMeleeHitbox()
+    {
+        meleeHitBox.enabled = false;
     }
 
 }

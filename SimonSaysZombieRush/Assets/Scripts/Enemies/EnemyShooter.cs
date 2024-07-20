@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyShooter : EnemyAI
 {
+    [Header("----- Shooting -----")]
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
     [SerializeField] float shootDelay;

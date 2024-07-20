@@ -5,19 +5,35 @@ using UnityEngine.AI;
 
 public abstract class EnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] Renderer model;
-    [SerializeField] Color hitColor;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Animator anim;
-    [SerializeField] Transform headPos;
-    [SerializeField] int HP;
-    [SerializeField] int faceTargetSpeed;
-    [SerializeField] int viewAngle;
-    [SerializeField] int animSpeedTransition;
-    [SerializeField] int roamDistance;
-    [SerializeField] int roamTimer;
+    [Header("----- Model -----")]
+    [SerializeField] protected Renderer model;
+    [SerializeField] protected Color hitColor;
 
-    [SerializeField] bool alwaysChasePlayer;
+    [Header("----- Stats -----")]
+    [SerializeField] protected int HP;
+
+    [Header("----- Navigation -----")]
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected int faceTargetSpeed;
+    [SerializeField] protected bool alwaysChasePlayer;
+    [SerializeField] protected int roamDistance;
+    [SerializeField] protected int roamTimer;
+
+    [Header("----- Player Detection -----")]
+    [SerializeField] protected Transform headPos;
+    [SerializeField] protected int viewAngle;
+
+    [Header("----- Animation -----")]
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected int animSpeedTransition;
+
+    [Header("----- Grenade Effect -----")]
+    public bool isGrenadeEffectActive = false;
+
+    [Header("----- Spawn Source -----")]
+    // Replace with a system that take advantage of inheritance so that we only need one of these
+    public WaveSpawner sourceWaveSpawner;
+    public RandomSpawner sourceRandomSpawner;
 
     protected Color originalColor;
     protected bool isRoaming;
@@ -26,11 +42,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     protected float stoppingDistOrig;
     protected Vector3 playerDir;
     protected Vector3 startingPos;
-    public bool isGrenadeEffectActive = false;
 
-    // Replace with a system that take advantage of inheritance so that we only need one of these
-    public WaveSpawner sourceWaveSpawner;
-    public RandomSpawner sourceRandomSpawner;
 
     // Start is called before the first frame update
     protected virtual void Start()
