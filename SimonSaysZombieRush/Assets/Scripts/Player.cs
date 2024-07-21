@@ -301,6 +301,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             {
                 damageTarget.TakeDamage(damage);
             }
+            else
+            {
+                Instantiate(weaponList[selectedWeapon].hitEffect, hit.point, Quaternion.identity);
+            }
         }
 
         yield return new WaitForSeconds(damageDelay);
