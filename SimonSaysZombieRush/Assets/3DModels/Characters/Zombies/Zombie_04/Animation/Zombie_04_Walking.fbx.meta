@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 435f7dfc54cdc1a46a4896d436e461bd
+=======
+guid: 5f98db0253d950b4f9f949c820bae7bc
+>>>>>>> Zombie Meta Mesh
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
