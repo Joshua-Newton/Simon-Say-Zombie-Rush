@@ -89,6 +89,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         origPosY = transform.position.y;
         origScaleY = transform.localScale.y;
         UpdatePlayerUI();
+        SpawnPlayer();
     }
 
     // Update is called once per frame
