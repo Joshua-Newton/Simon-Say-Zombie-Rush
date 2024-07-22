@@ -9,6 +9,7 @@ TagManager:
   - Spit
   - Enemy
   - Player Spawn Pos
+  - WallRun
   layers:
   - Default
   - TransparentFX

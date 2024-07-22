@@ -22,9 +22,7 @@ public class WallRun : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.player.GetComponent<Player>().InitiateWallRun(wallRunTrigger);
-
-
+            GameManager.instance.player.GetComponent<Player>().InitiateWallRun();
         }
     }
 

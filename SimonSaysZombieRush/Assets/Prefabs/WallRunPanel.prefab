@@ -9,15 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2387350995824360959}
-  - component: {fileID: 3382862513477882230}
   - component: {fileID: 5350583859783302617}
   - component: {fileID: 4836931609862429855}
   - component: {fileID: 5335620336121278016}
-  - component: {fileID: 7270019726398957003}
   - component: {fileID: 6015212485289319971}
   m_Layer: 0
   m_Name: WallRunPanel
-  m_TagString: Untagged
+  m_TagString: WallRun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -37,20 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3382862513477882230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471343467831153949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70ad36ac4cfab854bbfcaf071883e85f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallRunTrigger: {fileID: 7270019726398957003}
-  wallRunCooldown: 1.5
 --- !u!33 &5350583859783302617
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -122,27 +106,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &7270019726398957003
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471343467831153949}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.0000001, z: 1.0000002}
-  m_Center: {x: 1, y: -0.00000011920929, z: 0.0000009536743}
 --- !u!54 &6015212485289319971
 Rigidbody:
   m_ObjectHideFlags: 0

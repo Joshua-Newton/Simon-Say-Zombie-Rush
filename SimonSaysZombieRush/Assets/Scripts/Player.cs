@@ -14,9 +14,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] AudioClip[] audioSteps;
     [Range(0, 1)] [SerializeField] float audioStepsVolume = 0.5f;
     [SerializeField] AudioClip[] audioJumps;
-    [Range(0, 1)][SerializeField] float audioJumpsVolume = 0.5f;
+    [Range(0, 1)] [SerializeField] float audioJumpsVolume = 0.5f;
     [SerializeField] AudioClip[] audioHurt;
-    [Range(0, 1)][SerializeField] float audioHurtVolume = 0.5f;
+    [Range(0, 1)] [SerializeField] float audioHurtVolume = 0.5f;
 
     [Header("----- Player -----")]
     [SerializeField] int HP;
@@ -43,6 +43,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [Header("----- Wall Run -----")]
     [SerializeField] int wallRunSpeed;
     [SerializeField] float maxWallRunTime;
+    [Range(0, 3)] [SerializeField] float wallRunDistance;
 
     [Header("----- Grenade -----")]
     public GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
@@ -71,7 +72,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isCrouching;
     bool isSprinting;
     bool isPlayingStep;
-
+    bool canWallRun = true;
 
     float initialWallRunAngle;
     float heightOriginal;
@@ -80,6 +81,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     Collider wallRunCollider;
     Coroutine healingCoroutine;
+
+    enum LastWallRun { none, left, right};
+    LastWallRun lastWallRun;
+
+    RaycastHit leftHit;
+    RaycastHit rightHit;
 
     // Start is called before the first frame update
     void Start()
@@ -111,13 +118,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     void Movement()
     {
-        if (!isWallRunning)
-        {
-            movementDirection = Input.GetAxis("Vertical") * transform.forward +
-                                Input.GetAxis("Horizontal") * transform.right;
 
-            characterController.Move(movementDirection * speed * Time.deltaTime);
-        }
+        movementDirection = Input.GetAxis("Vertical") * transform.forward +
+                            Input.GetAxis("Horizontal") * transform.right;
+
+        characterController.Move(movementDirection * speed * Time.deltaTime);
 
         if ((characterController.isGrounded && movementDirection.magnitude > 0.2f && !isPlayingStep) ||
             !characterController.isGrounded && movementDirection.magnitude > 0.2f && isWallRunning && !isPlayingStep)
@@ -132,10 +137,25 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         {
             aud.PlayOneShot(audioJumps[Random.Range(0, audioJumps.Length)], audioJumpsVolume);
             ++numJumps;
-            playerVelocity.y = jumpStrength;
             if (isWallRunning)
             {
+                if (lastWallRun == LastWallRun.left)
+                {
+                    Vector3 playerJumpVector = new Vector3(0, jumpStrength, 0);
+                    Vector3 jumpVelocity = (leftHit.normal.normalized + playerJumpVector.normalized) * jumpStrength;
+                    playerVelocity = jumpVelocity;
+                }
+                else if (lastWallRun == LastWallRun.right)
+                {
+                    Vector3 playerJumpVector = new Vector3(0, jumpStrength, 0);
+                    Vector3 jumpVelocity = (rightHit.normal.normalized + playerJumpVector.normalized) * jumpStrength;
+                    playerVelocity = jumpVelocity;
+                }
                 AbruptEndWallRun();
+            }
+            else
+            {
+                playerVelocity.y = jumpStrength;
             }
         }
 
@@ -191,33 +211,32 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     void WallRun()
     {
-        if (isWallRunning)
+        if(!isWallRunning && characterController.isGrounded)
         {
-            float angle = Vector3.Angle(Camera.main.transform.forward, wallRunCollider.transform.forward);
-
-            float input = Input.GetAxis("Vertical");
-            if (input <= 0)
-            {
-                AbruptEndWallRun();
-            }
-            else if (angle < 90 && initialWallRunAngle < 90)
-            {
-                movementDirection = input * wallRunCollider.transform.forward * Time.deltaTime;
-            }
-            else if (angle >= 90 && initialWallRunAngle >= 90)
-            {
-                movementDirection = input * -wallRunCollider.transform.forward * Time.deltaTime;
-            }
-            else
-            {
-                // Player changed look direction, so stop wall running
-                AbruptEndWallRun();
-            }
-            characterController.Move(movementDirection * wallRunSpeed);
+            lastWallRun = LastWallRun.none;
         }
-        else
+
+        bool wallOnLeft = Physics.Raycast(Camera.main.transform.position, -Camera.main.transform.right, out leftHit, wallRunDistance, ~ignoreLayer);
+        bool wallOnRight = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.right, out rightHit, wallRunDistance, ~ignoreLayer);
+        Debug.DrawRay(Camera.main.transform.position, -Camera.main.transform.right);
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.right);
+
+        if (isWallRunning && !wallOnLeft && !wallOnRight)
         {
-            wallRunCollider = null;
+            AbruptEndWallRun();
+        }
+        
+        // If there's a wall on the left... Or we jumped off a wall run on the right
+        if((!isWallRunning && wallOnLeft && leftHit.collider.CompareTag("WallRun")) && (canWallRun || lastWallRun != LastWallRun.left))
+        {
+            lastWallRun = LastWallRun.left;
+            InitiateWallRun();
+        }
+        // If there's a wall on the right... Or we jumped off a wall run on the left
+        if ((!isWallRunning && wallOnRight && rightHit.collider.CompareTag("WallRun")) && (canWallRun || lastWallRun != LastWallRun.right))
+        {
+            lastWallRun = LastWallRun.right;
+            InitiateWallRun();
         }
     }
 
@@ -281,6 +300,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         if (characterController.isGrounded)
         {
+            canWallRun = true;
             numJumps = 0;
             numGrapples = 0;
             playerVelocity = Vector3.zero;
@@ -382,11 +402,18 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         StartCoroutine(WallRunTimer());
     }
 
+    public void InitiateWallRun()
+    {
+        playerVelocity = Vector3.zero;
+        isWallRunning = true;
+        numJumps = 0; // Reset jumps so that the player can jump off the wall, otherwise they might run out of jumps while wall running
+        StartCoroutine(WallRunTimer());
+    }
+
     void EndWallRun()
     {
         isWallRunning = false;
-        wallRunCollider = null;
-        initialWallRunAngle = 0;
+        canWallRun = false;
     }
 
     void Crouch()
