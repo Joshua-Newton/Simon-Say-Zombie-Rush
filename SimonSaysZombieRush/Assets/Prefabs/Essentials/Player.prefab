@@ -381,9 +381,9 @@ MonoBehaviour:
   grenadeSpawnPoint: {fileID: 6587930494752407204}
   throwForce: 15
   raycastDistance: 100
-  healAmount: 0
-  healInterval: 0
-  healDuration: 0
+  healAmount: 1
+  healInterval: 2
+  healDelay: 2
 --- !u!143 &8113391142125545971
 CharacterController:
   m_ObjectHideFlags: 0

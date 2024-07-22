@@ -54,7 +54,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [Header("----- Healing -----")]
     [SerializeField] int healAmount; // Amount to heal per tick
     [SerializeField] float healInterval; // Interval between each healing tick
-    [SerializeField] int healDuration; // Total duration for the healing effect
+    [SerializeField] float healDelay; // Time after taking damage before healing
 
     Vector3 movementDirection;
     Vector3 grappleDirection;
@@ -72,6 +72,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isCrouching;
     bool isSprinting;
     bool isPlayingStep;
+
+    bool canHeal;
     bool canWallRun = true;
 
     float initialWallRunAngle;
@@ -81,6 +83,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     Collider wallRunCollider;
     Coroutine healingCoroutine;
+    Coroutine healingDelayCoroutine;
 
     enum LastWallRun { none, left, right};
     LastWallRun lastWallRun;
@@ -114,6 +117,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         {
             SelectWeapon();
         }
+        Heal();
     }
 
     void Movement()
@@ -354,12 +358,18 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
         else
         {
-            // Start healing over time after taking damage
-            if (healingCoroutine != null)
+            // The player has taken damage, so we can heal that damage. 
+            // Reset heal delay and stop healing, then start a delay that once it has passed we can start healing
+            if(healingDelayCoroutine != null)
+            {
+                StopCoroutine(healingDelayCoroutine);
+            }
+            if(healingCoroutine != null)
             {
                 StopCoroutine(healingCoroutine);
             }
-            healingCoroutine = StartCoroutine(HealOverTime());
+            canHeal = false;
+            healingDelayCoroutine = StartCoroutine(HealDelay());
         }
     }
 
@@ -437,24 +447,36 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     }
 
-    // Coroutine for healing over time
-    IEnumerator HealOverTime()
+    void Heal()
     {
-        float elapsedTime = 0;
-
-        while (elapsedTime < healDuration)
+        if (canHeal && HP < HPOriginal)
         {
-            HP += healAmount;
-            if (HP > HPOriginal)
-            {
-                HP = HPOriginal;
-                UpdatePlayerUI();
-                yield break;
-            }
-            UpdatePlayerUI();
-            yield return new WaitForSeconds(healInterval);
-            elapsedTime += healInterval;
+            healingCoroutine = StartCoroutine(HealHealth());
         }
+    }
+
+    IEnumerator HealHealth()
+    {
+        canHeal = false;
+        HP += healAmount;
+        if(HP > HPOriginal)
+        {
+            HP = HPOriginal;
+        }
+        UpdatePlayerUI();
+        yield return new WaitForSeconds(healInterval);
+
+        if(HP < HPOriginal)
+        {
+            canHeal = true;
+        }
+
+    }
+
+    IEnumerator HealDelay()
+    {
+        yield return new WaitForSeconds(healDelay);
+        canHeal = true;
     }
 
     public void GetWeaponStats(WeaponStats weapon)
