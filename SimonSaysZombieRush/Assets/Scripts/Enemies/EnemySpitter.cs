@@ -8,6 +8,7 @@ public class EnemySpitter : EnemyAI
     [SerializeField] GameObject spitProjectile;
     [SerializeField] Transform shootPos;
     [SerializeField] float spitDelay;
+    [Range(0.1f, 10)] [SerializeField] float spitSpeed;
     bool isSpitting;
 
 
@@ -33,7 +34,9 @@ public class EnemySpitter : EnemyAI
     IEnumerator Spit()
     {
         isSpitting = true;
-        Instantiate(spitProjectile, shootPos.position, transform.rotation);
+        GameObject projectile = Instantiate(spitProjectile, shootPos.position, transform.rotation);
+        Rigidbody spitRB = projectile.GetComponent<Rigidbody>();
+        spitRB.velocity = playerDir.normalized * spitSpeed;
         yield return new WaitForSeconds(spitDelay);
         isSpitting = false;
     }

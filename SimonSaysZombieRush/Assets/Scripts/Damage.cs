@@ -93,13 +93,18 @@ public class Damage : MonoBehaviour
 
     void SpawnAcid()
     {
+        GameObject acidInstance;
         RaycastHit hit;
         if(Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-            GameObject acidInstance = Instantiate(acid, hit.point, Quaternion.identity);
-            Destroy(acidInstance.gameObject, acidDuration);
+            acidInstance = Instantiate(acid, hit.point, Quaternion.identity);
+        }
+        else
+        {
+            acidInstance = Instantiate(acid, transform.position, Quaternion.identity);
         }
 
+        Destroy(acidInstance.gameObject, acidDuration);
         Destroy(gameObject);
     }
 

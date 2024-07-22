@@ -814,22 +814,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1714358392516758433}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
-  agent: {fileID: 9139125531226603734}
-  anim: {fileID: 6770012889016558053}
-  headPos: {fileID: 5776537315449240725}
   HP: 3
+  agent: {fileID: 9139125531226603734}
   faceTargetSpeed: 5
-  viewAngle: 90
-  animSpeedTransition: 5
+  alwaysChasePlayer: 0
   roamDistance: 10
   roamTimer: 1
-  alwaysChasePlayer: 0
+  headPos: {fileID: 5776537315449240725}
+  viewAngle: 90
+  anim: {fileID: 6770012889016558053}
+  animSpeedTransition: 5
   isGrenadeEffectActive: 0
   sourceWaveSpawner: {fileID: 0}
   sourceRandomSpawner: {fileID: 0}
   spitProjectile: {fileID: 5197720612276227783, guid: 22f4386bdf9e3fd4baaa3f72c1d683d8, type: 3}
   shootPos: {fileID: 4870959282976574419}
   spitDelay: 1
+  spitSpeed: 2
 --- !u!1 &2478016222801857313
 GameObject:
   m_ObjectHideFlags: 0
