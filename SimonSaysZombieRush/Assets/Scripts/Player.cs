@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour, IDamage, IJumpPad
 {
+    #region Serialized Fields
     [Header("----- Components -----")]
     [SerializeField] CharacterController characterController;
     [SerializeField] AudioSource aud;
@@ -46,8 +47,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [Range(0, 3)] [SerializeField] float wallRunDistance;
 
     [Header("----- Grenade -----")]
-    public GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
-    public Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
+    [SerializeField] GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
+    [SerializeField] Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
     [SerializeField] float throwForce = 15f; // Throwing force of the grenade
     [SerializeField] float raycastDistance = 100f; // Maximum distance for the raycast
 
@@ -55,7 +56,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] int healAmount; // Amount to heal per tick
     [SerializeField] float healInterval; // Interval between each healing tick
     [SerializeField] float healDelay; // Time after taking damage before healing
+    #endregion
 
+    #region Private fields
     Vector3 movementDirection;
     Vector3 grappleDirection;
     Vector3 grappleHitPoint;
@@ -85,12 +88,18 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     Coroutine healingCoroutine;
     Coroutine healingDelayCoroutine;
 
-    enum LastWallRun { none, left, right};
     LastWallRun lastWallRun;
 
     RaycastHit leftHit;
     RaycastHit rightHit;
+    #endregion
 
+    #region enum definitions
+    enum LastWallRun { none, left, right };
+
+    #endregion
+
+    #region Unity Methods
     // Start is called before the first frame update
     void Start()
     {
@@ -119,7 +128,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
         Heal();
     }
+    #endregion
 
+    #region Private Methods
     void Movement()
     {
 
@@ -185,24 +196,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             speed /= sprintMultiplier;
             isSprinting = false;
         }
-    }
-
-    IEnumerator PlayStep()
-    {
-        isPlayingStep = true;
-
-        aud.PlayOneShot(audioSteps[Random.Range(0, audioSteps.Length)], audioStepsVolume);
-
-        if (!isSprinting)
-        {
-            yield return new WaitForSeconds(0.5f);
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.3f);
-        }
-
-        isPlayingStep = false;
     }
 
     void Shooting()
@@ -311,6 +304,124 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
     }
 
+    void EndWallRun()
+    {
+        isWallRunning = false;
+        canWallRun = false;
+    }
+
+    void Crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            characterController.height = heightOriginal / 2;
+            transform.localScale = new Vector3(transform.localScale.x, origScaleY / 2, transform.localScale.z);
+            transform.position = new Vector3(transform.position.x, origPosY / 2, transform.position.z);
+            isCrouching = true;
+
+        }
+        else if (Input.GetButtonUp("Crouch") && isCrouching)
+        {
+            characterController.height = heightOriginal;
+            transform.localScale = new Vector3(transform.localScale.x, origScaleY, transform.localScale.z);
+            transform.position = new Vector3(transform.position.x, origPosY, transform.position.z);
+            isCrouching = false;
+        }
+
+
+    }
+
+    void Heal()
+    {
+        if (canHeal && HP < HPOriginal)
+        {
+            healingCoroutine = StartCoroutine(HealHealth());
+        }
+    }
+
+    void SelectWeapon()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
+        {
+            selectedWeapon++;
+            ChangeWeapon();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
+        {
+            selectedWeapon--;
+            ChangeWeapon();
+        }
+    }
+
+    void ChangeWeapon()
+    {
+        damage = weaponList[selectedWeapon].damage;
+        damageRange = weaponList[selectedWeapon].damageRange;
+        damageRange = weaponList[selectedWeapon].damageRange;
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterials = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
+    }
+
+    #endregion
+
+    #region IEnumerator Coroutines
+
+    IEnumerator flashScreenDamage()
+    {
+        GameManager.instance.dmgFlashBckgrnd.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        GameManager.instance.dmgFlashBckgrnd.SetActive(false);
+    }
+
+    IEnumerator WallRunTimer()
+    {
+        yield return new WaitForSeconds(maxWallRunTime);
+        EndWallRun();
+    }
+
+    IEnumerator PlayStep()
+    {
+        isPlayingStep = true;
+
+        aud.PlayOneShot(audioSteps[Random.Range(0, audioSteps.Length)], audioStepsVolume);
+
+        if (!isSprinting)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        isPlayingStep = false;
+    }
+
+    IEnumerator HealHealth()
+    {
+        canHeal = false;
+        HP += healAmount;
+        if (HP > HPOriginal)
+        {
+            HP = HPOriginal;
+        }
+        UpdatePlayerUI();
+        yield return new WaitForSeconds(healInterval);
+
+        if (HP < HPOriginal)
+        {
+            canHeal = true;
+        }
+
+    }
+
+    IEnumerator HealDelay()
+    {
+        yield return new WaitForSeconds(healDelay);
+        canHeal = true;
+    }
+
     IEnumerator Shoot()
     {
         isShooting = true;
@@ -336,6 +447,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         isShooting = false;
     }
 
+    #endregion
+
+    #region Public Functions
     public void SpawnPlayer()
     {
         HP = HPOriginal;
@@ -379,19 +493,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         playerVelocity.y = jumpPadStrength;
     }
 
-    IEnumerator flashScreenDamage()
-    {
-        GameManager.instance.dmgFlashBckgrnd.SetActive(true);
-        yield return new WaitForSeconds(0.05f);
-        GameManager.instance.dmgFlashBckgrnd.SetActive(false);
-    }
-
-    IEnumerator WallRunTimer()
-    {
-        yield return new WaitForSeconds(maxWallRunTime);
-        EndWallRun();
-    }
-
     public void AbruptEndWallRun()
     {
         StopCoroutine(WallRunTimer());
@@ -420,65 +521,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         StartCoroutine(WallRunTimer());
     }
 
-    void EndWallRun()
-    {
-        isWallRunning = false;
-        canWallRun = false;
-    }
-
-    void Crouch()
-    {
-        if (Input.GetButtonDown("Crouch"))
-        {
-            characterController.height = heightOriginal / 2;
-            transform.localScale = new Vector3(transform.localScale.x, origScaleY / 2, transform.localScale.z);
-            transform.position = new Vector3(transform.position.x, origPosY / 2, transform.position.z);
-            isCrouching = true;
-            
-        }
-        else if (Input.GetButtonUp("Crouch") && isCrouching)
-        {
-            characterController.height = heightOriginal;
-            transform.localScale = new Vector3(transform.localScale.x, origScaleY, transform.localScale.z);
-            transform.position = new Vector3(transform.position.x, origPosY, transform.position.z);
-            isCrouching = false;
-        }
-
-
-    }
-
-    void Heal()
-    {
-        if (canHeal && HP < HPOriginal)
-        {
-            healingCoroutine = StartCoroutine(HealHealth());
-        }
-    }
-
-    IEnumerator HealHealth()
-    {
-        canHeal = false;
-        HP += healAmount;
-        if(HP > HPOriginal)
-        {
-            HP = HPOriginal;
-        }
-        UpdatePlayerUI();
-        yield return new WaitForSeconds(healInterval);
-
-        if(HP < HPOriginal)
-        {
-            canHeal = true;
-        }
-
-    }
-
-    IEnumerator HealDelay()
-    {
-        yield return new WaitForSeconds(healDelay);
-        canHeal = true;
-    }
-
     public void GetWeaponStats(WeaponStats weapon)
     {
         weaponList.Add(weapon);
@@ -492,27 +534,5 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         weaponModel.GetComponent<MeshRenderer>().sharedMaterials = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
     }
 
-    void SelectWeapon()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
-        {
-            selectedWeapon++;
-            ChangeWeapon();
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
-        {
-            selectedWeapon--;
-            ChangeWeapon();
-        }
-    }
-
-    void ChangeWeapon()
-    {
-        damage = weaponList[selectedWeapon].damage;
-        damageRange = weaponList[selectedWeapon].damageRange;
-        damageRange = weaponList[selectedWeapon].damageRange;
-
-        weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        weaponModel.GetComponent<MeshRenderer>().sharedMaterials = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
-    }
+    #endregion
 }
