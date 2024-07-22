@@ -355,6 +355,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     void ChangeWeapon()
     {
+        UpdatePlayerUI();
+
         damage = weaponList[selectedWeapon].damage;
         damageRange = weaponList[selectedWeapon].damageRange;
         damageRange = weaponList[selectedWeapon].damageRange;
@@ -428,6 +430,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
         aud.PlayOneShot(weaponList[selectedWeapon].shootSound, weaponList[selectedWeapon].shootVol);
         weaponList[selectedWeapon].ammoCurrent--;
+        UpdatePlayerUI();
 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, damageRange, ~ignoreLayer))
@@ -502,6 +505,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     public void UpdatePlayerUI()
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
+        if (weaponList.Count > 0)
+        {   
+            GameManager.instance.ammoCurrent.text = weaponList[selectedWeapon].ammoCurrent.ToString("F0");
+            GameManager.instance.ammoMax.text = weaponList[selectedWeapon].ammoMax.ToString("F0");
+        }
     }
 
     public void InitiateWallRun(Collider wallTrigger)
@@ -525,6 +533,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         weaponList.Add(weapon);
         selectedWeapon = weaponList.Count - 1;
+
+        UpdatePlayerUI();
 
         damage = weapon.damage;
         damageRange = weapon.damageRange;
