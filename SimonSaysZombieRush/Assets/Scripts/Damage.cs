@@ -15,7 +15,7 @@ public class Damage : MonoBehaviour
     [SerializeField] float acidDuration;
     [SerializeField] bool repeatDamage;
     [SerializeField] float repeatDelay;
-
+    [SerializeField] bool damagePlayer = true;
 
     bool hasDamaged;
     bool isDamaging;
@@ -44,7 +44,10 @@ public class Damage : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.isTrigger || repeatDamage)
+        
+        if(other.isTrigger || 
+            repeatDamage ||
+            (!damagePlayer && other.CompareTag("Player")))
         {
             return;
         }

@@ -143,7 +143,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6587930494752407204}
-  m_LocalEulerAnglesHint: {x: -1.668, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -12.569, y: 14.55, z: 69.105}
 --- !u!33 &6302416489586075568
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -207,6 +207,9 @@ GameObject:
   - component: {fileID: 367535616766072315}
   - component: {fileID: 131784378898269623}
   - component: {fileID: 829109074985877577}
+  - component: {fileID: 4755565540965438917}
+  - component: {fileID: 7461095048124033081}
+  - component: {fileID: 5931582288798661208}
   m_Layer: 0
   m_Name: Melee Model
   m_TagString: Untagged
@@ -222,13 +225,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5309740781932959731}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0000003706576, y: -0.9238797, z: 0.38268325, w: 0.0000008948471}
-  m_LocalPosition: {x: 0.44, y: -0.481, z: 0.73}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalRotation: {x: -0, y: -0, z: 0.49403936, w: 0.8694396}
+  m_LocalPosition: {x: 0.127, y: -0.6, z: 0.659}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6587930494752407204}
-  m_LocalEulerAnglesHint: {x: 45, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 59.213}
 --- !u!33 &131784378898269623
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -282,6 +285,76 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4755565540965438917
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5309740781932959731}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.166017, y: 0.13232009, z: 0.1510269}
+  m_Center: {x: 0.5819918, y: 0.025256539, z: 0.008151457}
+--- !u!114 &7461095048124033081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5309740781932959731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3403d5b1a2710b4c958a6f436ac49e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  rb: {fileID: 5931582288798661208}
+  damageAmount: 1
+  speed: 0
+  destroyTime: 0
+  acid: {fileID: 0}
+  acidDuration: 0
+  repeatDamage: 0
+  repeatDelay: 0
+  damagePlayer: 0
+--- !u!54 &5931582288798661208
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5309740781932959731}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8713134058560455240
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +370,7 @@ GameObject:
   - component: {fileID: 1022089204400291504}
   - component: {fileID: 8704252476720124236}
   - component: {fileID: 7563562730603081131}
+  - component: {fileID: 1293715369504297785}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -337,6 +411,7 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
+  animator: {fileID: 1293715369504297785}
   audioSteps:
   - {fileID: 8300000, guid: 0459655a50d29174cb2ecf660ee9dc01, type: 3}
   - {fileID: 8300000, guid: 4a8ea0d06b9edb1438c15d37e9dd23d6, type: 3}
@@ -361,6 +436,49 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ef2d2769036d17d44bd0079248c78112, type: 3}
   - {fileID: 8300000, guid: a959e649699338748a6ae6facdfc4f7d, type: 3}
   audioHurtVolume: 0.5
+  audioMelee:
+  - {fileID: 8300000, guid: 4dd3709bc57e142658a6b53f15346ce6, type: 3}
+  - {fileID: 8300000, guid: 205be67afd3eb43a18e9e78c60a271f1, type: 3}
+  - {fileID: 8300000, guid: 4a05b5376c9ef43f4b35987fa28a8038, type: 3}
+  - {fileID: 8300000, guid: 09e22874557a04dd1834c6cc34e7afd7, type: 3}
+  - {fileID: 8300000, guid: f30387194582d48e5a0bfa2625403e7c, type: 3}
+  - {fileID: 8300000, guid: aab0b21cf44ea4d1881a3f5fe1bc4a27, type: 3}
+  - {fileID: 8300000, guid: 82068008eeda9472db932c326194a7b1, type: 3}
+  - {fileID: 8300000, guid: c6b3d1f33ab8b413790c3326aa7ed32b, type: 3}
+  - {fileID: 8300000, guid: 8800e692db52c4ad9bac9f80ff5a5f3e, type: 3}
+  - {fileID: 8300000, guid: 0a654a438c87e460da0eb0fa7953ddd5, type: 3}
+  - {fileID: 8300000, guid: 0d5300abead1941e28b47ac44f40eefd, type: 3}
+  - {fileID: 8300000, guid: 334441e4b58b24658beba204d6780d95, type: 3}
+  - {fileID: 8300000, guid: f7acb18e896784f2182444df3ca11eee, type: 3}
+  - {fileID: 8300000, guid: 7a58e3ff55f32406bb45f82692f0f7bc, type: 3}
+  - {fileID: 8300000, guid: 2669a0c9e73b14acebb612699f0200d1, type: 3}
+  - {fileID: 8300000, guid: 381ca1ae4d3de402f9cd9a47340578ea, type: 3}
+  - {fileID: 8300000, guid: 0067ad294270d49b29bc2cf4306579d4, type: 3}
+  - {fileID: 8300000, guid: 1876616f55e8b4783ad5c34165e44cfa, type: 3}
+  - {fileID: 8300000, guid: 6f69a1fa4f22445b6b7145d78e6b0583, type: 3}
+  - {fileID: 8300000, guid: 72861fa0b8d2f459a88b3ba67e9bdf9a, type: 3}
+  - {fileID: 8300000, guid: d641ffb49e8b04801956ae6d20cd0447, type: 3}
+  - {fileID: 8300000, guid: c33b58877ef714c259942f78e8f14187, type: 3}
+  - {fileID: 8300000, guid: 4fda5a4647ac9401c99bba5fa28a3170, type: 3}
+  - {fileID: 8300000, guid: 8e335994884604956af057cef8256101, type: 3}
+  - {fileID: 8300000, guid: d97e805d13d964000a1e08a79ca32e71, type: 3}
+  - {fileID: 8300000, guid: ca7d410e4eaae4ecab0b7c1c6aced209, type: 3}
+  - {fileID: 8300000, guid: 9bdc676e9596b4e0cb4d9cb13a60cd5e, type: 3}
+  - {fileID: 8300000, guid: 522c3fe9d479445c38b425662b271b27, type: 3}
+  - {fileID: 8300000, guid: 7f1f4a3c9cc174774afe09b5e51617ee, type: 3}
+  - {fileID: 8300000, guid: d1a4b34f9c9584a39919a6f1ddbeb03e, type: 3}
+  - {fileID: 8300000, guid: 77ff2fced608f43c5ac106fb90b82831, type: 3}
+  - {fileID: 8300000, guid: 9ee2ac716d3184e56b29a0379e02e99d, type: 3}
+  - {fileID: 8300000, guid: b1790fe4dfa754e96a722bad2b5aaff1, type: 3}
+  - {fileID: 8300000, guid: 4f301b6a262a949a884cf7ec822110d7, type: 3}
+  - {fileID: 8300000, guid: a3ec04e463d6f4fd08e733c910f5212c, type: 3}
+  - {fileID: 8300000, guid: 39441620e603b4c678d42756b7727c43, type: 3}
+  - {fileID: 8300000, guid: 0d69991da941247feaddcb79dd639714, type: 3}
+  - {fileID: 8300000, guid: f6a633d35bd6b4be1ac9ffbb354b5088, type: 3}
+  - {fileID: 8300000, guid: aae5858ce179c4146a965a329610f5d9, type: 3}
+  - {fileID: 8300000, guid: 5e14240ed39c243e598d813e91876436, type: 3}
+  - {fileID: 8300000, guid: 3304a2d00b0bc406db9e5374c75d9452, type: 3}
+  audioMeleeVolume: 0.05
   HP: 5
   speed: 8
   sprintMultiplier: 2
@@ -368,7 +486,8 @@ MonoBehaviour:
   jumpStrength: 10
   maxJumps: 2
   weaponList: []
-  weaponModel: {fileID: 3921498464701255060}
+  gunModel: {fileID: 3921498464701255060}
+  meleeModel: {fileID: 5309740781932959731}
   damage: 0
   damageRange: 0
   damageDelay: 0
@@ -662,3 +781,24 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!95 &1293715369504297785
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713134058560455240}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 97fee126991118c499563da3437b4366, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86eb52872ad28a045a7ba979ee2acd1e, type: 3}
   m_Name: Melee - Knife
   m_EditorClassIdentifier: 
-  weaponModel: {fileID: 919132149155446097, guid: 8d3cc89fc747b2e4bbd56557c7c7f0dd, type: 3}
+  weaponModel: {fileID: 919132149155446097, guid: f5e2e12ed7b1125439c7577a180bed52, type: 3}
+  weaponType: 1
   damage: 1
   damageRange: 3
   damageDelay: 0.5
@@ -20,6 +21,4 @@ MonoBehaviour:
   ammoMax: 0
   hitEffect: {fileID: 0}
   shootSound: {fileID: 0}
-  meleeSound: {fileID: 0}
   shootVol: 0.25
-  meleeVol: 0.5
