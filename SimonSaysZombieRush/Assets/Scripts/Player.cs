@@ -453,6 +453,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     #endregion
 
     #region Public Functions
+
+    public void ChangeHP(int HealthAmount)
+    {
+        HP += HealthAmount;
+        if (HP > HPOriginal)
+        {
+            HP = HPOriginal;
+        }
+        UpdatePlayerUI();
+    }
+
     public void SpawnPlayer()
     {
         HP = HPOriginal;
