@@ -13,6 +13,7 @@ public class HealthPickup : PickupBase
         {
             GameManager.instance.playerScript.ChangeHP(healthAmount);
         }
+        Destroy(gameObject);
        
     }
 
