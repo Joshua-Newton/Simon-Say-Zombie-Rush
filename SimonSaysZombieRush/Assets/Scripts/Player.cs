@@ -551,7 +551,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     public void GetWeaponStats(WeaponStats weapon)
     {
+        if (weaponList.Contains(weapon))
+        {
+            return;
+        }
+        else
+        {
         weaponList.Add(weapon);
+        }
         selectedWeapon = weaponList.Count - 1;
 
         UpdatePlayerUI();
