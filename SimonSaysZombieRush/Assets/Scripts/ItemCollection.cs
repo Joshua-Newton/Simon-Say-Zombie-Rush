@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemCollection : MonoBehaviour
+public class ItemCollection : PickupBase
 {
     [SerializeField] Sprite itemSprite;
 

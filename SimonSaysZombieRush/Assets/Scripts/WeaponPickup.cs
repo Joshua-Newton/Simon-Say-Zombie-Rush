@@ -1,17 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class WeaponPickup : MonoBehaviour
+public class WeaponPickup : PickupBase
 {
     [SerializeField] WeaponStats weapon;
-    [SerializeField] float spinSpeed;
-
-    private void Update()
-    {
-        Quaternion rotation = Quaternion.LookRotation(-transform.right);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, spinSpeed * Time.deltaTime);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
