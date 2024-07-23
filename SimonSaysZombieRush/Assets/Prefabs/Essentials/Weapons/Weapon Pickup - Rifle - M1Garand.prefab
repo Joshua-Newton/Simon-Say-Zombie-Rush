@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: 78c9b827c64bcf9428d239addac8e3c1, type: 2}
+  spinSpeed: 1
 --- !u!33 &6074499304797775135
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -5,6 +5,13 @@ using UnityEngine;
 public class WeaponPickup : MonoBehaviour
 {
     [SerializeField] WeaponStats weapon;
+    [SerializeField] float spinSpeed;
+
+    private void Update()
+    {
+        Quaternion rotation = Quaternion.LookRotation(-transform.right);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, spinSpeed * Time.deltaTime);
+    }
 
     private void OnTriggerEnter(Collider other)
     {

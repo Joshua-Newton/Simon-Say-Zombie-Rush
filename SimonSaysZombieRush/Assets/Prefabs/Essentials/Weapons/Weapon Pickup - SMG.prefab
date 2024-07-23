@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4014676716666281596}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0014419556, y: -0, z: -0, w: 0.999999}
+  m_LocalRotation: {x: 0.0014398852, y: 0, z: 0, w: 0.999999}
   m_LocalPosition: {x: 0.119, y: 0.7865851, z: -132.923}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: f9689d57b3d84c64c849ebf3d112324a, type: 2}
+  spinSpeed: 1
 --- !u!135 &8901623927414807791
 SphereCollider:
   m_ObjectHideFlags: 0
