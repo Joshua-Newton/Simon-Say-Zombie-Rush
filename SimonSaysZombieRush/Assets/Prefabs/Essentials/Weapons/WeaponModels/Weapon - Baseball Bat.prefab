@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8638220084512573562
+--- !u!1 &5215666596793111177
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,61 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4562221889629777528}
-  - component: {fileID: 8215087497062456111}
-  - component: {fileID: 2333182870679227439}
-  - component: {fileID: 8572032668547442649}
-  - component: {fileID: 726082704323434694}
+  - component: {fileID: 887048399049536507}
+  - component: {fileID: 8494836121645388126}
+  - component: {fileID: 1730024993442157184}
+  - component: {fileID: 1664997257897408206}
   m_Layer: 0
-  m_Name: Weapon Pickup - Bat
+  m_Name: Weapon - Baseball Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4562221889629777528
+--- !u!4 &887048399049536507
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638220084512573562}
+  m_GameObject: {fileID: 5215666596793111177}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.5, y: -0.08609279, z: 4.39}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalRotation: {x: -0.49129292, y: -0.5085581, z: 0.49148965, w: 0.50836784}
+  m_LocalPosition: {x: -0, y: 4.656613e-10, z: -0.000000059604645}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8215087497062456111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638220084512573562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f5b2d9e7221bf0428ae472375fa0b87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: 71f3678d36241fa47bb1838d00615bbe, type: 2}
---- !u!33 &2333182870679227439
+--- !u!33 &8494836121645388126
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638220084512573562}
-  m_Mesh: {fileID: 4073898957555667274, guid: b6bde238ccf09fa41b2fffd597d12ec7, type: 3}
---- !u!23 &8572032668547442649
+  m_GameObject: {fileID: 5215666596793111177}
+  m_Mesh: {fileID: 4073898957555667274, guid: af2ab258c8f518146a86784d02d984e4, type: 3}
+--- !u!23 &1730024993442157184
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638220084512573562}
+  m_GameObject: {fileID: 5215666596793111177}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -76,9 +62,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: b6bde238ccf09fa41b2fffd597d12ec7, type: 3}
-  - {fileID: 8368722655750445499, guid: b6bde238ccf09fa41b2fffd597d12ec7, type: 3}
-  - {fileID: 6034957751646507721, guid: b6bde238ccf09fa41b2fffd597d12ec7, type: 3}
+  - {fileID: 8748892135801146194, guid: af2ab258c8f518146a86784d02d984e4, type: 3}
+  - {fileID: 8368722655750445499, guid: af2ab258c8f518146a86784d02d984e4, type: 3}
+  - {fileID: 6034957751646507721, guid: af2ab258c8f518146a86784d02d984e4, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,13 +86,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &726082704323434694
-SphereCollider:
+--- !u!65 &1664997257897408206
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638220084512573562}
+  m_GameObject: {fileID: 5215666596793111177}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -117,7 +103,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 58.300854
-  m_Center: {x: 0.02407074, y: 15.22529, z: 0}
+  m_Size: {x: 1.1660172, y: 0.1323201, z: 0.15102693}
+  m_Center: {x: 0.58199185, y: 0.02525654, z: 0.008151464}

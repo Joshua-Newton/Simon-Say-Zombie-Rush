@@ -6,7 +6,10 @@ using UnityEngine;
 
 public class WeaponStats : ScriptableObject
 {
+    public enum WeaponType { Gun, Melee, Grenade }
+
     public GameObject weaponModel;
+    public WeaponType weaponType;
     public int damage;
     public int damageRange;
     public float damageDelay;
@@ -15,8 +18,6 @@ public class WeaponStats : ScriptableObject
 
     public ParticleSystem hitEffect;
     public AudioClip shootSound;
-    public AudioClip meleeSound;
     public float shootVol;
-    public float meleeVol;
 
 }

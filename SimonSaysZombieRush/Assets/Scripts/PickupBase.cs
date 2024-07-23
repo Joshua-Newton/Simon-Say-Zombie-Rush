@@ -13,7 +13,7 @@ public class PickupBase : MonoBehaviour
 
     protected void RotatePickup()
     {
-        Quaternion rotation = Quaternion.LookRotation(-transform.right);
+        Quaternion rotation = Quaternion.LookRotation(transform.right);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, spinSpeed * Time.deltaTime);
     }
 }
