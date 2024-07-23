@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] int grappleSpeed;
     [SerializeField] int grappleRange;
     [SerializeField] int grappleMaxConsecutiveUses;
+    [SerializeField] LineRenderer grappleRenderer;
 
     [Header("----- Wall Run -----")]
     [SerializeField] int wallRunSpeed;
@@ -241,11 +243,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         // Use GetButtonDown and GetButtonUp in conjunction with a bool to set grapple target, but allow player to look away while grappling
         // Then use the bool assigned to actually move the player. If they let go of the grapple button, they stop grappling
-        if (Input.GetButtonDown("Fire2") && numGrapples < grappleMaxConsecutiveUses)
+        if (Input.GetButtonDown("Fire2") && !GameManager.instance.isPaused && numGrapples < grappleMaxConsecutiveUses)
         {
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grappleRange, ~ignoreLayer))
+            if (!GameManager.instance.isPaused && Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grappleRange, ~ignoreLayer))
             {
+                grappleRenderer.enabled = true;
                 ++numGrapples;
                 grappleHitPoint = hit.point;
                 grappleDirection = grappleHitPoint - transform.position;
@@ -259,8 +262,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
         if (isGrappling)
         {
+            grappleRenderer.SetPosition(0, transform.position);
+            grappleRenderer.SetPosition(1, grappleHitPoint);
             grappleDirection = (grappleHitPoint - transform.position).normalized;
             characterController.Move(grappleDirection * grappleSpeed * Time.deltaTime);
+        }
+        else
+        {
+            grappleRenderer.enabled = false;
         }
     }
 
