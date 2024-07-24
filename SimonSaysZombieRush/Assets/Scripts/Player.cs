@@ -387,25 +387,19 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
         if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun)
         {
-            ToggleWeaponType();
+            gunModel.SetActive(true);
+            meleeModel.SetActive(false);
             gunModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
             gunModel.GetComponent<MeshRenderer>().sharedMaterials = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
         }
         else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee)
         {
-            ToggleWeaponType();
+            gunModel.SetActive(false);
+            meleeModel.SetActive(true);
             meleeModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
             meleeModel.GetComponent<MeshRenderer>().sharedMaterials = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
         }
     }
-
-    void ToggleWeaponType()
-    {
-        meleeModel.SetActive(!meleeModel.activeInHierarchy);
-        gunModel.SetActive(!gunModel.activeInHierarchy);
-
-    }
-
 
     void Melee()
     {
