@@ -101,7 +101,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     IEnumerator Groan()
     {
         isSpeaking = true;
-        Debug.Log("Groan from: " + gameObject.name);
         audSource.PlayOneShot(groanSounds[Random.Range(0, groanSounds.Count())], groanVolume);
         yield return new WaitForSeconds(minTimeBetweenSounds + Random.Range(-timeVariance, timeVariance));
         isSpeaking = false;

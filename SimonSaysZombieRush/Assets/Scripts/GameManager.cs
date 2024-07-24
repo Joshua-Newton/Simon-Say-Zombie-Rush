@@ -24,7 +24,9 @@ public abstract class GameManager : MonoBehaviour
     public Image playerHPBar;
     public GameObject dmgFlashBckgrnd;
     public GameObject player;
+    public GameObject zombie;
     public Player playerScript;
+    public EnemyAI zombieScript;
     public bool isPaused;
     public Collider playerCollider;
     public GameObject playerSpawnPos;
@@ -49,7 +51,9 @@ public abstract class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
+        zombie = GameObject.FindWithTag("Enemy");
         playerScript = player.GetComponent<Player>();
+        zombieScript = zombie.GetComponent<EnemyAI>();
         playerCollider = player.GetComponent<Collider>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
 
