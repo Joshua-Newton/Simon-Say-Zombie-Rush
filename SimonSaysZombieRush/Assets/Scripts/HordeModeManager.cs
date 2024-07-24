@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HordeModeManager : GameManager
 {
@@ -26,6 +28,7 @@ public class HordeModeManager : GameManager
 
     public void Start()
     {
+        
         StartCoroutine(StartWave());
     }
 
@@ -38,12 +41,14 @@ public class HordeModeManager : GameManager
     {
         menuActive = menuLose;
         PauseAndOpenActiveMenu();
+        SaveStats();
     }
 
     public override void WinGame()
     {
         menuActive = menuWin;
         PauseAndOpenActiveMenu();
+        SaveStats();
     }
 
     public void StartNextWave()
@@ -88,4 +93,45 @@ public class HordeModeManager : GameManager
         enemySpawner.maxSpawns = Mathf.Min(enemiesInWave, maxEnemiesInWave);
         enemySpawner.StartSpawning();
     }
+
+    void SaveStats()
+    {
+        HordeStats currentStats = GetStats();
+        if(currentStats != null)
+        {
+            if (currentWave > currentStats.HighestWave)
+            {
+                UpdateStats(currentStats);
+            }
+        }
+        else
+        {
+            HordeStats newStats = ScriptableObject.CreateInstance<HordeStats>();
+            UpdateStats(newStats);
+            AssetDatabase.CreateAsset(newStats, savePath);
+        }
+    }
+
+    HordeStats GetStats()
+    {
+        string[] assetGuids = AssetDatabase.FindAssets(statsAssetName);
+        if (assetGuids == null || assetGuids.Length <= 0)
+        {
+            return null;
+        }
+
+        string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
+        return AssetDatabase.LoadAssetAtPath<HordeStats>(path);
+    }
+
+    public override void UpdateStats(LevelStats stats)
+    {
+        if (stats.GetType() == typeof(HordeStats))
+        {
+            ((HordeStats)stats).HighestWave = currentWave;
+        }
+        stats.EnemiesKilled = 0; // TODO: Implement enemies killed tracker and assign here
+        stats.TimeUsed = 0; // TODO: Implement time tracker
+    }
+
 }

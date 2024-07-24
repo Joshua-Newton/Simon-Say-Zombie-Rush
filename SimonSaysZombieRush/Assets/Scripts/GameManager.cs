@@ -19,6 +19,7 @@ public abstract class GameManager : MonoBehaviour
     [SerializeField] protected TMP_Text enemyCountText;
     [SerializeField] protected TMP_Text scoreText; // TextMeshProUGUI to display the score
     [SerializeField] protected TMP_Text scoreTextFinalLevel; // TextMeshProUGUI to display the score
+    [SerializeField] protected GameObject HighScoreObject;
 
     public Image playerHPBar;
     public GameObject dmgFlashBckgrnd;
@@ -38,6 +39,12 @@ public abstract class GameManager : MonoBehaviour
     protected string nextScenePath;
     protected bool lastLevel;
 
+
+    protected string savePath;
+    protected string statsAssetName;
+    protected string saveFolder = "Assets/GameplayStats/";
+
+
     protected virtual void Awake()
     {
         instance = this;
@@ -56,6 +63,9 @@ public abstract class GameManager : MonoBehaviour
         {
             lastLevel = true;
         }
+
+        statsAssetName = SceneManager.GetActiveScene().name + ".asset";
+        savePath = saveFolder + statsAssetName;
     }
 
     void Update()
@@ -109,12 +119,12 @@ public abstract class GameManager : MonoBehaviour
 
     public abstract void CollectItem(GameObject item);
 
+    public abstract void UpdateStats(LevelStats stats);
+
     protected void PauseAndOpenActiveMenu()
     {
         StatePause();
         menuActive.SetActive(true);
     }
-
-    // Initialize the possible items list based on objects with the tag "Pickup" in the scene
    
 }

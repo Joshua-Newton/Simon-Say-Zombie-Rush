@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -144,13 +145,13 @@ public class TimeTrialModeManager : GameManager
                 return;
             }
         }
-        
+
         if (possibleItems.Count == 0)
         {
             StartCoroutine(ShowResultAndWin("All items collected"));
             UpdateScore(100);
         }
-        else if(playerSequence.Count == commandSequence.Count)
+        else if (playerSequence.Count == commandSequence.Count)
         {
             // Keep the image if the sequence is correct but not all items are collected yet
             StartCoroutine(ShowResult("Correct sequence!"));
@@ -220,5 +221,47 @@ public class TimeTrialModeManager : GameManager
             menuActive = menuWin;
         }
         PauseAndOpenActiveMenu();
+        SaveStats();
+    }
+
+    void SaveStats()
+    {
+        TimeTrialStats currentStats = GetStats();
+        if (currentStats != null)
+        {
+            if (remainingTime > currentStats.TimeUsed)
+            {
+                UpdateStats(currentStats);
+            }
+        }
+        else
+        {
+            TimeTrialStats newStats = ScriptableObject.CreateInstance<TimeTrialStats>();
+            UpdateStats(newStats);
+            AssetDatabase.CreateAsset(newStats, savePath);
+        }
+    }
+
+    TimeTrialStats GetStats()
+    {
+        string[] assetGuids = AssetDatabase.FindAssets(statsAssetName);
+        if (assetGuids == null || assetGuids.Length <= 0)
+        {
+            return null;
+        }
+
+        string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
+        return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
+    }
+
+    public override void UpdateStats(LevelStats stats)
+    {
+        if (stats.GetType() == typeof(TimeTrialStats))
+        {
+            ((TimeTrialStats)stats).BestTime = remainingTime;
+            ((TimeTrialStats)stats).BestScore = score;
+        }
+        stats.EnemiesKilled = 0; // TODO: Implement enemies killed tracker and assign here
+        stats.TimeUsed = 0; // TODO: Implement time tracker    }
     }
 }
