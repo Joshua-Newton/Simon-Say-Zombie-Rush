@@ -384,6 +384,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
         damage = weaponList[selectedWeapon].damage;
         damageRange = weaponList[selectedWeapon].damageRange;
+        damageDelay = weaponList[selectedWeapon].damageDelay;
 
         if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun)
         {
@@ -605,26 +606,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
         selectedWeapon = weaponList.Count - 1;
 
-        UpdatePlayerUI();
-
-        damage = weapon.damage;
-        damageRange = weapon.damageRange;
-        damageDelay = weapon.damageDelay;
-
-        if(weapon.weaponType == WeaponStats.WeaponType.Gun)
-        {
-            gunModel.SetActive(true);
-            meleeModel.SetActive(false);
-            gunModel.GetComponent<MeshFilter>().sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
-            gunModel.GetComponent<MeshRenderer>().sharedMaterials = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
-        }
-        else if(weapon.weaponType == WeaponStats.WeaponType.Melee)
-        {
-            gunModel.SetActive(false);
-            meleeModel.SetActive(true);
-            meleeModel.GetComponent<MeshFilter>().sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
-            meleeModel.GetComponent<MeshRenderer>().sharedMaterials = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
-        }
+        ChangeWeapon();
     }
 
     public void MeleeOff()
