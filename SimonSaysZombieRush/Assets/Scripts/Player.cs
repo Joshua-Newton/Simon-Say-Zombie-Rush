@@ -214,7 +214,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     void Shooting()
     {
-        if (Input.GetButton("Fire1") && weaponList.Count > 0 && weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun && !isShooting && !GameManager.instance.isPaused)
+        if (Input.GetButton("Fire1") && weaponList.Count > 0 && weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun && weaponList[selectedWeapon].ammoCurrent > 0 && !isShooting && !GameManager.instance.isPaused)
         {
             StartCoroutine(Shoot());
         }
