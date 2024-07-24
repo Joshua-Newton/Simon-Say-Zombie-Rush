@@ -68,7 +68,8 @@ public class TimeTrialModeManager : GameManager
     // Display the command sequence
     void DisplayCommand()
     {
-        commandDisplay.text = string.Join(", ", commandSequence);
+        var commandNames = commandSequence.Select(item => item.name);
+        commandDisplay.text = string.Join(", ", commandNames);
     }
 
     void DisplayImageCommand()

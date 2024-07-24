@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 2412314427357873577}
   - component: {fileID: 110017994501063228}
   - component: {fileID: 771151189827037977}
-  - component: {fileID: 6238975827758186873}
+  - component: {fileID: -7221989427737039676}
   - component: {fileID: 2309711775435805668}
   - component: {fileID: 5167653271739470765}
+  - component: {fileID: 7331614305922245156}
   m_Layer: 0
-  m_Name: Gravity Grenade
+  m_Name: Frag Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +87,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6238975827758186873
+--- !u!114 &-7221989427737039676
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,17 +96,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8517655606910467015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 386c45d151368504f802dd2bed2a8b6d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ed0844ae612d7e4fb751057fe6bd486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   explosionDelay: 3
-  explosionRadius: 10
-  explosionForce: 10
-  attractionDuration: 5
-  attractionStrength: 10
-  floatHeight: 3
-  floatDuration: 0.5
-  elapsedTime: 5
+  explosionRadius: 5
+  explosionForce: 700
+  shrapnelCount: 50
+  damage: 3
 --- !u!135 &2309711775435805668
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -154,3 +152,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &7331614305922245156
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8517655606910467015}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
