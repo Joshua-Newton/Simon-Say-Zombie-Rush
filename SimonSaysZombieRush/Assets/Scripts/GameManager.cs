@@ -98,6 +98,11 @@ public abstract class GameManager : MonoBehaviour
         enemyCountText.text = enemyCount.ToString("F0");
     }
 
+    public int GetEnemyCount()
+    {
+        return enemyCount;
+    }
+
     public abstract void LoseGame();
 
     public abstract void WinGame();

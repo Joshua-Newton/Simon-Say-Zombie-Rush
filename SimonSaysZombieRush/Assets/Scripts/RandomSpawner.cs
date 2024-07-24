@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RandomSpawner : MonoBehaviour
 {
@@ -10,21 +11,29 @@ public class RandomSpawner : MonoBehaviour
     [SerializeField] int numToSpawnSimultaneously; // How many to spawn at once
     [SerializeField] public int maxAlive; // Max number of spawns on the map at once
     [SerializeField] public int maxSpawns; // The Max number that this spawner will spawn before being reset
+    [SerializeField] bool increaseEnemySpeedWithWaves;
+    [Range(0, 1)] [SerializeField] float speedIncreasePerWave = 0.5f;
+    [Range(1, 10)][SerializeField] float maxSpeedMultiplier = 5; // how much faster can each enemy go
 
-    int numAlive; // The number currently alive
     int numSpawned; // The number this spawner has spawned
     int numKilled; // The number of enemies killed from this spawner
     bool isSpawning; // Whether this spawner will start spawning objects
+    bool isOnCooldown; // Whether the spawner is cooling down from the spawning the last batch of enemies
 
     // Spawns a single random object at a random transform from the spawner's arrays
     private void SpawnSingle()
     {
         if(CanSpawn())
         {
-            IncrementEnemyNumbers();
             GameObject objectToSpawn = possibleSpawnObjects[Random.Range(0, possibleSpawnObjects.Length)];
             Transform transformToSpawnAt = possibleSpawnTransforms[Random.Range(0, possibleSpawnTransforms.Length)];
-            SetEnemySpawner(Instantiate(objectToSpawn, transformToSpawnAt.position, transformToSpawnAt.rotation));
+            GameObject spawnedObject = Instantiate(objectToSpawn, transformToSpawnAt.position, transformToSpawnAt.rotation);
+            IncrementEnemyNumbers();
+            SetEnemySpawner(spawnedObject);
+            if (increaseEnemySpeedWithWaves)
+            {
+                IncreaseEnemySpeed(spawnedObject);
+            }
         }
     }
 
@@ -51,7 +60,7 @@ public class RandomSpawner : MonoBehaviour
 
     private bool CanSpawn()
     {
-        return numAlive < maxAlive && numSpawned < maxSpawns;
+        return HordeModeManager.instance.GetEnemyCount() < maxAlive && numSpawned < maxSpawns;
     }
 
     public void StartSpawning()
@@ -66,7 +75,7 @@ public class RandomSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (isSpawning)
+        if (isSpawning && !isOnCooldown)
         {
             StartCoroutine(Spawn());
         }
@@ -81,24 +90,32 @@ public class RandomSpawner : MonoBehaviour
         }
     }
 
+    private void IncreaseEnemySpeed(GameObject targetObject)
+    {
+        NavMeshAgent enemyAgent = targetObject.GetComponent<NavMeshAgent>();
+        if(enemyAgent != null)
+        {
+            float maxMultiplier = Mathf.Min(maxSpeedMultiplier, 1 + ((float)HordeModeManager.instance.GetCurrentWave() * speedIncreasePerWave));
+            enemyAgent.speed *= Random.Range(1, maxMultiplier);
+        }
+    }
+
     private void IncrementEnemyNumbers()
     {
-        ++numAlive;
         ++numSpawned;
     }
 
     public void ResetSpawner()
     {
-        numAlive = 0;
         numSpawned = 0;
         numKilled = 0;
         isSpawning = false;
+        //isOnCooldown = false;
     }
 
     public void EnemyKilled()
     {
         ++numKilled;
-        --numAlive;
         if(numKilled >= maxSpawns && HordeModeManager.instance)
         {
             HordeModeManager.instance.StartNextWave();
@@ -108,6 +125,7 @@ public class RandomSpawner : MonoBehaviour
 
     IEnumerator Spawn()
     {
+        isOnCooldown = true;
         for(int i = 0; i < numToSpawnSimultaneously; i++)
         {
             SpawnSingle();
@@ -117,6 +135,7 @@ public class RandomSpawner : MonoBehaviour
             StopSpawning();
         }
         yield return new WaitForSeconds(spawnCooldown);
+        isOnCooldown = false;
     }
 
 }

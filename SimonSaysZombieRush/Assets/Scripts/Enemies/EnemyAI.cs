@@ -78,7 +78,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         if (alwaysChasePlayer)
         {
             Move();
-            Attack();
+            if (playerInRange && angleToPlayer <= viewAngle)
+            {
+                Attack();
+            }
         }
         else if (!playerInRange || (playerInRange && canSeePlayer()))
         {
@@ -173,11 +176,14 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     public void TakeDamage(int amount)
     {
         HP -= amount;
-        agent.SetDestination(GameManager.instance.player.transform.position);
         StartCoroutine(FlashDamage());
         if (HP <= 0)
         {
             Die();
+        }
+        if (agent.isOnNavMesh)
+        {
+            agent.SetDestination(GameManager.instance.player.transform.position);
         }
     }
 

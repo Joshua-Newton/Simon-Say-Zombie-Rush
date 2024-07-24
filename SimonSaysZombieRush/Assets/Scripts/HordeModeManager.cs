@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HordeModeManager : GameManager
@@ -9,10 +10,13 @@ public class HordeModeManager : GameManager
     [SerializeField] int totalWaves;
     [SerializeField] int secondsBetweenWaves;
     [SerializeField] RandomSpawner enemySpawner;
+    [SerializeField] TMP_Text waveCountText;
+    [Range(1, 100)] [SerializeField] int maxEnemiesInWave = 18;
+    [Range(1, 20)] [SerializeField] int enemyMultiplier = 5;
 
     int currentWave;
     int enemiesInWave;
-    int enemiesKilled;
+
     protected override void Awake()
     {
         base.Awake();
@@ -47,10 +51,21 @@ public class HordeModeManager : GameManager
         StartCoroutine(StartWave());
     }
 
+    public int GetCurrentWave()
+    {
+        return currentWave;
+    }
+
+    public void UpdateWaveCount()
+    {
+        waveCountText.text = currentWave.ToString("F0");
+    }
+
     IEnumerator StartWave()
     {
         ++currentWave;
-        enemiesInWave = currentWave; // TODO: Replace with a more complex system. For now just have the player kill as many enemies as are in the wave
+        UpdateWaveCount();
+        enemiesInWave = currentWave * enemyMultiplier; // TODO: Replace with a more complex system. For now just have the player kill as many enemies as are in the wave
         yield return new WaitForSeconds(secondsBetweenWaves);
 
         if (!infiniteWaves && currentWave <= totalWaves)
@@ -70,7 +85,7 @@ public class HordeModeManager : GameManager
     private void ResetAndStartSpawning()
     {
         enemySpawner.ResetSpawner();
-        enemySpawner.maxSpawns = enemiesInWave;
+        enemySpawner.maxSpawns = Mathf.Min(enemiesInWave, maxEnemiesInWave);
         enemySpawner.StartSpawning();
     }
 }
