@@ -25,10 +25,10 @@ public class LevelMenu : MonoBehaviour
     */
 
     public void OpenLevel (int levelID)
-  {
+    {
         string TrialLevel = "TimeTrialModeLevel" + levelID;
         SceneManager.LoadScene(TrialLevel);
-        string HoardLevel = "HoardModeLevel" + levelID;
+        string HoardLevel = "HordeModeLevel" + levelID;
         SceneManager.LoadScene(HoardLevel);
 
 
