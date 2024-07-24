@@ -11,6 +11,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadSceneAsync(1);
     }
 
+    public void OpenLevel(int levelIndex)
+    {
+        SceneManager.LoadSceneAsync(levelIndex);
+    }
+
     public void QuitGame()
     {
     #if UNITY_EDITOR
