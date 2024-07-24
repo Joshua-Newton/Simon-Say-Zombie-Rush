@@ -39,8 +39,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     [Header("----- Audio -----")]
     [SerializeField] AudioSource audSource;
     [SerializeField] AudioClip[] groanSounds;
-    [SerializeField] float minTimeBetweenSounds;
-    [Range(0, 1)] [SerializeField] float groanVolume = 0.5f;
+    [Range(8, 100)] [SerializeField] float minTimeBetweenSounds = 5;
+    [Range(0, 5)] [SerializeField] float timeVariance = 1;
+    [Range(0, 1)] [SerializeField] float groanVolume = 0.3f;
 
     protected Color originalColor;
     protected bool isRoaming;
@@ -91,7 +92,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         isSpeaking = true;
         Debug.Log("Groan from: " + gameObject.name);
         audSource.PlayOneShot(groanSounds[Random.Range(0, groanSounds.Count())], groanVolume);
-        yield return new WaitForSeconds(minTimeBetweenSounds);
+        yield return new WaitForSeconds(minTimeBetweenSounds + Random.Range(-timeVariance, timeVariance));
         isSpeaking = false;
     }
 
