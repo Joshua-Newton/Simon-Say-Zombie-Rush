@@ -43,6 +43,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     [Range(0, 5)] [SerializeField] float timeVariance = 1;
     [Range(0, 1)] [SerializeField] float groanVolume = 0.3f;
 
+    [Header("----- Drops -----")]
+    [SerializeField] bool canDropItems;
+    [SerializeField] GameObject[] possibleDrops;
+    [Range(0, 100)] [SerializeField] float dropChance;
+
     protected Color originalColor;
     protected bool isRoaming;
     protected bool playerInRange;
@@ -191,7 +196,21 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
             sourceRandomSpawner.EnemyKilled();
         }
 
+        if(canDropItems && Random.Range(0, 99) < dropChance)
+        {
+            DropRandomItem();
+        }
+
         Destroy(gameObject);
+    }
+
+    void DropRandomItem()
+    {
+        GameObject itemDrop = possibleDrops[Random.Range(0, possibleDrops.Length)];
+        if (itemDrop != null)
+        {
+            Instantiate(itemDrop, transform.position + Vector3.up, Quaternion.identity);
+        }
     }
 
     void FaceTarget()

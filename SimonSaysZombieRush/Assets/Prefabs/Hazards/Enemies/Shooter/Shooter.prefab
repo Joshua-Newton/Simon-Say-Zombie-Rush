@@ -1738,8 +1738,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 39a4a3d686f628b42b9072bd06a2172c, type: 3}
   - {fileID: 8300000, guid: d80bb11aa5a5e314185ea8b8495f1234, type: 3}
   - {fileID: 8300000, guid: 51adec46e38398d4bbfe5dc6554b904d, type: 3}
-  minTimeBetweenSounds: 5
+  minTimeBetweenSounds: 8
+  timeVariance: 1
   groanVolume: 0.3
+  canDropItems: 1
+  possibleDrops:
+  - {fileID: 4017155185005024, guid: 7c5f9b64c4b2d9547b693972afc2ac0b, type: 3}
+  - {fileID: 8740908941748765629, guid: 11b58817db7be3a4c8bec43cef9f3dca, type: 3}
+  - {fileID: 8433842422522927380, guid: c21c07d013b84b64899f21af5320b1ac, type: 3}
+  - {fileID: 4014676716666281596, guid: 2be8c153b106f7d4aa9b753ce1f004fe, type: 3}
+  - {fileID: 7859658544650437553, guid: d9b39b58b73efdf489811c431948a958, type: 3}
+  - {fileID: 5978595989182856764, guid: 8df6f2cc33356504ea15bc8e2dbb7c9e, type: 3}
+  dropChance: 5
   bullet: {fileID: 4730036690490732152, guid: 44c74124242374f4c9a2bb2cec8609e8, type: 3}
   shootPos: {fileID: 4236647475509864459}
   shootDelay: 0.5
