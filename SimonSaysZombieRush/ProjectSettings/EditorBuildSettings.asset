@@ -14,4 +14,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototype 1 Scene 2.unity
     guid: 2e9a37f07bdb4184a9d29fe1a5af9add
+  - enabled: 1
+    path: Assets/Scenes/TimeTrialModeLevel1.unity
+    guid: e0f314fe8a76f1b45a727aaf7893051c
+  - enabled: 1
+    path: Assets/Scenes/TimeTrialModeLevel2.unity
+    guid: 53e899032569a73489b8639da2597c50
+  - enabled: 1
+    path: Assets/Scenes/TimeTrialModeLevel3.unity
+    guid: 5135b389cb5f1bc4c91c510c7bc0287f
+  - enabled: 1
+    path: Assets/Scenes/HoardModeLevel1.unity
+    guid: 945c92accb0b86f428854f9c51a8fb5f
+  - enabled: 1
+    path: Assets/Scenes/HoardModeLevel2.unity
+    guid: a04ab68476188ad489a464e8f8105494
+  - enabled: 1
+    path: Assets/Scenes/HoardModeLevel3.unity
+    guid: b0213fe1ddb473f4e9ee37b8e801db0d
   m_configObjects: {}
