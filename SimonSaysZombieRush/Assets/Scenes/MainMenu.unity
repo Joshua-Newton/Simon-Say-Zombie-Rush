@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 16685982}
   - component: {fileID: 16685984}
   m_Layer: 5
-  m_Name: HordLevel
+  m_Name: HordeLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1423,7 +1423,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hord Mode
+  m_text: Horde Mode
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3587,7 +3587,7 @@ GameObject:
   - component: {fileID: 1738154049}
   - component: {fileID: 1738154048}
   m_Layer: 5
-  m_Name: Hoard
+  m_Name: Horde
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3700,7 +3700,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a292956dc8c97eb42bd0f795a1afaad0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f755557f3059a49428745600d4c086f9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
