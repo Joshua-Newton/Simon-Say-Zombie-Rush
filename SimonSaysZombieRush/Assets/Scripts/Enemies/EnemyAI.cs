@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,6 +36,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     public WaveSpawner sourceWaveSpawner;
     public RandomSpawner sourceRandomSpawner;
 
+    [Header("----- Audio -----")]
+    [SerializeField] AudioSource audSource;
+    [SerializeField] AudioClip[] groanSounds;
+    [SerializeField] float minTimeBetweenSounds;
+    [Range(0, 1)] [SerializeField] float groanVolume = 0.5f;
+
     protected Color originalColor;
     protected bool isRoaming;
     protected bool playerInRange;
@@ -42,7 +49,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     protected float stoppingDistOrig;
     protected Vector3 playerDir;
     protected Vector3 startingPos;
-
+    protected bool isSpeaking;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -72,6 +79,20 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
             }
         }
 
+        if(!isSpeaking)
+        {
+            StartCoroutine(Groan());
+        }
+
+    }
+
+    IEnumerator Groan()
+    {
+        isSpeaking = true;
+        Debug.Log("Groan from: " + gameObject.name);
+        audSource.PlayOneShot(groanSounds[Random.Range(0, groanSounds.Count())], groanVolume);
+        yield return new WaitForSeconds(minTimeBetweenSounds);
+        isSpeaking = false;
     }
 
     IEnumerator Roam()
