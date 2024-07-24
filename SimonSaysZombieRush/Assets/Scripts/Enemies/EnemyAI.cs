@@ -72,7 +72,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTransition));
 
-        if(alwaysChasePlayer)
+        playerDir = GameManager.instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+
+        if (alwaysChasePlayer)
         {
             Move();
             Attack();
@@ -119,11 +122,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
 
     bool canSeePlayer()
     {
-        playerDir = GameManager.instance.player.transform.position - headPos.position;
-        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-
-        //Debug.DrawRay(transform.position, playerDir);
-
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit) || alwaysChasePlayer)
         {
