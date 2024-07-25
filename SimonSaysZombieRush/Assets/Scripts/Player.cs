@@ -635,7 +635,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         if(weaponList.Count > 0 && weaponList[selectedWeapon].weaponModel != null)
         {
-            Collider meleeCollider = weaponList[selectedWeapon].weaponModel.GetComponent<Collider>();
+            Collider meleeCollider = meleeModel.GetComponent<Collider>();
+            // TODO: Implement melee weapons that have their collider as part of the WeaponStats
+            //Collider meleeCollider = weaponList[selectedWeapon].weaponModel.GetComponent<Collider>();
             if(meleeCollider != null)
             {
                 meleeCollider.enabled = false;
@@ -646,7 +648,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     public void MeleeOn()
     {
-        Collider meleeCollider = weaponList[selectedWeapon].weaponModel.GetComponent<Collider>();
+        Collider meleeCollider = meleeModel.GetComponent<Collider>();
+        // TODO: Implement melee weapons that have their collider as part of the WeaponStats
+        //Collider meleeCollider = weaponList[selectedWeapon].weaponModel.GetComponent<Collider>();
         if (meleeCollider != null)
         {
             meleeCollider.enabled = true;
