@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeUsed: 0
   EnemiesKilled: 0
-  BestTime: 57
-  BestScore: 200
+  BestTime: 50
+  BestScore: 100
