@@ -126,7 +126,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2503224443311396801}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.5101882, z: -0, w: 0.8600628}
+  m_LocalRotation: {x: 0, y: 0.5101902, z: 0, w: 0.86006165}
   m_LocalPosition: {x: -13.208833, y: 0, z: 16.505175}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
@@ -153,11 +153,11 @@ MonoBehaviour:
   barrel: {fileID: 2130577241110418341}
   soundSource: {fileID: 7009026051129819576}
   breakSound: {fileID: 8300000, guid: 224602265abece64281a0a2bc9fad7e8, type: 3}
-  breakVolume: 3
+  breakVolume: 10
   explosionDamage: 2
   explosionEffect: {fileID: 1301697207402410478, guid: 57c2935077afc164a9b9c3a8bb016aad, type: 3}
   sphereCollider: {fileID: 5005633595870921180}
-  explodeLength: 0.05
+  explodeLength: 0.5
 --- !u!114 &6246893193295455716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 29.5
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
