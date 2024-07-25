@@ -26,13 +26,14 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         // TODO: Replace with a more programatic system without "magic" strings
-        timeTrial1Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel1")[0]));
-        timeTrial2Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel2")[0]));
-        timeTrial3Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel3")[0]));
-        horde1Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel1")[0]));
-        horde2Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel2")[0]));
-        horde3Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel3")[0]));
-
+        #if UNITY_EDITOR
+            timeTrial1Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel1")[0]));
+            timeTrial2Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel2")[0]));
+            timeTrial3Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel3")[0]));
+            horde1Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel1")[0]));
+            horde2Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel2")[0]));
+            horde3Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel3")[0]));
+        #endif
         if (timeTrial1Stats != null)
         {
             timeTrial1Text.text = timeTrial1Stats.BestTime.ToString("F0");
@@ -79,25 +80,33 @@ public class MainMenu : MonoBehaviour
     }
     TimeTrialStats GetTimeTrialStats(string statsName)
     {
-        string[] assetGuids = AssetDatabase.FindAssets(statsName);
-        if (assetGuids == null || assetGuids.Length <= 0)
-        {
-            return null;
-        }
+        #if UNITY_EDITOR
+            string[] assetGuids = AssetDatabase.FindAssets(statsName);
+            if (assetGuids == null || assetGuids.Length <= 0)
+            {
+                return null;
+            }
 
-        string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
-        return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
+            string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
+            return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
+        #else
+            return null;
+        #endif
     }
 
     HordeStats GetHordeStats(string statsName)
     {
-        string[] assetGuids = AssetDatabase.FindAssets(statsName);
-        if (assetGuids == null || assetGuids.Length <= 0)
-        {
-            return null;
-        }
+        #if UNITY_EDITOR
+            string[] assetGuids = AssetDatabase.FindAssets(statsName);
+            if (assetGuids == null || assetGuids.Length <= 0)
+            {
+                return null;
+            }
 
-        string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
-        return AssetDatabase.LoadAssetAtPath<HordeStats>(path);
+            string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
+            return AssetDatabase.LoadAssetAtPath<HordeStats>(path);
+        #else
+            return null;
+        #endif
     }
 }

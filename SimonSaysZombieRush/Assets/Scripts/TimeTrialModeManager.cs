@@ -220,26 +220,26 @@ public class TimeTrialModeManager : GameManager
         {
             TimeTrialStats newStats = ScriptableObject.CreateInstance<TimeTrialStats>();
             UpdateStats(newStats);
-#if UNITY_EDITOR
-            AssetDatabase.CreateAsset(newStats, savePath);
-#endif
+            #if UNITY_EDITOR
+                AssetDatabase.CreateAsset(newStats, savePath);
+            #endif
         }
     }
 
     TimeTrialStats GetStats()
     {
-#if UNITY_EDITOR
-        string[] assetGuids = AssetDatabase.FindAssets(statsAssetName);
-        if (assetGuids == null || assetGuids.Length <= 0)
-        {
-            return null;
-        }
+        #if UNITY_EDITOR
+            string[] assetGuids = AssetDatabase.FindAssets(statsAssetName);
+            if (assetGuids == null || assetGuids.Length <= 0)
+            {
+                return null;
+            }
 
-        string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
-        return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
-#else
-        return null;
-#endif
+            string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
+            return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
+        #else
+            return null;
+        #endif
     }
 
     public override void UpdateStats(LevelStats stats)

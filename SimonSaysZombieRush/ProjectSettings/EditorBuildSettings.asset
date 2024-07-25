@@ -16,7 +16,7 @@ EditorBuildSettings:
     guid: a04ab68476188ad489a464e8f8105494
   - enabled: 1
     path: Assets/Scenes/HordeModeLevel3.unity
-    guid: b0213fe1ddb473f4e9ee37b8e801db0d
+    guid: 39f0cfc1d340a554094d03cf11faec44
   - enabled: 1
     path: Assets/Scenes/TimeTrialModeLevel1.unity
     guid: 3fe2d997c93b7a84daa3e7384e600bfd
@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TimeTrialModeLevel2.unity
     guid: afbfe1cd94e66194bb75852b46f531d8
   - enabled: 1
-    path: Assets/Scenes/TimeTrialModeLevel3(old).unity
-    guid: 5135b389cb5f1bc4c91c510c7bc0287f
+    path: Assets/Scenes/TimeTrialModeLevel3.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
