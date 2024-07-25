@@ -22,19 +22,19 @@ public class GravityGrenade : MonoBehaviour
         sphereCollider.isTrigger = true;
         sphereCollider.radius = explosionRadius;
         sphereCollider.enabled = false;
-
         StartCoroutine(ExplodeAfterDelay());
-        FloatBeforeExplosion();
     }
 
     void FloatBeforeExplosion()
     {
+        rb.useGravity = false;
         rb.AddForce(Vector3.up * floatHeight, ForceMode.Impulse);
     }
 
     IEnumerator ExplodeAfterDelay()
     {
         yield return new WaitForSeconds(explosionDelay);
+        FloatBeforeExplosion();
         Explode();
     }
 
@@ -56,17 +56,11 @@ public class GravityGrenade : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && hasExploded)
         {
             Vector3 direction = (transform.position - other.transform.position).normalized;
             float strength = attractionStrength * Time.deltaTime;
             other.transform.position += direction * strength;
         }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }
