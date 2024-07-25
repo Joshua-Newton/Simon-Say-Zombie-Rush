@@ -157,7 +157,7 @@ MonoBehaviour:
   explosionDamage: 2
   explosionEffect: {fileID: 1301697207402410478, guid: 57c2935077afc164a9b9c3a8bb016aad, type: 3}
   sphereCollider: {fileID: 3507886313993938901}
-  explodeLength: 0
+  explodeLength: 0.05
 --- !u!114 &7538111910158219048
 MonoBehaviour:
   m_ObjectHideFlags: 0
