@@ -498,7 +498,7 @@ MonoBehaviour:
   wallRunSpeed: 8
   maxWallRunTime: 2
   wallRunDistance: 1
-  gravityGrenadePrefab: {fileID: 8517655606910467015, guid: de863a8ed77be0b42821fddb3ca1d985, type: 3}
+  gravityGrenadePrefab: {fileID: 8517655606910467015, guid: 7000437e52bbe554f80161ddbd405edf, type: 3}
   grenadeSpawnPoint: {fileID: 6587930494752407204}
   throwForce: 15
   raycastDistance: 100
