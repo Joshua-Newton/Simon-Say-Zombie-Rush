@@ -4049,18 +4049,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 39398083524530707, guid: d3808735bf229f642963b718b1a8b106, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -10138,10 +10126,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8979203312248720591, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
-      propertyPath: gravityGrenadePrefab
-      value: 
-      objectReference: {fileID: 8517655606910467015, guid: 7000437e52bbe554f80161ddbd405edf, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
