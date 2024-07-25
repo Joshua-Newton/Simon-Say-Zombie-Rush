@@ -12339,6 +12339,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exploding Barrel
       objectReference: {fileID: 0}
+    - target: {fileID: 4001694157339647501, guid: 7de0751ed0ec4d844af745d96195df82, type: 3}
+      propertyPath: breakVolume
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001694157339647501, guid: 7de0751ed0ec4d844af745d96195df82, type: 3}
+      propertyPath: explodeLength
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6668205183905061555, guid: 7de0751ed0ec4d844af745d96195df82, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.208833
@@ -12378,6 +12386,10 @@ PrefabInstance:
     - target: {fileID: 6668205183905061555, guid: 7de0751ed0ec4d844af745d96195df82, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7009026051129819576, guid: 7de0751ed0ec4d844af745d96195df82, type: 3}
+      propertyPath: rolloffMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -14,7 +14,7 @@ public class BreakableObjects : MonoBehaviour, IDamage
     [Header("----- Sounds -----")]
     [SerializeField] AudioSource soundSource;
     [SerializeField] AudioClip breakSound;
-    [Range(0, 5)] [SerializeField] float breakVolume = 3.0f;
+    [Range(0, 20)] [SerializeField] float breakVolume = 3.0f;
 
     [Header("----- Exploding Object -----")]
     [SerializeField] int explosionDamage;
@@ -65,7 +65,8 @@ public class BreakableObjects : MonoBehaviour, IDamage
         sphereCollider.enabled = true;
         barrel.enabled = false;
         yield return new WaitForSeconds(explodeLength);
-        Destroy(gameObject);
+        sphereCollider.enabled = false;
+        Destroy(gameObject, 0.5f);
     }
 
 }
