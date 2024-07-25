@@ -2,27 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class TimeTrialModeManager : GameManager
 {
     public static new TimeTrialModeManager instance;
 
-    [SerializeField] protected int commandLength = 3; // Length of the command sequence
-    [SerializeField] protected TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
-    [SerializeField] protected GameObject[] commandImageObjects; // Possible positions for the images
-    [SerializeField] protected TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
-    [SerializeField] protected TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
-    [SerializeField] protected float levelTime = 60f; // Total time for the level in seconds
+    [SerializeField] private int commandLength = 3; // Length of the command sequence
+    [SerializeField] private TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
+    [SerializeField] private GameObject[] commandImageObjects; // Possible positions for the images
+    [SerializeField] private TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
+    [SerializeField] private TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
+    [SerializeField] private float levelTime = 60f; // Total time for the level in seconds
 
     private float remainingTime;
-
-    protected List<GameObject> possibleItems; // List of possible items
-    protected List<GameObject> commandSequence; // The generated command sequence
-    protected List<string> playerSequence; // The player's collected sequence
+    private List<GameObject> possibleItems; // List of possible items
+    private List<GameObject> commandSequence; // The generated command sequence
+    private List<string> playerSequence; // The player's collected sequence
 
     protected override void Awake()
     {
@@ -41,15 +42,7 @@ public class TimeTrialModeManager : GameManager
 
     void InitializePossibleItems()
     {
-        possibleItems = new List<GameObject>();
-        GameObject[] pickups = GameObject.FindGameObjectsWithTag("Pickup");
-        foreach (GameObject pickup in pickups)
-        {
-            if (!possibleItems.Contains(pickup))
-            {
-                possibleItems.Add(pickup);
-            }
-        }
+        possibleItems = GameObject.FindGameObjectsWithTag("Pickup").Distinct().ToList();
     }
 
     // Generate a random command sequence
@@ -59,18 +52,16 @@ public class TimeTrialModeManager : GameManager
         for (int i = 0; i < commandLength; i++)
         {
             if (possibleItems.Count == 0) break; // No more items to add
-
             int randomIndex = Random.Range(0, possibleItems.Count);
             commandSequence.Add(possibleItems[randomIndex]);
-            GameObject itemName = Resources.Load<GameObject>("Prefabs/Essentials/SimonImg" + possibleItems[randomIndex]); // Display Simons image
+            Resources.Load<GameObject>($"Prefabs/Essentials/SimonImg{possibleItems[randomIndex].name}"); // Load the image
         }
     }
 
     // Display the command sequence
     void DisplayCommand()
     {
-        var commandNames = commandSequence.Select(item => item.name);
-        commandDisplay.text = string.Join(", ", commandNames);
+        commandDisplay.text = string.Join(", ", commandSequence.Select(item => item.name));
     }
 
     void DisplayImageCommand()
@@ -82,7 +73,7 @@ public class TimeTrialModeManager : GameManager
             if (imgComponent && pickupComponent)
             {
                 imgComponent.sprite = pickupComponent.GetItemSprite();
-                imgComponent.color = new Color(imgComponent.color.r, imgComponent.color.g, imgComponent.color.b, 255);
+                imgComponent.color = new Color(imgComponent.color.r, imgComponent.color.g, imgComponent.color.b, 1f);
             }
         }
     }
@@ -92,7 +83,7 @@ public class TimeTrialModeManager : GameManager
     {
         int minutes = Mathf.FloorToInt(remainingTime / 60);
         int seconds = Mathf.FloorToInt(remainingTime % 60);
-        timerDisplay.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+        timerDisplay.text = $"{minutes:0}:{seconds:00}";
     }
 
     // Start the level timer
@@ -135,7 +126,6 @@ public class TimeTrialModeManager : GameManager
     // Validate the player's collected sequence
     void CheckPlayerSequence()
     {
-        // Check if the player's collected sequence matches the command sequence so far
         for (int i = 0; i < playerSequence.Count; i++)
         {
             if (playerSequence[i] != commandSequence[i].name)
@@ -153,7 +143,6 @@ public class TimeTrialModeManager : GameManager
         }
         else if (playerSequence.Count == commandSequence.Count)
         {
-            // Keep the image if the sequence is correct but not all items are collected yet
             StartCoroutine(ShowResult("Correct sequence!"));
             UpdateScore(100); // Update score for correct sequence
             ResetGameSequence();
@@ -212,14 +201,7 @@ public class TimeTrialModeManager : GameManager
 
     public override void WinGame()
     {
-        if (lastLevel)
-        {
-            menuActive = menuWinLastLevel;
-        }
-        else
-        {
-            menuActive = menuWin;
-        }
+        menuActive = lastLevel ? menuWinLastLevel : menuWin;
         PauseAndOpenActiveMenu();
         SaveStats();
     }
@@ -238,12 +220,15 @@ public class TimeTrialModeManager : GameManager
         {
             TimeTrialStats newStats = ScriptableObject.CreateInstance<TimeTrialStats>();
             UpdateStats(newStats);
+#if UNITY_EDITOR
             AssetDatabase.CreateAsset(newStats, savePath);
+#endif
         }
     }
 
     TimeTrialStats GetStats()
     {
+#if UNITY_EDITOR
         string[] assetGuids = AssetDatabase.FindAssets(statsAssetName);
         if (assetGuids == null || assetGuids.Length <= 0)
         {
@@ -252,16 +237,19 @@ public class TimeTrialModeManager : GameManager
 
         string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
         return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
+#else
+        return null;
+#endif
     }
 
     public override void UpdateStats(LevelStats stats)
     {
-        if (stats.GetType() == typeof(TimeTrialStats))
+        if (stats is TimeTrialStats timeTrialStats)
         {
-            ((TimeTrialStats)stats).BestTime = remainingTime;
-            ((TimeTrialStats)stats).BestScore = score;
+            timeTrialStats.BestTime = remainingTime;
+            timeTrialStats.BestScore = score;
         }
         stats.EnemiesKilled = 0; // TODO: Implement enemies killed tracker and assign here
-        stats.TimeUsed = 0; // TODO: Implement time tracker    }
+        stats.TimeUsed = 0; // TODO: Implement time tracker
     }
 }

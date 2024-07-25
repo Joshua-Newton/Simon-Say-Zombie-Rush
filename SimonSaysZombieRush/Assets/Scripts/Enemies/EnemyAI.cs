@@ -56,6 +56,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     protected Vector3 playerDir;
     protected Vector3 startingPos;
     protected bool isSpeaking;
+    private bool isStunned = false;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -186,7 +187,28 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    private void Die()
+    public void Stun(float duration)
+    {
+        if (!isStunned)
+        {
+            StartCoroutine(StunCoroutine(duration));
+        }
+    }
+
+    private IEnumerator StunCoroutine(float duration)
+    {
+        isStunned = true;
+        agent.isStopped = true; // Stop the NavMeshAgent to disable movement
+        anim.enabled = false; // Optionally disable animations
+
+        yield return new WaitForSeconds(duration);
+
+        agent.isStopped = false; // Re-enable the NavMeshAgent
+        anim.enabled = true; // Optionally re-enable animations
+        isStunned = false;
+    }
+
+private void Die()
     {
         GameManager.instance.UpdateEnemyCount(-1);
 

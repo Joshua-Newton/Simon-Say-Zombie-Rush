@@ -48,6 +48,11 @@ public class BreakableObjects : MonoBehaviour, IDamage
         }
     }
 
+    public void Stun(float duration)
+    {
+        // Breakable objects don't need to handle stuns, so this can be left empty or log a message
+    }
+
     IEnumerator FlashDamage()
     {
         model.material.color = hitColor;

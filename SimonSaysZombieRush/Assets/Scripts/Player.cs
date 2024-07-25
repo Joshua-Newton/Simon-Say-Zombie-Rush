@@ -55,7 +55,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [Range(0, 3)] [SerializeField] float wallRunDistance;
 
     [Header("----- Grenade -----")]
-    [SerializeField] GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
+    [SerializeField] private GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
     [SerializeField] Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
     [SerializeField] float throwForce = 15f; // Throwing force of the grenade
     [SerializeField] float raycastDistance = 100f; // Maximum distance for the raycast
@@ -87,6 +87,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isSprinting;
     bool isPlayingStep;
     bool isMeleeing;
+    private bool isStunned = false;
 
     bool canHeal;
     bool canWallRun = true;
@@ -555,6 +556,27 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
     }
 
+    public void Stun(float duration)
+    {
+        if (!isStunned)
+        {
+            StartCoroutine(StunCoroutine(duration));
+        }
+    }
+
+    private IEnumerator StunCoroutine(float duration)
+    {
+        isStunned = true;
+        characterController.enabled = false;
+        animator.enabled = false;
+
+        yield return new WaitForSeconds(duration);
+
+        characterController.enabled = true;
+        animator.enabled = true;
+        isStunned = false;
+    }
+
     public void JumpPad(float jumpPadStrength)
     {
         ++numJumps; // TODO: Design question, should a jump pad count as the player's first jump? I assumed yes - Josh N.
@@ -629,6 +651,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         {
             meleeCollider.enabled = true;
         }
+    }
+
+    public void UpdateGrenadePrefab(GameObject newGrenadePrefab)
+    {
+        gravityGrenadePrefab = newGrenadePrefab;
+        Debug.Log("Updated Grenade Prefab: " + gravityGrenadePrefab.name);
     }
 
 
