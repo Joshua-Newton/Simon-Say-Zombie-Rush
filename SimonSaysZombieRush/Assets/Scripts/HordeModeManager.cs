@@ -7,14 +7,24 @@ using UnityEngine.SceneManagement;
 
 public class HordeModeManager : GameManager
 {
+
     public static new HordeModeManager instance;
+
+    [Header("***** START HordeModeManager *****")]
+
+    [Header("----- Wave Parameters -----")]
     [SerializeField] bool infiniteWaves;
     [SerializeField] int totalWaves;
     [SerializeField] int secondsBetweenWaves;
-    [SerializeField] RandomSpawner enemySpawner;
-    [SerializeField] TMP_Text waveCountText;
     [Range(1, 100)] [SerializeField] int maxEnemiesInWave = 18;
     [Range(1, 20)] [SerializeField] int enemyMultiplier = 5;
+
+    [Header("----- Wave UI -----")]
+    [SerializeField] TMP_Text waveCountText;
+
+    [Header("----- Found Dependencies -----")]
+    [Header("EVERY HORDE MANAGER NEEDS A RANDOM SPAWNER TO EXIST IN THE SCENE, IT WILL BE FOUND ON RUNTIME")]
+    [SerializeField] RandomSpawner enemySpawner;
 
     int currentWave;
     int enemiesInWave;
@@ -96,38 +106,11 @@ public class HordeModeManager : GameManager
 
     void SaveStats()
     {
-        HordeStats currentStats = GetStats();
-        if(currentStats != null)
+        HordeStats currentStats = (HordeStats)levelStats;
+        if(currentStats != null && currentWave > currentStats.HighestWave)
         {
-            if (currentWave > currentStats.HighestWave)
-            {
-                UpdateStats(currentStats);
-            }
+            UpdateStats(currentStats);
         }
-        else
-        {
-            HordeStats newStats = ScriptableObject.CreateInstance<HordeStats>();
-            UpdateStats(newStats);
-            #if UNITY_EDITOR
-                AssetDatabase.CreateAsset(newStats, savePath);
-            #endif
-        }
-    }
-
-    HordeStats GetStats()
-    {
-        #if UNITY_EDITOR
-            string[] assetGuids = AssetDatabase.FindAssets(statsAssetName);
-            if (assetGuids == null || assetGuids.Length <= 0)
-            {
-                return null;
-            }
-
-            string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
-            return AssetDatabase.LoadAssetAtPath<HordeStats>(path);
-        #else
-            return null;
-        #endif
     }
 
     public override void UpdateStats(LevelStats stats)

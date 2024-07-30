@@ -11,25 +11,34 @@ public abstract class GameManager : MonoBehaviour
     public static GameManager instance;
 
     // TODO: Combine menuWin and menuWinLastLevel and just programmatically change the buttons
+    [Header("***** START GameManager *****")]
+    [Header("----- Menus -----")]
     [SerializeField] protected GameObject menuActive;
     [SerializeField] protected GameObject menuPause;
     [SerializeField] protected GameObject menuWin;
     [SerializeField] protected GameObject menuWinLastLevel;
     [SerializeField] protected GameObject menuLose;
+
+    [Header("----- General UI -----")]
     [SerializeField] protected TMP_Text enemyCountText;
     [SerializeField] protected TMP_Text scoreText; // TextMeshProUGUI to display the score
     [SerializeField] protected TMP_Text scoreTextFinalLevel; // TextMeshProUGUI to display the score
-    [SerializeField] protected GameObject HighScoreObject;
-
     public Image playerHPBar;
     public GameObject dmgFlashBckgrnd;
+    public GameObject checkpointPopup;
+    public TMP_Text ammoCurrent, ammoMax;
+
+    [Header("----- Persisted stats -----")]
+    [SerializeField] protected LevelStats levelStats;
+
+    [Header("----- Player -----")]
     public GameObject player;
     public Player playerScript;
-    public bool isPaused;
     public Collider playerCollider;
+
+    [Header("----- Game State -----")]
+    public bool isPaused;
     public GameObject playerSpawnPos;
-    public GameObject checkpointPopup;
-    public  TMP_Text ammoCurrent, ammoMax;
 
     protected float initialTimeScale;
     protected int enemyCount;

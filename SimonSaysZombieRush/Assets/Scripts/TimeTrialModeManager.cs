@@ -13,12 +13,20 @@ public class TimeTrialModeManager : GameManager
 {
     public static new TimeTrialModeManager instance;
 
+    [Header("***** START TimeTrialModeManager *****")]
+
+    [Header("----- Time Trial Parameters -----")]
     [SerializeField] private int commandLength = 3; // Length of the command sequence
+    [SerializeField] private float levelTime = 60f; // Total time for the level in seconds
+
+    [Header("----- Time Trial UI -----")]
     [SerializeField] private TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
-    [SerializeField] private GameObject[] commandImageObjects; // Possible positions for the images
     [SerializeField] private TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
     [SerializeField] private TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
-    [SerializeField] private float levelTime = 60f; // Total time for the level in seconds
+    [SerializeField] private GameObject[] commandImageObjects; // Possible positions for the images
+
+    [Header("***** END TimeTrialModeManager *****")]
+
 
     private float remainingTime;
     private List<GameObject> possibleItems; // List of possible items
@@ -208,38 +216,11 @@ public class TimeTrialModeManager : GameManager
 
     void SaveStats()
     {
-        TimeTrialStats currentStats = GetStats();
-        if (currentStats != null)
+        TimeTrialStats currentStats = (TimeTrialStats)levelStats;
+        if (currentStats != null && remainingTime > currentStats.TimeUsed)
         {
-            if (remainingTime > currentStats.TimeUsed)
-            {
-                UpdateStats(currentStats);
-            }
+            UpdateStats(currentStats);
         }
-        else
-        {
-            TimeTrialStats newStats = ScriptableObject.CreateInstance<TimeTrialStats>();
-            UpdateStats(newStats);
-            #if UNITY_EDITOR
-                AssetDatabase.CreateAsset(newStats, savePath);
-            #endif
-        }
-    }
-
-    TimeTrialStats GetStats()
-    {
-        #if UNITY_EDITOR
-            string[] assetGuids = AssetDatabase.FindAssets(statsAssetName);
-            if (assetGuids == null || assetGuids.Length <= 0)
-            {
-                return null;
-            }
-
-            string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
-            return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
-        #else
-            return null;
-        #endif
     }
 
     public override void UpdateStats(LevelStats stats)

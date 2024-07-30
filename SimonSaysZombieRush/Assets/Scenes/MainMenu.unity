@@ -2166,6 +2166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5925a6f97b7c6c4b9d548103cb8787b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeTrial1Stats: {fileID: 11400000, guid: 2a879ec99db1ae04c9ed2849f3b07f50, type: 2}
+  timeTrial2Stats: {fileID: 11400000, guid: ccb6b64b6e143c24f9c07bb173d98407, type: 2}
+  timeTrial3Stats: {fileID: 11400000, guid: f9bd36813e661504eb6d919d8f73767d, type: 2}
+  horde1Stats: {fileID: 11400000, guid: ad00ecbfbfb3e694f834c15996890d6b, type: 2}
+  horde2Stats: {fileID: 11400000, guid: 19d37e5576f502b47889efc3191a9592, type: 2}
+  horde3Stats: {fileID: 11400000, guid: 5ed64440fa38ca24780fb489854e8660, type: 2}
   timeTrial1Text: {fileID: 1173665238}
   timeTrial2Text: {fileID: 2074256073}
   timeTrial3Text: {fileID: 111014239}
