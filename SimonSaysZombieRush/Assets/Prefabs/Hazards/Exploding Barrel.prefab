@@ -153,7 +153,7 @@ MonoBehaviour:
   barrel: {fileID: 2130577241110418341}
   soundSource: {fileID: 7009026051129819576}
   breakSound: {fileID: 8300000, guid: 224602265abece64281a0a2bc9fad7e8, type: 3}
-  breakVolume: 10
+  breakVolume: 1
   explosionDamage: 2
   explosionEffect: {fileID: 1301697207402410478, guid: 57c2935077afc164a9b9c3a8bb016aad, type: 3}
   sphereCollider: {fileID: 5005633595870921180}

@@ -4,13 +4,19 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider), typeof(BoxCollider))]
 public class GravityGrenade : MonoBehaviour
 {
-    [SerializeField] private float explosionDelay;
-    [SerializeField] private float explosionRadius;
-    [SerializeField] private float attractionDuration;
-    [SerializeField] private float attractionStrength;
-    [SerializeField] private float floatHeight;
-    [SerializeField] private float floatDuration;
+    [SerializeField] float explosionDelay;
+    [SerializeField] float explosionRadius;
+    [SerializeField] float attractionDuration;
+    [SerializeField] float attractionStrength;
+    [SerializeField] float floatHeight;
+    [SerializeField] float floatDuration;
+    [SerializeField] float floatLerpDuration = .5f;
 
+    [SerializeField] AudioSource aud;
+    [SerializeField] ParticleSystem pullEffect;
+    [SerializeField] AudioClip pullSound;
+    [SerializeField] GameObject explosionEffectAndSound;
+    
     private bool hasExploded = false;
     private Rigidbody rb;
     private SphereCollider sphereCollider;
@@ -27,8 +33,15 @@ public class GravityGrenade : MonoBehaviour
 
     void FloatBeforeExplosion()
     {
+        rb.isKinematic = false;
         rb.useGravity = false;
-        rb.AddForce(Vector3.up * floatHeight, ForceMode.Impulse);
+        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, gameObject.transform.position + (Vector3.up * floatHeight), floatLerpDuration * Time.deltaTime);
+        gameObject.transform.rotation = Quaternion.identity;
+        ParticleSystem pullParticle = Instantiate(pullEffect, gameObject.transform.position, Quaternion.identity);
+        
+        pullParticle.gameObject.transform.localScale.Set(1 / gameObject.transform.localScale.x, 1 / gameObject.transform.localScale.y, 1 / gameObject.transform.localScale.z);
+        aud.PlayOneShot(pullSound);
+        Destroy(pullParticle, attractionDuration);
     }
 
     IEnumerator ExplodeAfterDelay()
@@ -51,7 +64,8 @@ public class GravityGrenade : MonoBehaviour
     {
         yield return new WaitForSeconds(attractionDuration);
         sphereCollider.enabled = false;
-        Destroy(gameObject, 1f);
+        Destroy(Instantiate(explosionEffectAndSound), 2f);
+        Destroy(gameObject);
     }
 
     void OnTriggerStay(Collider other)
