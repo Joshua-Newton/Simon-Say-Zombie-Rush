@@ -191,7 +191,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.166017, y: 0.13232009, z: 0.1510269}
   m_Center: {x: 0.5819918, y: 0.025256539, z: 0.008151457}
@@ -314,11 +314,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 92965a1002b5160449c55cad6e70d844, type: 3}
   - {fileID: 8300000, guid: 3ced55a12345a0845936f65e0f00d60f, type: 3}
   audioStepsVolume: 0.05
-  audioJumps:
-  - {fileID: 8300000, guid: 6068502a42c253f4ab403d184f921351, type: 3}
-  - {fileID: 8300000, guid: 09f477ebd087738439c6ace5ee2729af, type: 3}
-  - {fileID: 8300000, guid: 73a3841b3118a76429f7f527a1864dae, type: 3}
-  audioJumpsVolume: 0.3
   audioHurt:
   - {fileID: 8300000, guid: d60323bc98026d742b9a24e762209e7a, type: 3}
   - {fileID: 8300000, guid: 2dca374e4fbad7a409d1a7ec9d56ed3a, type: 3}
@@ -374,8 +369,6 @@ MonoBehaviour:
   speed: 8
   sprintMultiplier: 2
   gravity: 20
-  jumpStrength: 10
-  maxJumps: 2
   weaponList: []
   gunModel: {fileID: 3921498464701255060}
   meleeModel: {fileID: 5309740781932959731}
