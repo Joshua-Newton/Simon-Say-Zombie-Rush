@@ -45,11 +45,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] int grappleMaxConsecutiveUses;
     [SerializeField] LineRenderer grappleRenderer;
 
-    [Header("----- Wall Run -----")]
-    [SerializeField] int wallRunSpeed;
-    [SerializeField] float maxWallRunTime;
-    [Range(0, 3)] [SerializeField] float wallRunDistance;
-
     [Header("----- Grenade -----")]
     [SerializeField] private GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
     [SerializeField] Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
@@ -96,14 +91,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     Coroutine healingCoroutine;
     Coroutine healingDelayCoroutine;
 
-    LastWallRun lastWallRun;
-
     RaycastHit leftHit;
     RaycastHit rightHit;
     #endregion
 
     #region enum definitions
-    enum LastWallRun { none, left, right };
 
     #endregion
 
@@ -133,7 +125,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         Sprint();
         Shooting();
         GrappleHook();
-        WallRun();
         ThrowGrenade();
         Crouch();
         if (!GameManager.instance.isPaused)
@@ -186,37 +177,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         else if (Input.GetButton("Fire1") && weaponList.Count > 0 && weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee && !isMeleeing && !GameManager.instance.isPaused)
         {
             Melee();
-        }
-    }
-
-    void WallRun()
-    {
-        if(!isWallRunning && characterController.isGrounded)
-        {
-            lastWallRun = LastWallRun.none;
-        }
-
-        bool wallOnLeft = Physics.Raycast(Camera.main.transform.position, -Camera.main.transform.right, out leftHit, wallRunDistance, ~ignoreLayer);
-        bool wallOnRight = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.right, out rightHit, wallRunDistance, ~ignoreLayer);
-        Debug.DrawRay(Camera.main.transform.position, -Camera.main.transform.right);
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.right);
-
-        if (isWallRunning && !wallOnLeft && !wallOnRight)
-        {
-            AbruptEndWallRun();
-        }
-        
-        // If there's a wall on the left... Or we jumped off a wall run on the right
-        if((!isWallRunning && wallOnLeft && leftHit.collider.CompareTag("WallRun")) && (canWallRun || lastWallRun != LastWallRun.left))
-        {
-            lastWallRun = LastWallRun.left;
-            InitiateWallRun();
-        }
-        // If there's a wall on the right... Or we jumped off a wall run on the left
-        if ((!isWallRunning && wallOnRight && rightHit.collider.CompareTag("WallRun")) && (canWallRun || lastWallRun != LastWallRun.right))
-        {
-            lastWallRun = LastWallRun.right;
-            InitiateWallRun();
         }
     }
 
@@ -388,12 +348,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         GameManager.instance.dmgFlashBckgrnd.SetActive(false);
     }
 
-    IEnumerator WallRunTimer()
-    {
-        yield return new WaitForSeconds(maxWallRunTime);
-        EndWallRun();
-    }
-
     IEnumerator PlayStep()
     {
         isPlayingStep = true;
@@ -466,7 +420,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
                 }
             }
         }
-        
         
         yield return new WaitForSeconds(damageDelay);
         isShooting = false;
@@ -550,12 +503,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         playerVelocity.y = jumpPadStrength;
     }
 
-    public void AbruptEndWallRun()
-    {
-        StopCoroutine(WallRunTimer());
-        EndWallRun();
-    }
-
     public void UpdatePlayerUI()
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
@@ -564,21 +511,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             GameManager.instance.ammoCurrent.text = weaponList[selectedWeapon].ammoCurrent.ToString("F0");
             GameManager.instance.ammoMax.text = weaponList[selectedWeapon].ammoMax.ToString("F0");
         }
-    }
-
-    public void InitiateWallRun(Collider wallTrigger)
-    {
-        wallRunCollider = wallTrigger;
-        isWallRunning = true;
-        initialWallRunAngle = Vector3.Angle(Camera.main.transform.forward, wallRunCollider.transform.forward);
-        StartCoroutine(WallRunTimer());
-    }
-
-    public void InitiateWallRun()
-    {
-        playerVelocity = Vector3.zero;
-        isWallRunning = true;
-        StartCoroutine(WallRunTimer());
     }
 
     public void GetWeaponStats(WeaponStats weapon)
