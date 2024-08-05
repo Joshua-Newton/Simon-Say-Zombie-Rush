@@ -16,8 +16,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip[] audioSteps;
     [Range(0, 1)] [SerializeField] float audioStepsVolume = 0.5f;
-    [SerializeField] AudioClip[] audioJumps;
-    [Range(0, 1)] [SerializeField] float audioJumpsVolume = 0.5f;
     [SerializeField] AudioClip[] audioHurt;
     [Range(0, 1)] [SerializeField] float audioHurtVolume = 0.5f;
     [SerializeField] AudioClip[] audioMelee;
@@ -29,10 +27,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] int speed;
     [SerializeField] int sprintMultiplier;
 
-    [Header("----- Jump -----")]
+    [Header("----- Gravity -----")]
     [SerializeField] float gravity;
-    [SerializeField] float jumpStrength;
-    [SerializeField] int maxJumps;
 
     [Header("----- Weapons -----")]
     [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
@@ -75,7 +71,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     Vector3 grappleHitPoint;
     Vector3 playerVelocity;
 
-    int numJumps;
     int HPOriginal;
     int numGrapples;
     int selectedWeapon;
@@ -133,7 +128,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         {
             Debug.DrawRay(raySource, rayDestination);
         }
-        Jump();
+        Grounded();
         Movement();
         Sprint();
         Shooting();
@@ -167,43 +162,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
     }
 
-    void Jump()
-    {
-        if (Input.GetButtonDown("Jump") && numJumps < maxJumps && !isGrappling)
-        {
-            aud.PlayOneShot(audioJumps[Random.Range(0, audioJumps.Length)], audioJumpsVolume);
-            ++numJumps;
-            if (isWallRunning)
-            {
-                if (lastWallRun == LastWallRun.left)
-                {
-                    Vector3 playerJumpVector = new Vector3(0, jumpStrength, 0);
-                    Vector3 jumpVelocity = (leftHit.normal.normalized + playerJumpVector.normalized) * jumpStrength;
-                    playerVelocity = jumpVelocity;
-                }
-                else if (lastWallRun == LastWallRun.right)
-                {
-                    Vector3 playerJumpVector = new Vector3(0, jumpStrength, 0);
-                    Vector3 jumpVelocity = (rightHit.normal.normalized + playerJumpVector.normalized) * jumpStrength;
-                    playerVelocity = jumpVelocity;
-                }
-                AbruptEndWallRun();
-            }
-            else
-            {
-                playerVelocity.y = jumpStrength;
-            }
-        }
-
-        if (!isGrappling && !isWallRunning)
-        {
-            characterController.Move(playerVelocity * Time.deltaTime);
-            playerVelocity.y -= gravity * Time.deltaTime;
-        }
-
-        // Grounded() has to come immediately after jump in order to properly check characterController.isGrounded
-        Grounded();
-    }
 
     void Sprint()
     {
@@ -330,7 +288,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         if (characterController.isGrounded)
         {
             canWallRun = true;
-            numJumps = 0;
             numGrapples = 0;
             playerVelocity = Vector3.zero;
         }
@@ -590,7 +547,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     public void JumpPad(float jumpPadStrength)
     {
-        ++numJumps; // TODO: Design question, should a jump pad count as the player's first jump? I assumed yes - Josh N.
         playerVelocity.y = jumpPadStrength;
     }
 
@@ -614,7 +570,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         wallRunCollider = wallTrigger;
         isWallRunning = true;
-        numJumps = 0; // Reset jumps so that the player can jump off the wall, otherwise they might run out of jumps while wall running
         initialWallRunAngle = Vector3.Angle(Camera.main.transform.forward, wallRunCollider.transform.forward);
         StartCoroutine(WallRunTimer());
     }
@@ -623,7 +578,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         playerVelocity = Vector3.zero;
         isWallRunning = true;
-        numJumps = 0; // Reset jumps so that the player can jump off the wall, otherwise they might run out of jumps while wall running
         StartCoroutine(WallRunTimer());
     }
 
