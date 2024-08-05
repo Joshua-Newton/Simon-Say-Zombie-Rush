@@ -97,15 +97,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8517655606910467015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 386c45d151368504f802dd2bed2a8b6d, type: 3}
+  m_Script: {fileID: 11500000, guid: f39178c295b049b44936a57bc14c9166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   explosionDelay: 3
-  explosionRadius: 10
-  attractionDuration: 5
-  attractionStrength: 5
-  floatHeight: 3
-  floatDuration: 0.5
+  explosionRadius: 20
+  attractionDuration: 4
+  attractionStrength: 10
+  floatHeight: 0.5
+  floatDuration: 4
+  floatLerpDuration: 0.5
   aud: {fileID: -2695151965385581147}
   pullEffect: {fileID: 7927052286661353364, guid: 9515a01e917be044c95793bb1eb133c6, type: 3}
   pullSound: {fileID: 8300000, guid: 4e5bae87d606f404eb23bf586ce97f16, type: 3}

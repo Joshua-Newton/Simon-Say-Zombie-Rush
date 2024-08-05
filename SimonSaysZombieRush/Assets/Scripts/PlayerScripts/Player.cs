@@ -129,6 +129,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     // Update is called once per frame
     void Update()
     {
+        if(raySource != null && rayDestination != null)
+        {
+            Debug.DrawRay(raySource, rayDestination);
+        }
         Jump();
         Movement();
         Sprint();
@@ -148,9 +152,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     #region Private Methods
     void Movement()
     {
-
-        movementDirection = Input.GetAxis("Vertical") * transform.forward +
-                            Input.GetAxis("Horizontal") * transform.right;
+        movementDirection = (Input.GetAxis("Horizontal") * Vector3.right + Input.GetAxis("Vertical") * Vector3.forward);
+        if (movementDirection.magnitude > 1)
+        {
+            movementDirection.Normalize();
+        }
 
         characterController.Move(movementDirection * speed * Time.deltaTime);
 
@@ -467,6 +473,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     }
 
+    Vector3 raySource;
+    Vector3 rayDestination;
     IEnumerator HealDelay()
     {
         yield return new WaitForSeconds(healDelay);
@@ -484,8 +492,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             currentWeapon.ammoCurrent--;
             UpdatePlayerUI();
 
+            raySource = GameManager.instance.player.transform.position;
+            rayDestination = GameManager.instance.player.GetComponent<FaceMouse>().GetCurrentMousePos() - raySource;
+            
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, damageRange, ~ignoreLayer))
+            if (Physics.Raycast(raySource, rayDestination, out hit, damageRange, ~ignoreLayer))
             {
                 IDamage damageTarget = hit.collider.GetComponent<IDamage>();
                 if (hit.transform != transform && damageTarget != null)
