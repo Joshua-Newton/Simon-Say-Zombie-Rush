@@ -79,19 +79,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     private bool isStunned = false;
 
     bool canHeal;
-    bool canWallRun = true;
-
-    float initialWallRunAngle;
-    float heightOriginal;
-    float origPosY;
-    float origScaleY;
 
     Collider wallRunCollider;
     Coroutine healingCoroutine;
     Coroutine healingDelayCoroutine;
 
-    RaycastHit leftHit;
-    RaycastHit rightHit;
     #endregion
 
     #region enum definitions
@@ -103,9 +95,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     void Start()
     {
         HPOriginal = HP;
-        heightOriginal = characterController.height;
-        origPosY = transform.position.y;
-        origScaleY = transform.localScale.y;
         gunModelOriginal = gunModel;
         meleeModelOriginal = meleeModel;
         UpdatePlayerUI();
@@ -245,16 +234,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         if (characterController.isGrounded)
         {
-            canWallRun = true;
             numGrapples = 0;
             playerVelocity = Vector3.zero;
         }
-    }
-
-    void EndWallRun()
-    {
-        isWallRunning = false;
-        canWallRun = false;
     }
 
     void Heal()
