@@ -73,7 +73,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isShooting;
     bool isGrappling;
     bool isWallRunning;
-    bool isCrouching;
     bool isSprinting;
     bool isPlayingStep;
     bool isMeleeing;
@@ -126,7 +125,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         Shooting();
         GrappleHook();
         ThrowGrenade();
-        Crouch();
         if (!GameManager.instance.isPaused)
         {
             SelectWeapon();
@@ -257,27 +255,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     {
         isWallRunning = false;
         canWallRun = false;
-    }
-
-    void Crouch()
-    {
-        if (Input.GetButtonDown("Crouch"))
-        {
-            characterController.height = heightOriginal / 2;
-            transform.localScale = new Vector3(transform.localScale.x, origScaleY / 2, transform.localScale.z);
-            transform.position = new Vector3(transform.position.x, origPosY / 2, transform.position.z);
-            isCrouching = true;
-
-        }
-        else if (Input.GetButtonUp("Crouch") && isCrouching)
-        {
-            characterController.height = heightOriginal;
-            transform.localScale = new Vector3(transform.localScale.x, origScaleY, transform.localScale.z);
-            transform.position = new Vector3(transform.position.x, origPosY, transform.position.z);
-            isCrouching = false;
-        }
-
-
     }
 
     void Heal()
