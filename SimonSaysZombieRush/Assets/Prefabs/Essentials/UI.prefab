@@ -3205,6 +3205,8 @@ MonoBehaviour:
   resultDisplay: {fileID: 7471107002491720401}
   timerDisplay: {fileID: 2437057329104455006}
   levelTime: 60
+  pointsPerItem: 100
+  pointsPerKill: 25
 --- !u!1 &4428256198308811708
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,9 @@ public class TimeTrialModeManager : GameManager
     [SerializeField] private TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
     [SerializeField] private float levelTime = 60f; // Total time for the level in seconds
 
+    [Range(0, 1000)] [SerializeField] int pointsPerItem = 100;
+    [Range(0, 1000)][SerializeField] int pointsPerKill = 25;
+
     private float remainingTime;
     private List<GameObject> possibleItems; // List of possible items
     private List<GameObject> commandSequence; // The generated command sequence
@@ -112,6 +115,8 @@ public class TimeTrialModeManager : GameManager
     // Call this function when the player collects an item
     public override void CollectItem(GameObject item)
     {
+        UpdateScore(pointsPerItem);
+
         if (playerSequence == null)
         {
             playerSequence = new List<string>();
@@ -139,12 +144,10 @@ public class TimeTrialModeManager : GameManager
         if (possibleItems.Count == 0)
         {
             StartCoroutine(ShowResultAndWin("All items collected"));
-            UpdateScore(100);
         }
         else if (playerSequence.Count == commandSequence.Count)
         {
             StartCoroutine(ShowResult("Correct sequence!"));
-            UpdateScore(100); // Update score for correct sequence
             ResetGameSequence();
         }
     }
@@ -156,6 +159,11 @@ public class TimeTrialModeManager : GameManager
         GenerateCommand();
         DisplayCommand();
         DisplayImageCommand();
+    }
+
+    public void UpdateScoreFromKill()
+    {
+        UpdateScore(pointsPerKill);
     }
 
     // Update the score and display it

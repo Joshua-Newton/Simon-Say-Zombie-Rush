@@ -208,9 +208,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         isStunned = false;
     }
 
-private void Die()
+    private void Die()
     {
         GameManager.instance.UpdateEnemyCount(-1);
+        if(TimeTrialModeManager.instance != null)
+        {
+            TimeTrialModeManager.instance.UpdateScoreFromKill();
+        }
 
         if(sourceWaveSpawner)
         {
@@ -225,6 +229,7 @@ private void Die()
         {
             DropRandomItem();
         }
+
 
         Destroy(gameObject);
     }
