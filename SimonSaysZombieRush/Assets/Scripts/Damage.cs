@@ -21,7 +21,7 @@ public class Damage : MonoBehaviour
     bool isDamaging;
     Coroutine spitCoroutine;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         if(type == damageType.bullet)
         {
@@ -37,7 +37,7 @@ public class Damage : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         
     }
