@@ -25,7 +25,7 @@ public class ItemCollection : PickupBase
             {
                 HordeModeManager.instance.CollectItem(gameObject);
             }
-            Destroy(gameObject); // Remove the item after collection
+            gameObject.SetActive(false); // Remove the item after collection. However, they still need to exist in lists for the game manager.
         }
     }
 }
