@@ -37,7 +37,7 @@ public class HordeModeManager : GameManager
         Debug.Log("Picked up: " + item.name);
     }
 
-    public override void LoseGame()
+    public override void LoseGame(string reason)
     {
         menuActive = menuLose;
         PauseAndOpenActiveMenu();

@@ -417,7 +417,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
         if (HP <= 0)
         {
-            GameManager.instance.LoseGame();
+            GameManager.instance.LoseGame("You died!");
         }
         else
         {

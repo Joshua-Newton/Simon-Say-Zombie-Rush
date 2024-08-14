@@ -55,12 +55,7 @@ public class ItemTimer : MonoBehaviour
             gameObject.SetActive(false);
             item.SetActive(false);
             expired = true;
-            TimeTrialModeManager.instance.EndTimer(timerIndex);
-            TimeTrialModeManager.instance.RemoveItemFromCollections(item);
-            TimeTrialModeManager.instance.NotifyPlayerOfMissedItem(item);
-            TimeTrialModeManager.instance.CheckSimonSequenceForUpdate();
-            TimeTrialModeManager.instance.CheckForLossByMissingItems();
-
+            TimeTrialModeManager.instance.HandleExpiredItem(item, timerIndex);
         }
     }
 

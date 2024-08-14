@@ -36,6 +36,7 @@ public class TimeTrialModeManager : GameManager
     private List<GameObject> collectedSequence; // The player's collected sequence
     private List<GameObject> playerInventory; // All of the items the player is holding
     private List<GameObject> timers;
+    private int totalCollectedItems = 0;
 
     protected override void Awake()
     {
@@ -84,6 +85,15 @@ public class TimeTrialModeManager : GameManager
         }
     }
 
+    public void HandleExpiredItem(GameObject item, int timerIndex)
+    {
+        EndTimer(timerIndex);
+        RemoveItemFromCollections(item);
+        NotifyPlayerOfMissedItem(item);
+        CheckSimonSequenceForUpdate();
+        CheckForLossByMissingItems();
+    }
+
     public void EndTimer(int timerIndex)
     {
         timers[timerIndex].gameObject.SetActive(false);
@@ -130,9 +140,9 @@ public class TimeTrialModeManager : GameManager
 
     public void CheckForLossByMissingItems()
     {
-        if (possibleItems.Count <= 0)
+        if (possibleItems.Count <= 0 && totalCollectedItems <= 0)
         {
-            LoseGame();
+            LoseGame("You couldn't collect any resources!");
         }
     }
 
@@ -206,10 +216,15 @@ public class TimeTrialModeManager : GameManager
     public void ReturnToBase()
     {
         UpdateScore(playerInventory.Count * pointsPerItem);
-        
-        if(possibleItems.Count <= 0)
+        totalCollectedItems += playerInventory.Count;
+
+        if(possibleItems.Count <= 0 && playerInventory.Count <= 0)
         {
-            StartCoroutine(ShowResultAndWin("All items collected"));
+            StartCoroutine(ShowResultAndWin("Returned To Base Successfully"));
+        }
+        else if(possibleItems.Count <= 0)
+        {
+            StartCoroutine(ShowResultAndWin("All possible items collected"));
         }
         else
         {
@@ -237,7 +252,8 @@ public class TimeTrialModeManager : GameManager
         // Time is up, player loses the game
         remainingTime = 0;
         UpdateTimerDisplay();
-        LoseGame();
+        // TODO: We're not causing the player to lose with this timer anymore. Modify this to be a countup timer instead
+        //LoseGame("Out of time!");
     }
 
     // Call this function when the player collects an item
@@ -319,8 +335,9 @@ public class TimeTrialModeManager : GameManager
         SceneManager.LoadScene(SceneManager.GetSceneByPath(nextScenePath).name);
     }
 
-    public override void LoseGame()
+    public override void LoseGame(string reason)
     {
+        loseMessage.text = reason;
         menuActive = menuLose;
         PauseAndOpenActiveMenu();
     }
