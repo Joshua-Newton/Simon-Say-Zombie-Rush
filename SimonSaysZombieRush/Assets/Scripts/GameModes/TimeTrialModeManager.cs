@@ -13,20 +13,29 @@ public class TimeTrialModeManager : GameManager
 {
     public static new TimeTrialModeManager instance;
 
+    [Header("Simon Says Mechanic")]
     [SerializeField] private int commandLength = 3; // Length of the command sequence
     [SerializeField] private TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
     [SerializeField] private GameObject[] commandImageObjects; // Possible positions for the images
     [SerializeField] private TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
     [SerializeField] private TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
-    [SerializeField] private float levelTime = 60f; // Total time for the level in seconds
-
+    [Header("Timers")]
+    [SerializeField] private float levelTime = 120f; // Total time for the level in seconds
+    [Header("Item Timers")]
+    [SerializeField] private GameObject timerParent;
+    [SerializeField] private GameObject itemTimerPrefab;
+    [SerializeField] private float timerSpacing;
+    [Header("Scoring")]
     [Range(0, 1000)] [SerializeField] int pointsPerItem = 100;
-    [Range(0, 1000)][SerializeField] int pointsPerKill = 25;
+    [Range(0, 1000)] [SerializeField] int pointsPerKill = 25;
+    [Range(0, 1000)] [SerializeField] int pointsBonusForSequence = 50;
 
     private float remainingTime;
     private List<GameObject> possibleItems; // List of possible items
     private List<GameObject> commandSequence; // The generated command sequence
-    private List<string> playerSequence; // The player's collected sequence
+    private List<GameObject> collectedSequence; // The player's collected sequence
+    private List<GameObject> playerInventory; // All of the items the player is holding
+    private List<GameObject> timers;
 
     protected override void Awake()
     {
@@ -36,7 +45,11 @@ public class TimeTrialModeManager : GameManager
 
     void Start()
     {
+        playerInventory = new List<GameObject>();
+        collectedSequence = new List<GameObject>();
+        timers = new List<GameObject>();
         InitializePossibleItems();
+        InitializeTimerUI();
         GenerateCommand();
         DisplayCommand();
         DisplayImageCommand();
@@ -46,6 +59,81 @@ public class TimeTrialModeManager : GameManager
     void InitializePossibleItems()
     {
         possibleItems = GameObject.FindGameObjectsWithTag("Pickup").Distinct().ToList();
+    }
+
+    void InitializeTimerUI()
+    {
+        for(int i = 0; i < possibleItems.Count; ++i)
+        {
+            GameObject newTimer = Instantiate(itemTimerPrefab, timerParent.transform);
+            RectTransform rt = newTimer.GetComponent<RectTransform>();
+            if(rt != null )
+            {
+                rt.SetPositionAndRotation(new Vector3(rt.position.x, rt.position.y - (i * timerSpacing), rt.position.z), Quaternion.identity);
+            }
+            ItemTimer timerComponent = newTimer.GetComponent<ItemTimer>();
+            if(timerComponent != null)
+            {
+                timerComponent.SetRemainingTime(possibleItems[i].GetComponent<ItemCollection>().GetSecondsToRetrieve());
+                timerComponent.SetItem(possibleItems[i]);
+                timerComponent.InitializeTimer(i);
+                possibleItems[i].GetComponent<ItemCollection>().SetTimerIndex(i);
+            }
+
+            timers.Add(newTimer);
+        }
+    }
+
+    public void EndTimer(int timerIndex)
+    {
+        timers[timerIndex].gameObject.SetActive(false);
+
+        for (int i = timerIndex + 1; i < timers.Count; ++i)
+        {
+            RectTransform rt = timers[i].GetComponent<RectTransform>();
+            if (rt != null)
+            {
+                rt.SetPositionAndRotation(new Vector3(rt.position.x, rt.position.y + timerSpacing, rt.position.z), Quaternion.identity);
+            }
+        }
+
+    }
+
+    public void RemoveItemFromCollections(GameObject item)
+    {
+        if(possibleItems.Contains(item))
+        {
+            possibleItems.Remove(item);
+        }
+        if(playerInventory.Contains(item))
+        {
+            playerInventory.Remove(item);
+        }
+    }
+
+    public void CheckSimonSequenceForUpdate()
+    {
+        for(int i = 0; i < commandSequence.Count; ++i)
+        {
+            if (!commandSequence[i].gameObject.activeSelf)
+            {
+                ResetGameSequence();
+            }
+        }
+    }
+
+    public void NotifyPlayerOfMissedItem(GameObject item)
+    {
+        StartCoroutine(ShowResult("Failed to collect " + item.name + " in time!"));
+        
+    }
+
+    public void CheckForLossByMissingItems()
+    {
+        if (possibleItems.Count <= 0)
+        {
+            LoseGame();
+        }
     }
 
     // Generate a random command sequence
@@ -64,11 +152,30 @@ public class TimeTrialModeManager : GameManager
     // Display the command sequence
     void DisplayCommand()
     {
-        commandDisplay.text = string.Join(", ", commandSequence.Select(item => item.name));
+        if(commandSequence.Count > 0)
+        {
+            commandDisplay.text = string.Join(", ", commandSequence.Select(item => item.name));
+        }
+        else
+        {
+            commandDisplay.text = "Return to base!";
+        }
+
     }
 
     void DisplayImageCommand()
     {
+        // If no command is left, disable the images and return
+        if(commandSequence.Count <= 0)
+        {
+            for(int i = 0; i < commandImageObjects.Count(); ++i)
+            {
+                commandImageObjects[i].gameObject.SetActive(false);
+            }
+            return;
+        }
+
+        // There are commands remaining, so update the images
         for (int i = 0; i < commandSequence.Count && i < commandImageObjects.Length; ++i)
         {
             Image imgComponent = commandImageObjects[i].GetComponent<Image>();
@@ -96,6 +203,27 @@ public class TimeTrialModeManager : GameManager
         StartCoroutine(LevelTimerCoroutine());
     }
 
+    public void ReturnToBase()
+    {
+        UpdateScore(playerInventory.Count * pointsPerItem);
+        
+        if(possibleItems.Count <= 0)
+        {
+            StartCoroutine(ShowResultAndWin("All items collected"));
+        }
+        else
+        {
+            StartCoroutine(ShowResult("Collected " + playerInventory.Count.ToString() + " items!"));
+        }
+
+        for(int i = 0; i < playerInventory.Count; ++i)
+        {
+            EndTimer(playerInventory[i].GetComponent<ItemCollection>().GetTimerIndex());
+        }
+
+        playerInventory.Clear();
+    }
+
     // Coroutine to manage the level timer
     IEnumerator LevelTimerCoroutine()
     {
@@ -115,25 +243,19 @@ public class TimeTrialModeManager : GameManager
     // Call this function when the player collects an item
     public override void CollectItem(GameObject item)
     {
-        UpdateScore(pointsPerItem);
-
-        if (playerSequence == null)
-        {
-            playerSequence = new List<string>();
-        }
-
-        playerSequence.Add(item.name);
+        playerInventory.Add(item);
+        collectedSequence.Add(item);
         possibleItems.Remove(item); // Remove the item from the possibleItems list
 
-        CheckPlayerSequence();
+        CheckCollectedSequence();
     }
 
     // Validate the player's collected sequence
-    void CheckPlayerSequence()
+    void CheckCollectedSequence()
     {
-        for (int i = 0; i < playerSequence.Count; i++)
+        for (int i = 0; i < collectedSequence.Count; i++)
         {
-            if (playerSequence[i] != commandSequence[i].name)
+            if (collectedSequence[i] != commandSequence[i])
             {
                 StartCoroutine(ShowResult("Incorrect sequence!"));
                 ResetGameSequence();
@@ -141,11 +263,7 @@ public class TimeTrialModeManager : GameManager
             }
         }
 
-        if (possibleItems.Count == 0)
-        {
-            StartCoroutine(ShowResultAndWin("All items collected"));
-        }
-        else if (playerSequence.Count == commandSequence.Count)
+        if (collectedSequence.Count == commandSequence.Count)
         {
             StartCoroutine(ShowResult("Correct sequence!"));
             ResetGameSequence();
@@ -155,7 +273,7 @@ public class TimeTrialModeManager : GameManager
     // Reset the game for a new command
     void ResetGameSequence()
     {
-        playerSequence.Clear();
+        collectedSequence.Clear();
         GenerateCommand();
         DisplayCommand();
         DisplayImageCommand();

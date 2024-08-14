@@ -29,7 +29,7 @@ public abstract class GameManager : MonoBehaviour
     public Collider playerCollider;
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
-    public  TMP_Text ammoCurrent, ammoMax;
+    public TMP_Text ammoCurrent, ammoMax;
 
     protected float initialTimeScale;
     protected int enemyCount;

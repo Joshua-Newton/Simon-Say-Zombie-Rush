@@ -6,7 +6,7 @@ public class PickupBase : MonoBehaviour
 {
     [SerializeField] float spinSpeed;
 
-    protected void Update()
+    protected virtual void Update()
     {
         RotatePickup();
     }

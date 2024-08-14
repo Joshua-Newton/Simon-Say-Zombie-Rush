@@ -17,6 +17,7 @@ public class FaceMouse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        distanceToCamera = (Camera.main.transform.position - GameManager.instance.player.transform.position).magnitude;
         RotateToFaceMouse();
     }
 

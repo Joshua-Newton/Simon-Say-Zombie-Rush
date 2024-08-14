@@ -58,6 +58,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinSpeed: 1
   itemSprite: {fileID: 21300000, guid: ced59a8cd6355584686503532162cffe, type: 3}
+  secondsToRetrieve: 30
 --- !u!23 &8732204358629120661
 MeshRenderer:
   m_ObjectHideFlags: 0

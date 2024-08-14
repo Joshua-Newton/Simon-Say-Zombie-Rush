@@ -400,6 +400,41 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &582441738611105382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 113816513791535456}
+  m_Layer: 5
+  m_Name: Timers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &113816513791535456
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582441738611105382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 39398083524530707}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -188, y: -557}
+  m_SizeDelta: {x: 356.2081, y: 776}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &622370738777877456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,8 +3240,12 @@ MonoBehaviour:
   resultDisplay: {fileID: 7471107002491720401}
   timerDisplay: {fileID: 2437057329104455006}
   levelTime: 60
+  timerParent: {fileID: 582441738611105382}
+  itemTimerPrefab: {fileID: 7469691690341086678, guid: 3793e1060a9ee104f8d82edc64602eac, type: 3}
+  timerSpacing: 45
   pointsPerItem: 100
   pointsPerKill: 25
+  pointsBonusForSequence: 50
 --- !u!1 &4428256198308811708
 GameObject:
   m_ObjectHideFlags: 0
@@ -4427,6 +4466,7 @@ RectTransform:
   - {fileID: 2289690177669319110}
   - {fileID: 7260934408853656701}
   - {fileID: 7455363612240330146}
+  - {fileID: 113816513791535456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
