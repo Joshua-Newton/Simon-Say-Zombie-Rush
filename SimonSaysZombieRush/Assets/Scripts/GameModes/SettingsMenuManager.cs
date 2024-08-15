@@ -21,15 +21,15 @@ public class SettingsMenuManager : MonoBehaviour
     }
     public void ChangeMusicVolume()
     {
-        mainAudioMixer.SetFloat("MusicVol", Mathf.Log10(musicVol.value) * 20f);
+        mainAudioMixer.SetFloat("MusicVol", musicVol.value);
     }
     public void ChangeSfxVolume()
     {
-        mainAudioMixer.SetFloat("SFXVol", Mathf.Log10(sfxVol.value) * 20f);
+        mainAudioMixer.SetFloat("SFXVol", sfxVol.value);
     }
     public void ChangeMenuVolume()
     {
-        mainAudioMixer.SetFloat("MenuVol", Mathf.Log10(menuVol.value) * 20f);
+        mainAudioMixer.SetFloat("MenuVol", menuVol.value);
     }
 
 }
