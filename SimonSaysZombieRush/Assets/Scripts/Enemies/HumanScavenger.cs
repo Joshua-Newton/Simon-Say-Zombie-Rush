@@ -11,10 +11,8 @@ public class HumanScavenger : EnemyShooter
 
     GameObject supplyItem;
     bool foundItem;
-    bool enemyInRange;
     bool isSwiveling;
     bool swivelDirection;
-    GameObject enemyTarget;
     float playerDistFromSupply;
     float randomOffset;
 
@@ -63,7 +61,7 @@ public class HumanScavenger : EnemyShooter
             agent.SetDestination(other.gameObject.transform.position);
         }
 
-        if (other.CompareTag("Enemy") && Physics.Raycast(headPos.position, headPos.position - other.transform.position, out hit))
+        if (other.CompareTag("Enemy") && Physics.Raycast(headPos.position, otherDirection, out hit))
         {
             // TODO: Implement Scavenger attacking zombies
             Debug.Log("Enemy detected");
@@ -128,8 +126,6 @@ public class HumanScavenger : EnemyShooter
             randomOffset = Random.Range(-swivelAngle, 0);
         }
         swivelDirection = !swivelDirection;
-        //float randomOffset = Random.Range(-swivelAngle, swivelAngle);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y + randomOffset, transform.rotation.z), faceTargetSpeed * Time.deltaTime);
         yield return new WaitForSeconds(2f);
         isSwiveling = false;
     }
