@@ -1,0 +1,5 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SimonSaysZombieRush/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
