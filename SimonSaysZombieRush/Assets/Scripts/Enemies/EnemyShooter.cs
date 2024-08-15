@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemyShooter : EnemyAI
 {
     [Header("----- Shooting -----")]
-    [SerializeField] GameObject bullet;
-    [SerializeField] Transform shootPos;
-    [SerializeField] float shootDelay;
-    bool isShooting;
+    [SerializeField] protected GameObject bullet;
+    [SerializeField] protected Transform shootPos;
+    [SerializeField] protected float shootDelay;
+    protected bool isShooting;
 
     // Start is called before the first frame update
     protected override void Start()

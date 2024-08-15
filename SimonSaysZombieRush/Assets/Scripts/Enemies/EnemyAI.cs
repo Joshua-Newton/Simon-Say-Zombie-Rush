@@ -70,12 +70,26 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     protected virtual void Update()
     {
+        SetAnimationSpeed();
+        UpdatePlayerPositionData();
+        ChaseAndRoam();
+        Speak();
+    }
+
+    protected void SetAnimationSpeed()
+    {
         float agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTransition));
+    }
 
+    protected void UpdatePlayerPositionData()
+    {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+    }
 
+    protected virtual void ChaseAndRoam()
+    {
         if (alwaysChasePlayer)
         {
             Move();
@@ -84,20 +98,24 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
                 Attack();
             }
         }
-        else if (!playerInRange || (playerInRange && canSeePlayer()))
+        else if (!playerInRange || (playerInRange && CanSeePlayer()))
         {
-            if(!isRoaming && agent.remainingDistance < 0.05f)
+            if (!isRoaming && agent.remainingDistance < 0.05f)
             {
                 StartCoroutine(Roam());
             }
         }
 
-        if(!isSpeaking)
+    }
+
+    protected virtual void Speak()
+    {
+        if (!isSpeaking)
         {
             StartCoroutine(Groan());
         }
-
     }
+
 
     IEnumerator Groan()
     {
@@ -107,7 +125,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         isSpeaking = false;
     }
 
-    IEnumerator Roam()
+    protected IEnumerator Roam()
     {
         isRoaming = true;
         yield return new WaitForSeconds(roamTimer);
@@ -123,7 +141,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         isRoaming = false;
     }
 
-    bool canSeePlayer()
+    protected bool CanSeePlayer()
     {
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit) || alwaysChasePlayer)
@@ -141,7 +159,20 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         return false;
     }
 
-    private void Move()
+    protected bool CanSeePlayerWithoutMovingOrAttacking()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, playerDir, out hit) || alwaysChasePlayer)
+        {
+            if ((hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle) || alwaysChasePlayer)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected virtual void Move()
     {
         if (!isGrenadeEffectActive)
         {
@@ -156,7 +187,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
 
     protected abstract void Attack();
     
-    void OnTriggerEnter(Collider other)
+    virtual protected void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
