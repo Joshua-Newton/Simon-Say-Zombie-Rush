@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class WeaponStats : ScriptableObject
 {
-    public enum WeaponType { Gun, Melee, Grenade }
+    public enum WeaponType { Gun, Melee, Grenade, Projectile }
 
     public GameObject weaponModel;
+    public GameObject projectile;
     public WeaponType weaponType;
     public int damage;
     public int damageRange;

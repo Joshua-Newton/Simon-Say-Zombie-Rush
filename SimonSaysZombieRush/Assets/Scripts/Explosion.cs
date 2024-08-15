@@ -7,7 +7,7 @@ public class Explosion : MonoBehaviour
     [Header("----- Explosion Sound -----")]
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] explosionSounds;
-    [Range(0, 1)][SerializeField] float volume;
+    [Range(0, 1)] [SerializeField] float volume;
 
     [Header("----- Explosion Components -----")]
     [SerializeField] ParticleSystem particles;
@@ -43,4 +43,10 @@ public class Explosion : MonoBehaviour
         yield return new WaitForSeconds(explosionDamageTime);
         explosionCollider.enabled = false;
     }
+
+    public void SetExplosionDamage(int newDamage)
+    {
+        explosionCollider.GetComponent<Damage>().SetDamage(newDamage);
+    }
+
 }

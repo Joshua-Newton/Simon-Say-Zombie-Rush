@@ -282,7 +282,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         damageRange = weaponList[selectedWeapon].damageRange;
         damageDelay = weaponList[selectedWeapon].damageDelay;
 
-        if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun)
+        if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun || weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Projectile)
         {
             gunModel.SetActive(true);
             meleeModel.SetActive(false);

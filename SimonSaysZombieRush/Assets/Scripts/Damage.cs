@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    [SerializeField] enum damageType { bullet, stationary, spit, flame };
-    [SerializeField] damageType type;
-    [SerializeField] Rigidbody rb;
-    [SerializeField] int damageAmount;
-    [SerializeField] int speed;
-    [SerializeField] int destroyTime;
-    [SerializeField] GameObject acid;
-    [SerializeField] float acidDuration;
-    [SerializeField] bool repeatDamage;
-    [SerializeField] float repeatDelay;
-    [SerializeField] bool damagePlayer = true;
+    [SerializeField] protected enum damageType { bullet, stationary, spit, flame };
+    [SerializeField] protected damageType type;
+    [SerializeField] protected Rigidbody rb;
+    [SerializeField] protected int damageAmount;
+    [SerializeField] protected int speed;
+    [SerializeField] protected int destroyTime;
+    [SerializeField] protected GameObject acid;
+    [SerializeField] protected float acidDuration;
+    [SerializeField] protected bool repeatDamage;
+    [SerializeField] protected float repeatDelay;
+    [SerializeField] protected bool damagePlayer = true;
 
-    bool hasDamaged;
-    bool isDamaging;
-    Coroutine spitCoroutine;
+    protected bool hasDamaged;
+    protected bool isDamaging;
+    protected Coroutine spitCoroutine;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -118,4 +118,10 @@ public class Damage : MonoBehaviour
         yield return new WaitForSeconds(repeatDelay);
         isDamaging = false;
     }
+
+    public void SetDamage(int newDamage)
+    {
+        damageAmount = newDamage;
+    }
+
 }
