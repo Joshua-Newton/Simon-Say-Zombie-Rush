@@ -78,8 +78,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
 
     protected void SetAnimationSpeed()
     {
-        float agentSpeed = agent.velocity.normalized.magnitude;
-        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTransition));
+        if(anim != null)
+        {
+            float agentSpeed = agent.velocity.normalized.magnitude;
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTransition));
+        }
     }
 
     protected void UpdatePlayerPositionData()
@@ -120,7 +123,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     IEnumerator Groan()
     {
         isSpeaking = true;
-        audSource.PlayOneShot(groanSounds[Random.Range(0, groanSounds.Count())], groanVolume);
+        if(groanSounds.Length > 0)
+        {
+            audSource.PlayOneShot(groanSounds[Random.Range(0, groanSounds.Count())], groanVolume);
+        }
         yield return new WaitForSeconds(minTimeBetweenSounds + Random.Range(-timeVariance, timeVariance));
         isSpeaking = false;
     }
@@ -239,7 +245,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         isStunned = false;
     }
 
-    private void Die()
+    protected virtual void Die()
     {
         GameManager.instance.UpdateEnemyCount(-1);
         if(TimeTrialModeManager.instance != null)

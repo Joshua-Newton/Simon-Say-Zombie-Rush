@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Explosion : Damage
+public class Explosion : MonoBehaviour
 {
     [Header("----- Explosion Sound -----")]
     [SerializeField] AudioSource audioSource;
@@ -21,10 +21,8 @@ public class Explosion : Damage
     [SerializeField] float explosionObjectLifeTime;
 
     // Start is called before the first frame update
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
-        audioSource.PlayOneShot(explosionSounds[Random.Range(0, explosionSounds.Length)], volume);
         if (expandingExplosion)
         {
             explosionCollider.radius = Mathf.Lerp(explosionStartingRadius, explosionRadiusMax, explosionDamageTime);
@@ -33,6 +31,7 @@ public class Explosion : Damage
         {
             explosionCollider.radius = explosionRadiusMax;
         }
+        audioSource.PlayOneShot(explosionSounds[Random.Range(0, explosionSounds.Length)], volume);
         StartCoroutine(EnableDamage());
         Destroy(gameObject, explosionObjectLifeTime);
     }
@@ -43,13 +42,5 @@ public class Explosion : Damage
         explosionCollider.enabled = true;
         yield return new WaitForSeconds(explosionDamageTime);
         explosionCollider.enabled = false;
-    }
-
-
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
     }
 }
