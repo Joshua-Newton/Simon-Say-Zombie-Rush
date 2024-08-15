@@ -369,6 +369,8 @@ MonoBehaviour:
   speed: 8
   sprintMultiplier: 2
   gravity: 20
+  startingWeapons:
+  - {fileID: 9006916951281124391, guid: 7f16cfa23eeef274cb05558fdfb2b7c6, type: 3}
   weaponList: []
   gunModel: {fileID: 3921498464701255060}
   meleeModel: {fileID: 5309740781932959731}
@@ -379,9 +381,6 @@ MonoBehaviour:
   grappleRange: 20
   grappleMaxConsecutiveUses: 1
   grappleRenderer: {fileID: 7563562730603081131}
-  wallRunSpeed: 8
-  maxWallRunTime: 2
-  wallRunDistance: 1
   gravityGrenadePrefab: {fileID: 8517655606910467015, guid: 7000437e52bbe554f80161ddbd405edf, type: 3}
   grenadeSpawnPoint: {fileID: 8117207031737159191}
   throwForce: 15
@@ -489,7 +488,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

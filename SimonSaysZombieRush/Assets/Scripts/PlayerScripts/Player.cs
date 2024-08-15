@@ -21,7 +21,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] AudioClip[] audioMelee;
     [Range(0, 1)][SerializeField] float audioMeleeVolume = 0.5f;
 
-
     [Header("----- Player -----")]
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -31,6 +30,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] float gravity;
 
     [Header("----- Weapons -----")]
+    [SerializeField] List<GameObject> startingWeapons;
     [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject meleeModel;
@@ -97,6 +97,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         HPOriginal = HP;
         gunModelOriginal = gunModel;
         meleeModelOriginal = meleeModel;
+        EquipStartingWeapons();
         UpdatePlayerUI();
         SpawnPlayer();
     }
@@ -123,6 +124,18 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     #endregion
 
     #region Private Methods
+    void EquipStartingWeapons()
+    {
+        foreach(GameObject weapon in startingWeapons)
+        {
+            WeaponPickup pickup = weapon.GetComponent<WeaponPickup>();
+            if (pickup != null)
+            {
+                GetWeaponStats(pickup.GetWeaponStats());
+            }
+        }
+    }
+
     void Movement()
     {
         movementDirection = (Input.GetAxis("Horizontal") * Vector3.right + Input.GetAxis("Vertical") * Vector3.forward);

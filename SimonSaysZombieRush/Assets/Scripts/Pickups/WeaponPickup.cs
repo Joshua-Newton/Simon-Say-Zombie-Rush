@@ -16,4 +16,9 @@ public class WeaponPickup : PickupBase
             Destroy(gameObject);
         }
     }
+
+    public WeaponStats GetWeaponStats()
+    {
+        return weapon;
+    }
 }
