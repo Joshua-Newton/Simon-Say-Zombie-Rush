@@ -8,19 +8,19 @@ public class SettingsMenuManager : MonoBehaviour
 
     public void ChangeMasterVolume()
     {
-        mainAudioMixer.SetFloat("MasterVol", masterVol.value);
+        mainAudioMixer.SetFloat("MasterVol", Mathf.Log10(masterVol.value) * 20f);
     }
     public void ChangeMusicVolume()
     {
-        mainAudioMixer.SetFloat("MusicVol", musicVol.value);
+        mainAudioMixer.SetFloat("MusicVol", Mathf.Log10(musicVol.value) * 20f);
     }
     public void ChangeSfxVolume()
     {
-        mainAudioMixer.SetFloat("SFXVol", sfxVol.value);
+        mainAudioMixer.SetFloat("SFXVol", Mathf.Log10(sfxVol.value) * 20f);
     }
     public void ChangeMenuVolume()
     {
-        mainAudioMixer.SetFloat("MenuVol", menuVol.value);
+        mainAudioMixer.SetFloat("MenuVol", Mathf.Log10(menuVol.value) * 20f);
     }
 
 }
