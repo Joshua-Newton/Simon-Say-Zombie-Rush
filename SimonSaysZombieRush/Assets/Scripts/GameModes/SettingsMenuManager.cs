@@ -6,9 +6,18 @@ public class SettingsMenuManager : MonoBehaviour
     public Slider masterVol, musicVol,menuVol, sfxVol;
     public AudioMixer mainAudioMixer;
 
+    private void Awake()
+    {
+        mainAudioMixer.SetFloat("MasterVol", -40);
+        masterVol.value = -40;
+        mainAudioMixer.SetFloat("MusicVol", 0);
+        mainAudioMixer.SetFloat("SFXVol", 0);
+        mainAudioMixer.SetFloat("MenuVol", 0);
+    }
+
     public void ChangeMasterVolume()
     {
-        mainAudioMixer.SetFloat("MasterVol", Mathf.Log10(masterVol.value) * 20f);
+        mainAudioMixer.SetFloat("MasterVol", masterVol.value);
     }
     public void ChangeMusicVolume()
     {
