@@ -11,6 +11,7 @@ TagManager:
   - Player Spawn Pos
   - WallRun
   - Breakable Object
+  - Flame
   layers:
   - Default
   - TransparentFX

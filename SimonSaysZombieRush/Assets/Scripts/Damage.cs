@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    [SerializeField] enum damageType { bullet, stationary, spit };
+    [SerializeField] enum damageType { bullet, stationary, spit, flame };
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
     [SerializeField] int damageAmount;
@@ -78,7 +78,7 @@ public class Damage : MonoBehaviour
             return; // ignore enemies and other triggers for ontriggerstay interactions
         }
 
-        if (type == damageType.stationary && repeatDamage && !isDamaging)
+        if ((type == damageType.stationary || type == damageType.flame) && repeatDamage && !isDamaging)
         {
             IDamage damageTarget = other.GetComponent<IDamage>();
             if(damageTarget != null)
