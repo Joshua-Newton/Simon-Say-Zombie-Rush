@@ -20,6 +20,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [Range(0, 1)] [SerializeField] float audioHurtVolume = 0.5f;
     [SerializeField] AudioClip[] audioMelee;
     [Range(0, 1)][SerializeField] float audioMeleeVolume = 0.5f;
+    [SerializeField]  AudioClip audioDamage;
+    [Range(0, 10)][SerializeField] float damageVolume;
 
     [Header("----- Player -----")]
     [SerializeField] int HP;
@@ -76,6 +78,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isSprinting;
     bool isPlayingStep;
     bool isMeleeing;
+    bool isBurning;
     private bool isStunned = false;
     public CameraController cameraController;
 
@@ -316,6 +319,22 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         }
     }
 
+    void OnTriggerEnter (Collider other)
+    {
+        if (other.gameObject.tag == "Lava")
+        {
+            StartCoroutine(PlayBurning());
+        }
+    }
+
+    void OnTriggerExit (Collider other)
+    {
+        if (other.gameObject.tag == "Lava")
+        {
+            StopCoroutine(PlayBurning());
+        }
+    }
+
     #endregion
 
     #region IEnumerator Coroutines
@@ -402,6 +421,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         
         yield return new WaitForSeconds(damageDelay);
         isShooting = false;
+    }
+
+    IEnumerator PlayBurning()
+    {
+        isBurning = true;
+        aud.PlayOneShot(audioDamage, damageVolume);
+        yield return new WaitForSeconds(0.05f);
+        isBurning = false;
     }
 
 

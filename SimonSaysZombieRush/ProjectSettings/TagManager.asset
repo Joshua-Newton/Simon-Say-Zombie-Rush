@@ -12,6 +12,7 @@ TagManager:
   - WallRun
   - Breakable Object
   - Flame
+  - Lava
   layers:
   - Default
   - TransparentFX

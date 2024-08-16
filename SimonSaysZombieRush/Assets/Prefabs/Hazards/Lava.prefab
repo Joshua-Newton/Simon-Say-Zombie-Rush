@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7303268685825981922}
   m_Layer: 0
   m_Name: Lava
-  m_TagString: Untagged
+  m_TagString: Lava
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,8 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   rb: {fileID: 3214669543878298245}
-  aud: {fileID: 7303268685825981922}
-  audioDamage: {fileID: 8300000, guid: b4ebb0a7f56be7548ba76d144651830e, type: 3}
   damageAmount: 1
   speed: 0
   destroyTime: 0
@@ -89,7 +87,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 24ab7caaab3818f449013a8636a1df4a, type: 2}
+  - {fileID: 2100000, guid: 34b8e744786669c4ba11a50e5aebea0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -179,10 +177,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 6.144078
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

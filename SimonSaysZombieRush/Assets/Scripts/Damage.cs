@@ -16,12 +16,11 @@ public class Damage : MonoBehaviour
     [SerializeField] protected bool repeatDamage;
     [SerializeField] protected float repeatDelay;
     [SerializeField] protected bool damagePlayer = true;
-    [SerializeField] protected AudioSource aud;
-    [SerializeField] protected AudioClip audioDamage;
-    [Range(0, 10)] [SerializeField] float damageVolume;
+
 
     protected bool hasDamaged;
     protected bool isDamaging;
+    protected bool isBurning;
     protected Coroutine spitCoroutine;
     // Start is called before the first frame update
     protected virtual void Start()
@@ -88,11 +87,8 @@ public class Damage : MonoBehaviour
             {
                 StartCoroutine(repeatingDamage(damageTarget));
             }
-
-            if (type == damageType.lava)
-                aud.PlayOneShot(audioDamage, damageVolume);
-           
         }
+
     }
 
     IEnumerator spit()
@@ -130,5 +126,4 @@ public class Damage : MonoBehaviour
     {
         damageAmount = newDamage;
     }
-
 }

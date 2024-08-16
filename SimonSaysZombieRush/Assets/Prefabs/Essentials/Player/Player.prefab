@@ -321,7 +321,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d2f515d96ff6be6499149f550a1cf212, type: 3}
   - {fileID: 8300000, guid: ef2d2769036d17d44bd0079248c78112, type: 3}
   - {fileID: 8300000, guid: a959e649699338748a6ae6facdfc4f7d, type: 3}
-  audioHurtVolume: 0.3
+  audioHurtVolume: 0.315
   audioMelee:
   - {fileID: 8300000, guid: 4dd3709bc57e142658a6b53f15346ce6, type: 3}
   - {fileID: 8300000, guid: 205be67afd3eb43a18e9e78c60a271f1, type: 3}
@@ -365,7 +365,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5e14240ed39c243e598d813e91876436, type: 3}
   - {fileID: 8300000, guid: 3304a2d00b0bc406db9e5374c75d9452, type: 3}
   audioMeleeVolume: 0.1
-  HP: 5
+  audioDamage: {fileID: 8300000, guid: 7cb990e14562b4d43939b5e82742bacf, type: 3}
+  damageVolume: 0.64
+  HP: 20
   speed: 8
   sprintMultiplier: 2
   gravity: 20
@@ -388,6 +390,7 @@ MonoBehaviour:
   healAmount: 1
   healInterval: 2
   healDelay: 2
+  cameraController: {fileID: 0}
 --- !u!114 &-1330740601553871819
 MonoBehaviour:
   m_ObjectHideFlags: 0
