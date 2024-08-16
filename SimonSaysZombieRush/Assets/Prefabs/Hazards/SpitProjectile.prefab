@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8307762558418374229}
   - component: {fileID: 1858486763675241282}
   - component: {fileID: 6209495484640970690}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpitProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,6 +57,7 @@ MonoBehaviour:
   acidDuration: 5
   repeatDamage: 0
   repeatDelay: 0
+  damagePlayer: 1
 --- !u!135 &3197329376116836574
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject meleeModel;
-
+    [SerializeField] Transform shootPos;
     [SerializeField] int damage;
     [SerializeField] float damageRange;
     [SerializeField] float damageDelay;
@@ -180,11 +180,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
     void Shooting()
     {
-        if (Input.GetButton("Fire1") && weaponList.Count > 0 && weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun && weaponList[selectedWeapon].ammoCurrent > 0 && !isShooting && !GameManager.instance.isPaused)
+        WeaponStats.WeaponType type = weaponList[selectedWeapon].weaponType;
+        if (Input.GetButton("Fire1") && weaponList.Count > 0 && type != WeaponStats.WeaponType.Melee && weaponList[selectedWeapon].ammoCurrent > 0 && !isShooting && !GameManager.instance.isPaused)
         {
             StartCoroutine(Shoot());
         }
-        else if (Input.GetButton("Fire1") && weaponList.Count > 0 && weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee && !isMeleeing && !GameManager.instance.isPaused)
+        else if (Input.GetButton("Fire1") && weaponList.Count > 0 && type == WeaponStats.WeaponType.Melee && !isMeleeing && !GameManager.instance.isPaused)
         {
             Melee();
         }
@@ -418,7 +419,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
                 }
             }
         }
-        
+        else if (currentWeapon.weaponType == WeaponStats.WeaponType.Projectile)
+        {
+            isShooting = true;
+            aud.PlayOneShot(currentWeapon.shootSound, currentWeapon.shootVol);
+
+            currentWeapon.ammoCurrent--;
+            UpdatePlayerUI();
+
+            Instantiate(currentWeapon.projectile, shootPos.position, shootPos.rotation);
+        }
+
         yield return new WaitForSeconds(damageDelay);
         isShooting = false;
     }

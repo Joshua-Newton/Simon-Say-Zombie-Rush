@@ -147,7 +147,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.5025635
+        value: 0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -156,7 +156,7 @@ TrailRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 1
+        value: 0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 8299091647182229118}
   - component: {fileID: 8166365040149606910}
   - component: {fileID: 3048379191291801476}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

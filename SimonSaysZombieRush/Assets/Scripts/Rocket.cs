@@ -18,13 +18,10 @@ public class Rocket : Damage
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
         Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
+
     }
+    
 
 }
