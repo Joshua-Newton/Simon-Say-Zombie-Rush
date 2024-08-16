@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    [SerializeField] protected enum damageType { bullet, stationary, spit, flame };
+    [SerializeField] protected enum damageType { bullet, stationary, spit, flame, lava };
     [SerializeField] protected damageType type;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected int damageAmount;
@@ -16,6 +16,9 @@ public class Damage : MonoBehaviour
     [SerializeField] protected bool repeatDamage;
     [SerializeField] protected float repeatDelay;
     [SerializeField] protected bool damagePlayer = true;
+    [SerializeField] protected AudioSource aud;
+    [SerializeField] protected AudioClip audioDamage;
+    [Range(0, 10)] [SerializeField] float damageVolume;
 
     protected bool hasDamaged;
     protected bool isDamaging;
@@ -78,13 +81,17 @@ public class Damage : MonoBehaviour
             return; // ignore enemies and other triggers for ontriggerstay interactions
         }
 
-        if ((type == damageType.stationary || type == damageType.flame) && repeatDamage && !isDamaging)
+        if ((type == damageType.stationary || type == damageType.flame || type == damageType.lava) && repeatDamage && !isDamaging)
         {
             IDamage damageTarget = other.GetComponent<IDamage>();
             if(damageTarget != null)
             {
                 StartCoroutine(repeatingDamage(damageTarget));
             }
+
+            if (type == damageType.lava)
+                aud.PlayOneShot(audioDamage, damageVolume);
+           
         }
     }
 
