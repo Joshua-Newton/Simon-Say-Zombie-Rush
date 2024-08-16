@@ -473,6 +473,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         aud.PlayOneShot(audioHurt[Random.Range(0, audioHurt.Length)], audioHurtVolume);
         StartCoroutine(flashScreenDamage());
 
+        // Trigger camera shake based on damage
+        if (cameraController != null)
+        {
+            // Set shake intensity proportional to damage, with clamping to ensure reasonable values
+            float shakeMagnitude = Mathf.Clamp((float)amount / 100f, 0.1f, 1f);
+            cameraController.TriggerShake(0.5f, shakeMagnitude); // Shake for 0.5 seconds with proportional intensity
+        }
+
         if (HP <= 0)
         {
             GameManager.instance.LoseGame("You died!");
