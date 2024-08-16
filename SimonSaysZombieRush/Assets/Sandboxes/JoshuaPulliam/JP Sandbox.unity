@@ -6770,6 +6770,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8915249047749293552, guid: 276dd22c4764a4145b92e1355d0079ff, type: 3}
   m_PrefabInstance: {fileID: 204422666}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1121617179
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.910934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.4631815
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7029355455798826344, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: m_Name
+      value: Lava
+      objectReference: {fileID: 0}
+    - target: {fileID: 7303268685825981922, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: MinDistance
+      value: 5.1609344
+      objectReference: {fileID: 0}
+    - target: {fileID: 7303268685825981922, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532939881765243318, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
+      propertyPath: damageVolume
+      value: 3.14
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
 --- !u!1001 &1129739511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11068,18 +11137,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 846423667}
     m_Modifications:
     - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499778152214666238, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 27.500004
       objectReference: {fileID: 0}
@@ -11119,10 +11176,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1807975703233506021, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 24ab7caaab3818f449013a8636a1df4a, type: 2}
     - target: {fileID: 7029355455798826344, guid: 8081d5599b3ab524c96086dd79103fc3, type: 3}
       propertyPath: m_Name
       value: Lava
@@ -13102,3 +13155,4 @@ SceneRoots:
   - {fileID: 1601621200516070827}
   - {fileID: 2117308507}
   - {fileID: 980810838}
+  - {fileID: 1121617179}
