@@ -77,6 +77,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isPlayingStep;
     bool isMeleeing;
     private bool isStunned = false;
+    public CameraController cameraController;
 
     bool canHeal;
 
@@ -120,6 +121,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
             SelectWeapon();
         }
         Heal();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // Trigger the camera shake with a duration of 0.5 seconds and magnitude of 0.5
+            cameraController.TriggerShake(0.5f, 0.5f);
+        }
     }
     #endregion
 
@@ -534,4 +541,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
 
 
     #endregion
+
+ 
+
+ 
 }
