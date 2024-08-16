@@ -20,7 +20,7 @@ public class TimeTrialModeManager : GameManager
     [SerializeField] private TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
     [SerializeField] private TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
     [Header("Timers")]
-    [SerializeField] private float levelTime = 120f; // Total time for the level in seconds
+    private float levelTime = 0f; // Total time for the level in seconds
     [Header("Item Timers")]
     [SerializeField] private GameObject timerParent;
     [SerializeField] private GameObject itemTimerPrefab;
@@ -30,7 +30,7 @@ public class TimeTrialModeManager : GameManager
     [Range(0, 1000)] [SerializeField] int pointsPerKill = 25;
     [Range(0, 1000)] [SerializeField] int pointsBonusForSequence = 50;
 
-    private float remainingTime;
+  
     private List<GameObject> possibleItems; // List of possible items
     private List<GameObject> commandSequence; // The generated command sequence
     private List<GameObject> collectedSequence; // The player's collected sequence
@@ -64,16 +64,16 @@ public class TimeTrialModeManager : GameManager
 
     void InitializeTimerUI()
     {
-        for(int i = 0; i < possibleItems.Count; ++i)
+        for (int i = 0; i < possibleItems.Count; ++i)
         {
             GameObject newTimer = Instantiate(itemTimerPrefab, timerParent.transform);
             RectTransform rt = newTimer.GetComponent<RectTransform>();
-            if(rt != null )
+            if (rt != null)
             {
                 rt.SetPositionAndRotation(new Vector3(rt.position.x, rt.position.y - (i * timerSpacing), rt.position.z), Quaternion.identity);
             }
             ItemTimer timerComponent = newTimer.GetComponent<ItemTimer>();
-            if(timerComponent != null)
+            if (timerComponent != null)
             {
                 timerComponent.SetRemainingTime(possibleItems[i].GetComponent<ItemCollection>().GetSecondsToRetrieve());
                 timerComponent.SetItem(possibleItems[i]);
@@ -84,6 +84,12 @@ public class TimeTrialModeManager : GameManager
             timers.Add(newTimer);
         }
     }
+
+
+    // Timer variables
+    private float timePassed = 120f;
+    private new bool isPaused = false;
+    private bool isLevelTimerRunning = false;
 
     public void HandleExpiredItem(GameObject item, int timerIndex)
     {
@@ -201,16 +207,53 @@ public class TimeTrialModeManager : GameManager
     // Display the timer in MM:SS format
     void UpdateTimerDisplay()
     {
-        int minutes = Mathf.FloorToInt(remainingTime / 60);
-        int seconds = Mathf.FloorToInt(remainingTime % 60);
+        int minutes = Mathf.FloorToInt(timePassed / 60);
+        int seconds = Mathf.FloorToInt(timePassed % 60);
         timerDisplay.text = $"{minutes:0}:{seconds:00}";
+    }
+
+    private void Update()
+    {
+        if (isLevelTimerRunning && !isPaused)
+        {
+            // Timer count up logic
+            //elapsedTime += Time.deltaTime;
+            timePassed += Time.deltaTime;
+            UpdateTimerDisplay();
+        }
     }
 
     // Start the level timer
     void StartLevelTimer()
     {
-        remainingTime = levelTime;
-        StartCoroutine(LevelTimerCoroutine());
+        isLevelTimerRunning = true;
+        timePassed = levelTime;
+        //StartCoroutine(LevelTimerCoroutine());
+        isPaused = false;
+        UpdateTimerDisplay();
+    }
+
+    public void PauseTimer()
+    {
+        isPaused = true;
+    }
+
+    public void ResumeTimer()
+    {
+        isPaused = false;
+    }
+
+    public void ResetTimer()
+    {
+        timePassed = 0f; // Reset the timer to 0:00
+        isLevelTimerRunning = false;
+        UpdateTimerDisplay();
+    }
+
+    public void StopTimerAndDisplayResult()
+    {
+        isLevelTimerRunning = false;
+        UpdateTimerDisplay();
     }
 
     public void ReturnToBase()
@@ -242,15 +285,15 @@ public class TimeTrialModeManager : GameManager
     // Coroutine to manage the level timer
     IEnumerator LevelTimerCoroutine()
     {
-        while (remainingTime > 0)
+        while (timePassed > 0)
         {
             yield return new WaitForSeconds(1f);
-            remainingTime -= 1f;
+            timePassed -= 1f;
             UpdateTimerDisplay();
         }
 
         // Time is up, player loses the game
-        remainingTime = 0;
+        timePassed = 0;
         UpdateTimerDisplay();
         // TODO: We're not causing the player to lose with this timer anymore. Modify this to be a countup timer instead
         //LoseGame("Out of time!");
@@ -344,9 +387,18 @@ public class TimeTrialModeManager : GameManager
 
     public override void WinGame()
     {
+        StopTimerAndDisplayResult();
+        //base.WinGame();
         menuActive = lastLevel ? menuWinLastLevel : menuWin;
         PauseAndOpenActiveMenu();
         SaveStats();
+    }
+
+    // Call ResetTimer when the level is restarted or a new level begins
+    void StartNewLevel()
+    {
+        ResetTimer();
+        StartLevelTimer();
     }
 
     void SaveStats()
@@ -354,7 +406,7 @@ public class TimeTrialModeManager : GameManager
         TimeTrialStats currentStats = GetStats();
         if (currentStats != null)
         {
-            if (remainingTime > currentStats.TimeUsed)
+            if (timePassed > currentStats.TimeUsed)
             {
                 UpdateStats(currentStats);
             }
@@ -389,7 +441,7 @@ public class TimeTrialModeManager : GameManager
     {
         if (stats is TimeTrialStats timeTrialStats)
         {
-            timeTrialStats.BestTime = remainingTime;
+            timeTrialStats.BestTime = timePassed;
             timeTrialStats.BestScore = score;
         }
         stats.EnemiesKilled = 0; // TODO: Implement enemies killed tracker and assign here
