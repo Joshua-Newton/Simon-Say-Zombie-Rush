@@ -76,7 +76,7 @@ public abstract class GameManager : MonoBehaviour
         savePath = saveFolder + statsAssetName;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (Input.GetButtonDown("Cancel"))
         {

@@ -128,7 +128,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // Trigger the camera shake with a duration of 0.5 seconds and magnitude of 0.5
-            cameraController.TriggerShake(0.5f, 0.5f);
+            //cameraController.TriggerShake(0.5f, 0.5f);
         }
     }
     #endregion
