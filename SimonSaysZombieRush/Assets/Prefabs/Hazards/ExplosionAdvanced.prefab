@@ -69,7 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   rb: {fileID: 0}
-  damageAmount: 3
+  damageAmount: 100
   speed: 0
   destroyTime: 2
   acid: {fileID: 0}
@@ -5085,7 +5085,7 @@ AudioSource:
   m_GameObject: {fileID: 9041289702761694404}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1559667293912200592, guid: 751459f5fe7f3114ea673006c402e869, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
