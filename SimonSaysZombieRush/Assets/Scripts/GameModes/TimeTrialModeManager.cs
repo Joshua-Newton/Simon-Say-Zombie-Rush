@@ -27,6 +27,7 @@ public class TimeTrialModeManager : GameManager
     [Range(0, 1000)] [SerializeField] int pointsPerItem = 100;
     [Range(0, 1000)] [SerializeField] int pointsPerKill = 25;
     [Range(0, 1000)] [SerializeField] int pointsBonusForSequence = 50;
+    [Range(1, 6000)] [SerializeField] int parTimeSeconds = 60;
 
     private List<GameObject> possibleItems; // List of possible items
     private List<GameObject> commandSequence; // The generated command sequence
@@ -296,6 +297,11 @@ public class TimeTrialModeManager : GameManager
     void UpdateScore(int points)
     {
         score += points;
+        UpdateScoreText();
+    }
+
+    void UpdateScoreText()
+    {
         scoreText.text = "Score: " + score;
         scoreTextFinalLevel.text = "Score: " + score;
     }
@@ -337,8 +343,17 @@ public class TimeTrialModeManager : GameManager
     public override void WinGame()
     {
         menuActive = lastLevel ? menuWinLastLevel : menuWin;
+        DetermineFinalScore();
+        UpdateScoreText();
         PauseAndOpenActiveMenu();
         SaveStats();
+    }
+
+    void DetermineFinalScore()
+    {
+        // simple ratio of expected time to actual time to multiply score by, then truncate score to an int (i.e. round down)
+        float scoreMultiplier = parTimeSeconds / timePassed;
+        score = (int)(score * scoreMultiplier);
     }
 
     void SaveStats()
