@@ -9,6 +9,8 @@ public class SlowArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.isTrigger)
+            { return; }
         ISlowArea slowArea = other.GetComponent<ISlowArea>();
         if (slowArea != null )
         {
