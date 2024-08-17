@@ -591,12 +591,20 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     public void SlowArea(int slowVariable)
     {
         speed /= slowVariable;
+        if (isSprinting == true)
+        {
+            speed = originalSpeed;
+        }
         isSlowed = true;
     }
 
     public void SlowAreaExit(int slowVariable)
     {
-        speed = originalSpeed;
+        speed *= slowVariable;
+        if (speed < originalSpeed)
+        {
+            speed = originalSpeed;
+        }
         isSlowed = false;
     }
 
