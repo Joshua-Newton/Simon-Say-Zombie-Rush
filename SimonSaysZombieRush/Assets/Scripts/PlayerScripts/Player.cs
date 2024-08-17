@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     int numGrapples;
     int selectedWeapon;
     int originalSpeed;
+    int slowedSpeed;
 
     bool isShooting;
     bool isGrappling;
@@ -590,20 +592,29 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     public void SlowArea(int slowVariable)
     {
-        speed /= slowVariable;
+        slowedSpeed = originalSpeed / slowVariable;
+        speed = slowedSpeed;
         if (isSprinting == true)
         {
             speed = originalSpeed;
         }
+
         isSlowed = true;
     }
 
     public void SlowAreaExit(int slowVariable)
     {
-        speed *= slowVariable;
-        if (speed < originalSpeed)
+        if (speed < originalSpeed && !isSprinting)
         {
-            speed = originalSpeed;
+            speed *= slowVariable;
+        }
+        else if (speed > originalSpeed && !isSprinting)
+        {
+            speed /= slowVariable;
+        }
+        else if (isSprinting && (speed < originalSpeed || speed >= originalSpeed))
+        {
+            speed = originalSpeed * 2;
         }
         isSlowed = false;
     }
