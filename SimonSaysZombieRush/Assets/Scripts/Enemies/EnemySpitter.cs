@@ -40,5 +40,4 @@ public class EnemySpitter : EnemyAI
         yield return new WaitForSeconds(spitDelay);
         isSpitting = false;
     }
-
 }

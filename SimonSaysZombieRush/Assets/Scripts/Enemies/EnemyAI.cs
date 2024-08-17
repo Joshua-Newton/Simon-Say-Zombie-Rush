@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class EnemyAI : MonoBehaviour, IDamage
+public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
 {
     [Header("----- Model -----")]
     [SerializeField] protected Renderer model;
@@ -53,10 +53,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
     protected bool playerInRange;
     protected float angleToPlayer;
     protected float stoppingDistOrig;
+    protected float originalSpeed;
     protected Vector3 playerDir;
     protected Vector3 startingPos;
     protected bool isSpeaking;
     private bool isStunned = false;
+    protected bool isSlowed;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -65,6 +67,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         stoppingDistOrig = agent.stoppingDistance;
         GameManager.instance.UpdateEnemyCount(1);
         originalColor = model.material.color;
+        originalSpeed = agent.speed;
     }
 
     // Update is called once per frame
@@ -291,5 +294,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamage
         model.material.color = hitColor;
         yield return new WaitForSeconds(.1f);
         model.material.color = originalColor;
+    }
+    public void SlowArea(int slowVariable)
+    {
+        agent.speed /= slowVariable;
+        isSlowed = true;
+    }
+
+    public void SlowAreaExit(int slowVariable)
+    {
+        agent.speed = originalSpeed;
+        isSlowed = false;
     }
 }

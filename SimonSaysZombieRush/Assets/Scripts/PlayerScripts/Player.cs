@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Player : MonoBehaviour, IDamage, IJumpPad
+public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 {
     #region Serialized Fields
     [Header("----- Components -----")]
@@ -71,6 +71,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     int HPOriginal;
     int numGrapples;
     int selectedWeapon;
+    int originalSpeed;
 
     bool isShooting;
     bool isGrappling;
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
     bool isPlayingStep;
     bool isMeleeing;
     bool isBurning;
+    bool isSlowed;
     private bool isStunned = false;
     public CameraController cameraController;
 
@@ -101,6 +103,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         HPOriginal = HP;
         gunModelOriginal = gunModel;
         meleeModelOriginal = meleeModel;
+        originalSpeed = speed;
         EquipStartingWeapons();
         UpdatePlayerUI();
         SpawnPlayer();
@@ -585,6 +588,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad
         Debug.Log("Updated Grenade Prefab: " + gravityGrenadePrefab.name);
     }
 
+    public void SlowArea(int slowVariable)
+    {
+        speed /= slowVariable;
+        isSlowed = true;
+    }
+
+    public void SlowAreaExit(int slowVariable)
+    {
+        speed = originalSpeed;
+        isSlowed = false;
+    }
 
     #endregion
 
