@@ -161,7 +161,7 @@ MonoBehaviour:
   explosionRadiusMax: 5
   expandingExplosion: 0
   explosionStartingRadius: 1
-  explosionDamageTime: 1
+  explosionDamageTime: 0.05
   explosionObjectLifeTime: 1
 --- !u!198 &2192006948031550430
 ParticleSystem:
