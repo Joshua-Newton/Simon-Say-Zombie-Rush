@@ -3363,6 +3363,7 @@ MonoBehaviour:
   playerCollider: {fileID: 0}
   playerSpawnPos: {fileID: 0}
   isPaused: 0
+  isStandAloneLevel: 0
   commandLength: 1
   commandDisplay: {fileID: 6087879501224194326}
   commandImageObjects:
@@ -3384,8 +3385,6 @@ MonoBehaviour:
   parTimeSeconds: 60
   grenadeIcon: {fileID: 945653316350360632}
   grenadeCountText: {fileID: 4633995666102934382}
-  maxGrenades: 2
-  grenadeCooldown: 5
 --- !u!1 &4428256198308811708
 GameObject:
   m_ObjectHideFlags: 0
@@ -6075,7 +6074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6859447755064051697
 RectTransform:
   m_ObjectHideFlags: 0
