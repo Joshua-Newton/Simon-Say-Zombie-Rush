@@ -274,7 +274,11 @@ public class TimeTrialModeManager : GameManager
 
         if (collectedSequence.Count == commandSequence.Count)
         {
-            StartCoroutine(ShowResult("Correct sequence!"));
+            //StartCoroutine(ShowResult("Correct sequence!"));
+            StartCoroutine(ShowResult("Correct sequence! Bonus points awarded!"));
+
+            // Award bonus points for correct sequence
+            UpdateScore(pointsBonusForSequence);
             ResetGameSequence();
         }
     }
@@ -311,6 +315,14 @@ public class TimeTrialModeManager : GameManager
     {
         resultDisplay.text = message;
         resultDisplay.gameObject.SetActive(true);
+
+        // Feedback for bonus points
+        if (message.Contains("Bonus points awarded"))
+        {
+          
+        }
+
+
         yield return new WaitForSeconds(2);
         resultDisplay.gameObject.SetActive(false);
     }
