@@ -414,7 +414,7 @@ MonoBehaviour:
   damage: 0
   damageRange: 0
   damageDelay: 0
-  gravityGrenadePrefab: {fileID: 8517655606910467015, guid: 7000437e52bbe554f80161ddbd405edf, type: 3}
+  grenadeInventory: []
   grenadeSpawnPoint: {fileID: 3279185987544552613}
   throwForce: 15
   raycastDistance: 100
