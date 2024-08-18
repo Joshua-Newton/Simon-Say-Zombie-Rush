@@ -40,12 +40,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] float damageDelay;
 
     [Header("----- Grenade -----")]
-    [SerializeField] private GameObject gravityGrenadePrefab; // Prefab de la granada
+    [SerializeField] private List<GameObject> grenadeInventory; // List to store different grenade prefabs
     [SerializeField] private Transform grenadeSpawnPoint; // Punto de origen (no se usará en este caso)
     [SerializeField] private float throwForce = 15f; // Fuerza de lanzamiento
     [SerializeField] private float raycastDistance = 100f; // Distancia máxima del raycast
     [SerializeField] public int maxGrenades = 2; // Máximo número de granadas que el jugador puede tener
     [SerializeField] public float grenadeCooldown = 5f; // Tiempo de recarga entre granadas
+
 
     [Header("----- Healing -----")]
     [SerializeField] int healAmount;
@@ -76,7 +77,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     private bool isStunned = false;
     public CameraController cameraController;
     private int currentGrenades;
-    private bool isRecharging = false;
+    private int selectedGrenadeIndex;
+    private bool isRecharging;
 
     bool canHeal;
 
@@ -135,6 +137,25 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
+    private void SelectNextGrenade()
+    {
+        if (grenadeInventory.Count > 1)
+        {
+            selectedGrenadeIndex = (selectedGrenadeIndex + 1) % grenadeInventory.Count;
+            Debug.Log("Selected Grenade: " + grenadeInventory[selectedGrenadeIndex].name);
+        }
+    }
+
+    private void SelectPreviousGrenade()
+    {
+        if (grenadeInventory.Count > 1)
+        {
+            selectedGrenadeIndex--;
+            if (selectedGrenadeIndex < 0) selectedGrenadeIndex = grenadeInventory.Count - 1;
+            Debug.Log("Selected Grenade: " + grenadeInventory[selectedGrenadeIndex].name);
+        }
+    }
+
     void Gravity()
     {
         playerVelocity.y -= gravity;
@@ -184,35 +205,22 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    void ThrowGrenade()
+    private void ThrowGrenade()
     {
-        // Asegúrate de que el jugador tenga suficientes granadas antes de lanzar
-        if (currentGrenades <= 0)
-        {
-            Debug.Log("No grenades left to throw.");
-            return;
-        }
+        if (grenadeInventory.Count == 0) return;
 
-        // Calcula la dirección en la que el jugador está mirando, basado en su rotación
-        Vector3 direction = transform.forward;
+        GameObject grenadePrefab = grenadeInventory[selectedGrenadeIndex];
+        Vector3 targetPoint = transform.position + transform.forward * 5f; // Throws the grenade forward
 
-        // Instancia la granada en el punto de spawn del jugador y rotada en la dirección del jugador
-        GameObject grenade = Instantiate(gravityGrenadePrefab, grenadeSpawnPoint.position, Quaternion.identity);
+        GameObject grenade = Instantiate(grenadePrefab, grenadeSpawnPoint.position, Quaternion.identity);
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
 
-        // Aplica una fuerza en la dirección en la que el jugador está mirando
-        rb.AddForce(direction * throwForce, ForceMode.VelocityChange);
-
-        // Decrementa el número de granadas
         currentGrenades--;
-        Debug.Log("Grenades remaining: " + currentGrenades); // Para verificar en la consola
-
-        // Inicia la recarga de la granada si es necesario
-        if (currentGrenades < maxGrenades && !isRecharging)
-        {
-            StartCoroutine(RechargeGrenade());
-        }
+        StartCoroutine(RechargeGrenade());
     }
+
+
 
 
     void Grounded()
@@ -431,6 +439,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     #region Public Functions
 
+
+    public void AddGrenade(GameObject grenadePrefab)
+    {
+        if (!grenadeInventory.Contains(grenadePrefab))
+        {
+            grenadeInventory.Add(grenadePrefab);
+            currentGrenades = maxGrenades; // Refill grenades when a new type is picked up
+            selectedGrenadeIndex = grenadeInventory.Count - 1; // Automatically switch to the new grenade type
+        }
+    }
+
     public void ChangeHP(int HealthAmount)
     {
         HP += HealthAmount;
@@ -555,11 +574,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    public void UpdateGrenadePrefab(GameObject newGrenadePrefab)
-    {
-        gravityGrenadePrefab = newGrenadePrefab;
-        Debug.Log("Updated Grenade Prefab: " + gravityGrenadePrefab.name);
-    }
 
     public void SlowArea(int slowVariable)
     {
