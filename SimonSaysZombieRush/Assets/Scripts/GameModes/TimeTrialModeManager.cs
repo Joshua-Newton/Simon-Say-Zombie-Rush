@@ -14,11 +14,11 @@ public class TimeTrialModeManager : GameManager
     public static new TimeTrialModeManager instance;
 
     [Header("----- Simon Says Mechanic -----")]
-    [SerializeField] private int commandLength = 3; // Length of the command sequence
-    [SerializeField] private TextMeshProUGUI commandDisplay; // TextMeshProUGUI to display the command
-    [SerializeField] private GameObject[] commandImageObjects; // Possible positions for the images
-    [SerializeField] private TextMeshProUGUI resultDisplay; // TextMeshProUGUI to display the result
-    [SerializeField] private TextMeshProUGUI timerDisplay; // TextMeshProUGUI to display the timer
+    [SerializeField] private int commandLength = 3;
+    [SerializeField] private TextMeshProUGUI commandDisplay;
+    [SerializeField] private GameObject[] commandImageObjects;
+    [SerializeField] private TextMeshProUGUI resultDisplay;
+    [SerializeField] private TextMeshProUGUI timerDisplay;
 
     [Header("----- Item Timers -----")]
     [SerializeField] private GameObject timerParent;
@@ -32,16 +32,16 @@ public class TimeTrialModeManager : GameManager
     [Range(1, 6000)][SerializeField] int parTimeSeconds = 60;
 
     [Header("----- Grenade UI -----")]
-    [SerializeField] private Image grenadeIcon; // Icono de la granada
-    [SerializeField] private TMP_Text grenadeCountText; // Texto para mostrar el número de granadas
-    private Player pj; // Referencia al script del jugador
+    [SerializeField] private Image grenadeIcon;
+    [SerializeField] private TMP_Text grenadeCountText;
+    private Player pj;
 
     private int currentGrenades;
-    private float timePassed;  // Declaración de la variable timePassed
-    private List<GameObject> possibleItems; // List of possible items
-    private List<GameObject> commandSequence; // The generated command sequence
-    private List<GameObject> collectedSequence; // The player's collected sequence
-    private List<GameObject> playerInventory; // All of the items the player is holding
+    private float timePassed;
+    private List<GameObject> possibleItems;
+    private List<GameObject> commandSequence;
+    private List<GameObject> collectedSequence;
+    private List<GameObject> playerInventory;
     private List<GameObject> timers;
     private int totalCollectedItems = 0;
 
@@ -73,7 +73,7 @@ public class TimeTrialModeManager : GameManager
             int currentGrenades = pj.GetCurrentGrenades();
             int maxGrenades = pj.GetMaxGrenades();
 
-            grenadeCountText.text = currentGrenades.ToString() + "/" + maxGrenades.ToString();
+            grenadeCountText.text = $"{currentGrenades}/{maxGrenades}";
             grenadeIcon.fillAmount = (float)currentGrenades / maxGrenades;
         }
         else
@@ -115,10 +115,10 @@ public class TimeTrialModeManager : GameManager
         commandSequence = new List<GameObject>();
         for (int i = 0; i < commandLength; i++)
         {
-            if (possibleItems.Count == 0) break; // No more items to add
+            if (possibleItems.Count == 0) break;
             int randomIndex = Random.Range(0, possibleItems.Count);
             commandSequence.Add(possibleItems[randomIndex]);
-            Resources.Load<GameObject>($"Prefabs/Essentials/SimonImg{possibleItems[randomIndex].name}"); // Load the image
+            Resources.Load<GameObject>($"Prefabs/Essentials/SimonImg{possibleItems[randomIndex].name}");
         }
     }
 
@@ -132,14 +132,13 @@ public class TimeTrialModeManager : GameManager
         {
             commandDisplay.text = "Return to base!";
         }
-
     }
 
     void DisplayImageCommand()
     {
         if (commandSequence.Count <= 0)
         {
-            for (int i = 0; i < commandImageObjects.Count(); ++i)
+            for (int i = 0; i < commandImageObjects.Length; ++i)
             {
                 commandImageObjects[i].gameObject.SetActive(false);
             }
@@ -212,7 +211,7 @@ public class TimeTrialModeManager : GameManager
     {
         playerInventory.Add(item);
         collectedSequence.Add(item);
-        possibleItems.Remove(item); // Remove the item from the possibleItems list
+        possibleItems.Remove(item);
 
         CheckCollectedSequence();
     }
@@ -232,7 +231,6 @@ public class TimeTrialModeManager : GameManager
         if (collectedSequence.Count == commandSequence.Count)
         {
             StartCoroutine(ShowResult("Correct sequence! Bonus points awarded!"));
-
             UpdateScore(pointsBonusForSequence);
             ResetGameSequence();
         }
@@ -295,7 +293,6 @@ public class TimeTrialModeManager : GameManager
     public void NotifyPlayerOfMissedItem(GameObject item)
     {
         StartCoroutine(ShowResult("Failed to collect " + item.name + " in time!"));
-
     }
 
     public void CheckForLossByMissingItems()
@@ -343,7 +340,7 @@ public class TimeTrialModeManager : GameManager
 
     IEnumerator LoadNextLevel()
     {
-        yield return new WaitForSeconds(2); // Optional delay before loading the next scene
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetSceneByPath(nextScenePath).name);
     }
 
@@ -401,7 +398,7 @@ public class TimeTrialModeManager : GameManager
         string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
         return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
 #else
-            return null;
+        return null;
 #endif
     }
 
@@ -412,7 +409,7 @@ public class TimeTrialModeManager : GameManager
             timeTrialStats.BestTime = timePassed;
             timeTrialStats.BestScore = score;
         }
-        stats.EnemiesKilled = 0; // TODO: Implement enemies killed tracker and assign here
-        stats.TimeUsed = 0; // TODO: Implement time tracker
+        stats.EnemiesKilled = 0;
+        stats.TimeUsed = 0;
     }
 }

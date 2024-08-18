@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 {
@@ -13,16 +10,15 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Animator animator;
-    private Rigidbody playerRigidbody;
 
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip[] audioSteps;
-    [Range(0, 1)] [SerializeField] float audioStepsVolume = 0.5f;
+    [Range(0, 1)][SerializeField] float audioStepsVolume = 0.5f;
     [SerializeField] AudioClip[] audioHurt;
-    [Range(0, 1)] [SerializeField] float audioHurtVolume = 0.5f;
+    [Range(0, 1)][SerializeField] float audioHurtVolume = 0.5f;
     [SerializeField] AudioClip[] audioMelee;
     [Range(0, 1)][SerializeField] float audioMeleeVolume = 0.5f;
-    [SerializeField]  AudioClip audioDamage;
+    [SerializeField] AudioClip audioDamage;
     [Range(0, 10)][SerializeField] float damageVolume;
 
     [Header("----- Player -----")]
@@ -52,9 +48,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] public float grenadeCooldown = 5f; // Tiempo de recarga entre granadas
 
     [Header("----- Healing -----")]
-    [SerializeField] int healAmount; // Amount to heal per tick
-    [SerializeField] float healInterval; // Interval between each healing tick
-    [SerializeField] float healDelay; // Time after taking damage before healing
+    [SerializeField] int healAmount;
+    [SerializeField] float healInterval;
+    [SerializeField] float healDelay;
     #endregion
 
     #region Private fields
@@ -79,23 +75,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     bool isSlowed;
     private bool isStunned = false;
     public CameraController cameraController;
-    private int currentGrenades; // Número actual de granadas disponibles
-    private bool isRecharging = false; // Indica si se está recargando una granada
+    private int currentGrenades;
+    private bool isRecharging = false;
 
     bool canHeal;
 
     Collider wallRunCollider;
     Coroutine healingCoroutine;
     Coroutine healingDelayCoroutine;
-
-    #endregion
-
-    #region enum definitions
-
     #endregion
 
     #region Unity Methods
-    // Start is called before the first frame update
     void Start()
     {
         HPOriginal = HP;
@@ -110,10 +100,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         cameraController = Camera.main.GetComponent<CameraController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(raySource != null && rayDestination != null)
+        if (raySource != null && rayDestination != null)
         {
             Debug.DrawRay(raySource, rayDestination);
         }
@@ -121,8 +110,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         Movement();
         Sprint();
         Shooting();
-        // Llamar a ThrowGrenade solo si hay granadas disponibles y no se está recargando
-        if (Input.GetButtonDown("Grenade") && currentGrenades > 0 && !isRecharging)
+        if (Input.GetButtonDown("Grenade") && currentGrenades > 0)
         {
             ThrowGrenade();
         }
@@ -137,7 +125,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     #region Private Methods
     void EquipStartingWeapons()
     {
-        foreach(GameObject weapon in startingWeapons)
+        foreach (GameObject weapon in startingWeapons)
         {
             WeaponPickup pickup = weapon.GetComponent<WeaponPickup>();
             if (pickup != null)
@@ -169,7 +157,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-
     void Sprint()
     {
         if (Input.GetButtonDown("Sprint"))
@@ -199,32 +186,34 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     void ThrowGrenade()
     {
-        // Realiza un raycast desde la cámara hacia la posición del mouse
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit, raycastDistance))
+        // Asegúrate de que el jugador tenga suficientes granadas antes de lanzar
+        if (currentGrenades <= 0)
         {
-            // Si el raycast golpea algo, obtiene la posición de impacto
-            targetPoint = hit.point;
-        }
-        else
-        {
-            // Si no golpea nada, calcula una posición en el espacio
-            targetPoint = ray.GetPoint(raycastDistance);
+            Debug.Log("No grenades left to throw.");
+            return;
         }
 
-        // Instancia la granada en la posición objetivo
-        GameObject grenade = Instantiate(gravityGrenadePrefab, targetPoint, Quaternion.identity);
+        // Calcula la dirección en la que el jugador está mirando, basado en su rotación
+        Vector3 direction = transform.forward;
+
+        // Instancia la granada en el punto de spawn del jugador y rotada en la dirección del jugador
+        GameObject grenade = Instantiate(gravityGrenadePrefab, grenadeSpawnPoint.position, Quaternion.identity);
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
 
-        // Aplica una fuerza hacia abajo para simular la caída
-        rb.AddForce(Vector3.down * throwForce, ForceMode.VelocityChange);
+        // Aplica una fuerza en la dirección en la que el jugador está mirando
+        rb.AddForce(direction * throwForce, ForceMode.VelocityChange);
 
-        currentGrenades--; // Decrementa el número de granadas
-        StartCoroutine(ReloadGrenade()); // Inicia la recarga de la granada
+        // Decrementa el número de granadas
+        currentGrenades--;
+        Debug.Log("Grenades remaining: " + currentGrenades); // Para verificar en la consola
+
+        // Inicia la recarga de la granada si es necesario
+        if (currentGrenades < maxGrenades && !isRecharging)
+        {
+            StartCoroutine(RechargeGrenade());
+        }
     }
+
 
     void Grounded()
     {
@@ -291,7 +280,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    void OnTriggerEnter (Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Lava")
         {
@@ -299,7 +288,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    void OnTriggerExit (Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Lava")
         {
@@ -310,15 +299,15 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     private IEnumerator RechargeGrenade()
     {
         isRecharging = true;
-        yield return new WaitForSeconds(grenadeCooldown);
-        currentGrenades++;
-        Debug.Log("Grenades recharged to: " + currentGrenades);
-        isRecharging = false;
-
-        if (currentGrenades < maxGrenades)
+        while (currentGrenades < maxGrenades)
         {
-            StartCoroutine(RechargeGrenade());
+            yield return new WaitForSeconds(grenadeCooldown);
+            currentGrenades++;
+            Debug.Log("Grenades recharged to: " + currentGrenades);
+
+            UpdatePlayerUI(); // Asegúrate de actualizar la UI después de cada recarga
         }
+        isRecharging = false;
     }
 
     #endregion
@@ -365,7 +354,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             canHeal = true;
         }
-
     }
 
     Vector3 raySource;
@@ -389,7 +377,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
             raySource = GameManager.instance.player.transform.position;
             rayDestination = GameManager.instance.player.GetComponent<FaceMouse>().GetCurrentMousePos() - raySource;
-            
+
             RaycastHit hit;
             if (Physics.Raycast(raySource, rayDestination, out hit, damageRange, ~ignoreLayer))
             {
@@ -429,15 +417,16 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     IEnumerator ReloadGrenade()
     {
-        isRecharging = true; // Marca como que está recargando
-        yield return new WaitForSeconds(grenadeCooldown); // Espera el tiempo de recarga
-        currentGrenades++; // Recarga una granada
-        isRecharging = false; // Marca que ha terminado la recarga
+        isRecharging = true;
+        yield return new WaitForSeconds(grenadeCooldown);
+        currentGrenades++;
+        isRecharging = false;
+
+        if (currentGrenades < maxGrenades)
+        {
+            StartCoroutine(RechargeGrenade());
+        }
     }
-
-
-
-
     #endregion
 
     #region Public Functions
@@ -468,13 +457,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         aud.PlayOneShot(audioHurt[Random.Range(0, audioHurt.Length)], audioHurtVolume);
         StartCoroutine(flashScreenDamage());
 
-        // Trigger camera shake based on damage
         if (cameraController != null)
         {
-            // Set shake intensity proportional to damage, with clamping to ensure reasonable values
             float shakeMagnitude = Mathf.Clamp((float)amount / 100f, 0.1f, 1f);
-            cameraController.TriggerShake(0.5f, shakeMagnitude); // Shake for 0.5 seconds with proportional intensity
-
+            cameraController.TriggerShake(0.5f, shakeMagnitude);
         }
 
         if (HP <= 0)
@@ -483,13 +469,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
         else
         {
-            // The player has taken damage, so we can heal that damage. 
-            // Reset heal delay and stop healing, then start a delay that once it has passed we can start healing
-            if(healingDelayCoroutine != null)
+            if (healingDelayCoroutine != null)
             {
                 StopCoroutine(healingDelayCoroutine);
             }
-            if(healingCoroutine != null)
+            if (healingCoroutine != null)
             {
                 StopCoroutine(healingCoroutine);
             }
@@ -528,7 +512,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
         if (weaponList.Count > 0)
-        {   
+        {
             GameManager.instance.ammoCurrent.text = weaponList[selectedWeapon].ammoCurrent.ToString("F0");
             GameManager.instance.ammoMax.text = weaponList[selectedWeapon].ammoMax.ToString("F0");
         }
@@ -542,7 +526,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
         else
         {
-            weaponList.Add(weapon);        
+            weaponList.Add(weapon);
         }
         selectedWeapon = weaponList.Count - 1;
 
@@ -551,12 +535,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     public void MeleeOff()
     {
-        if(weaponList.Count > 0 && weaponList[selectedWeapon].weaponModel != null)
+        if (weaponList.Count > 0 && weaponList[selectedWeapon].weaponModel != null)
         {
             Collider meleeCollider = meleeModel.GetComponent<Collider>();
-            // TODO: Implement melee weapons that have their collider as part of the WeaponStats
-            //Collider meleeCollider = weaponList[selectedWeapon].weaponModel.GetComponent<Collider>();
-            if(meleeCollider != null)
+            if (meleeCollider != null)
             {
                 meleeCollider.enabled = false;
             }
@@ -567,8 +549,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     public void MeleeOn()
     {
         Collider meleeCollider = meleeModel.GetComponent<Collider>();
-        // TODO: Implement melee weapons that have their collider as part of the WeaponStats
-        //Collider meleeCollider = weaponList[selectedWeapon].weaponModel.GetComponent<Collider>();
         if (meleeCollider != null)
         {
             meleeCollider.enabled = true;
@@ -616,11 +596,5 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             }
         }
     }
-
-
     #endregion
-
-
-
-
 }
