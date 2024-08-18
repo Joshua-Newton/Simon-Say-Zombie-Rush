@@ -248,6 +248,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8944689991483495872, guid: cbf242e07e08a9d4ca14e55ced8a27cd, type: 3}
+      propertyPath: secondsToRetrieve
+      value: 484
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2089,6 +2093,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1070383812080621050, guid: b6ec864695dd2d148ad4aebe80cd2949, type: 3}
+      propertyPath: secondsToRetrieve
+      value: 600
+      objectReference: {fileID: 0}
     - target: {fileID: 3965546946574949386, guid: b6ec864695dd2d148ad4aebe80cd2949, type: 3}
       propertyPath: m_Name
       value: Water bottle
@@ -3866,6 +3874,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1301080103}
     m_Modifications:
+    - target: {fileID: 142545396067199578, guid: f624ecd18b9fa784ea7592163692ff6e, type: 3}
+      propertyPath: secondsToRetrieve
+      value: 530
+      objectReference: {fileID: 0}
     - target: {fileID: 4464218135842449996, guid: f624ecd18b9fa784ea7592163692ff6e, type: 3}
       propertyPath: m_Name
       value: Medkit
@@ -4626,6 +4638,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7961535676396293828, guid: 67c5d41ea1c82c2438411bd99fe7a958, type: 3}
+      propertyPath: secondsToRetrieve
+      value: 563
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4891,6 +4907,10 @@ PrefabInstance:
     - target: {fileID: 5560441270474145586, guid: d2cfdf4c84c99184a98c1c502a900f82, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7907378269850154446, guid: d2cfdf4c84c99184a98c1c502a900f82, type: 3}
+      propertyPath: secondsToRetrieve
+      value: 460
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6179,6 +6199,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1301080103}
     m_Modifications:
+    - target: {fileID: 948077667690651981, guid: dd7128ab78e13164f95346837f93dc25, type: 3}
+      propertyPath: secondsToRetrieve
+      value: 553
+      objectReference: {fileID: 0}
     - target: {fileID: 1261257893381326571, guid: dd7128ab78e13164f95346837f93dc25, type: 3}
       propertyPath: m_LocalPosition.x
       value: -22.91414
@@ -7535,6 +7559,10 @@ PrefabInstance:
     - target: {fileID: 2902124898047647095, guid: dd64439755d263743a9a0db462b0a710, type: 3}
       propertyPath: m_Name
       value: Compass
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082679369158995307, guid: dd64439755d263743a9a0db462b0a710, type: 3}
+      propertyPath: secondsToRetrieve
+      value: 344
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13080,6 +13108,10 @@ PrefabInstance:
     - target: {fileID: 4321536676831232903, guid: 04f1b8d135c335643a6b453c8b6e5858, type: 3}
       propertyPath: m_Name
       value: Survival BackPack
+      objectReference: {fileID: 0}
+    - target: {fileID: 8086318371347182919, guid: 04f1b8d135c335643a6b453c8b6e5858, type: 3}
+      propertyPath: secondsToRetrieve
+      value: 467
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
