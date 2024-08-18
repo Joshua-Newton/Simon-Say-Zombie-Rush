@@ -479,7 +479,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (cameraController != null)
         {
             float shakeMagnitude = Mathf.Clamp((float)amount / 100f, 0.1f, 1f);
-            cameraController.TriggerShake(0.5f, shakeMagnitude);
+            //cameraController.TriggerShake(0.5f, shakeMagnitude);
         }
 
         if (HP <= 0)
