@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a468bf4108328b84fa1e3a2c283eb6f2, type: 3}
-  m_Name: TimeTrialModeLevel1
+  m_Name: TimeTrialModeLevel2
   m_EditorClassIdentifier: 
   TimeUsed: 0
   EnemiesKilled: 0
-  BestTime: 27.985443
-  BestScore: 911
+  BestTime: 80.65955
+  BestScore: 743
