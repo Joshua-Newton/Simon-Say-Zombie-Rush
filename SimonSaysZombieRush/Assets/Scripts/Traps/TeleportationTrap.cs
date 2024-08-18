@@ -17,6 +17,8 @@ public class TeleportationTrap : MonoBehaviour
 
             // Teleport the player
             other.transform.position = selectedDestination.position;
+            Physics.SyncTransforms();
+
         }
     }
 }
