@@ -43,12 +43,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] float damageRange;
     [SerializeField] float damageDelay;
 
-    [Header("----- Grapple -----")]
-    [SerializeField] int grappleSpeed;
-    [SerializeField] int grappleRange;
-    [SerializeField] int grappleMaxConsecutiveUses;
-    [SerializeField] LineRenderer grappleRenderer;
-
     [Header("----- Grenade -----")]
     [SerializeField] private GameObject gravityGrenadePrefab; // Prefab de la granada
     [SerializeField] private Transform grenadeSpawnPoint; // Punto de origen (no se usará en este caso)
@@ -68,12 +62,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     GameObject meleeModelOriginal;
 
     Vector3 movementDirection;
-    Vector3 grappleDirection;
-    Vector3 grappleHitPoint;
     Vector3 playerVelocity;
 
     int HPOriginal;
-    int numGrapples;
     int selectedWeapon;
     int originalSpeed;
     int slowedSpeed;
@@ -129,7 +120,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         Movement();
         Sprint();
         Shooting();
-        GrappleHook();
         // Llamar a ThrowGrenade solo si hay granadas disponibles y no se está recargando
         if (Input.GetButtonDown("Grenade") && currentGrenades > 0 && !isReloading)
         {
@@ -140,12 +130,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             SelectWeapon();
         }
         Heal();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Trigger the camera shake with a duration of 0.5 seconds and magnitude of 0.5
-            //cameraController.TriggerShake(0.5f, 0.5f);
-        }
     }
     #endregion
 
@@ -162,6 +146,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
+    void Gravity()
+    {
+        playerVelocity.y -= gravity;
+        characterController.Move(playerVelocity);
+    }
+
     void Movement()
     {
         movementDirection = (Input.GetAxis("Horizontal") * Vector3.right + Input.GetAxis("Vertical") * Vector3.forward);
@@ -171,9 +161,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
 
         characterController.Move(movementDirection * speed * Time.deltaTime);
-
-        if ((characterController.isGrounded && movementDirection.magnitude > 0.2f && !isPlayingStep) ||
-            !characterController.isGrounded && movementDirection.magnitude > 0.2f && isWallRunning && !isPlayingStep)
+        Gravity();
+        if (characterController.isGrounded && movementDirection.magnitude > 0.2f && !isPlayingStep)
         {
             StartCoroutine(PlayStep());
         }
@@ -204,40 +193,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         else if (Input.GetButton("Fire1") && weaponList.Count > 0 && type == WeaponStats.WeaponType.Melee && !isMeleeing && !GameManager.instance.isPaused)
         {
             Melee();
-        }
-    }
-
-    void GrappleHook()
-    {
-        // Use GetButtonDown and GetButtonUp in conjunction with a bool to set grapple target, but allow player to look away while grappling
-        // Then use the bool assigned to actually move the player. If they let go of the grapple button, they stop grappling
-        if (Input.GetButtonDown("Fire2") && !GameManager.instance.isPaused && numGrapples < grappleMaxConsecutiveUses)
-        {
-            RaycastHit hit;
-            if (!GameManager.instance.isPaused && Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grappleRange, ~ignoreLayer))
-            {
-                grappleRenderer.enabled = true;
-                ++numGrapples;
-                grappleHitPoint = hit.point;
-                grappleDirection = grappleHitPoint - transform.position;
-                isGrappling = true;
-            }
-        }
-        else if (Input.GetButtonUp("Fire2"))
-        {
-            isGrappling = false;
-        }
-
-        if (isGrappling)
-        {
-            grappleRenderer.SetPosition(0, transform.position);
-            grappleRenderer.SetPosition(1, grappleHitPoint);
-            grappleDirection = (grappleHitPoint - transform.position).normalized;
-            characterController.Move(grappleDirection * grappleSpeed * Time.deltaTime);
-        }
-        else
-        {
-            grappleRenderer.enabled = false;
         }
     }
 
@@ -274,7 +229,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     {
         if (characterController.isGrounded)
         {
-            numGrapples = 0;
             playerVelocity = Vector3.zero;
         }
     }
