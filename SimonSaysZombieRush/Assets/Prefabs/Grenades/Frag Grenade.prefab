@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed0844ae612d7e4fb751057fe6bd486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionDelay: 3
+  explosionDelay: 1
   explosionRadius: 5
   explosionForce: 700
   shrapnelCount: 50

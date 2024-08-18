@@ -50,10 +50,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] LineRenderer grappleRenderer;
 
     [Header("----- Grenade -----")]
-    [SerializeField] private GameObject gravityGrenadePrefab; // Prefab of the gravity grenade
-    [SerializeField] Transform grenadeSpawnPoint; // Spawn point to throw the grenade from
-    [SerializeField] float throwForce = 15f; // Throwing force of the grenade
-    [SerializeField] float raycastDistance = 100f; // Maximum distance for the raycast
+    [SerializeField] private GameObject gravityGrenadePrefab; // Prefab de la granada
+    [SerializeField] private Transform grenadeSpawnPoint; // Punto de origen (no se usará en este caso)
+    [SerializeField] private float throwForce = 15f; // Fuerza de lanzamiento
+    [SerializeField] private float raycastDistance = 100f; // Distancia máxima del raycast
+    [SerializeField] private int maxGrenades = 2; // Máximo número de granadas que el jugador puede tener
+    [SerializeField] private float grenadeCooldown = 5f; // Tiempo de recarga entre granadas
 
     [Header("----- Healing -----")]
     [SerializeField] int healAmount; // Amount to heal per tick
@@ -86,6 +88,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     bool isSlowed;
     private bool isStunned = false;
     public CameraController cameraController;
+    private int currentGrenades; // Número actual de granadas disponibles
+    private bool isReloading = false; // Indica si se está recargando una granada
 
     bool canHeal;
 
@@ -105,6 +109,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     {
         HPOriginal = HP;
         gunModelOriginal = gunModel;
+        currentGrenades = maxGrenades; // Iniciar con la cantidad máxima de granadas
         meleeModelOriginal = meleeModel;
         originalSpeed = speed;
         EquipStartingWeapons();
@@ -125,7 +130,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         Sprint();
         Shooting();
         GrappleHook();
-        ThrowGrenade();
+        // Llamar a ThrowGrenade solo si hay granadas disponibles y no se está recargando
+        if (Input.GetButtonDown("Grenade") && currentGrenades > 0 && !isReloading)
+        {
+            ThrowGrenade();
+        }
         if (!GameManager.instance.isPaused)
         {
             SelectWeapon();
@@ -234,31 +243,31 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     void ThrowGrenade()
     {
-        if (Input.GetButtonDown("Grenade")) // Assign a button to throw the grenade (e.g., E button)
+        // Realiza un raycast desde la cámara hacia la posición del mouse
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit, raycastDistance))
         {
-            Ray ray = new Ray(grenadeSpawnPoint.position, grenadeSpawnPoint.forward);
-            RaycastHit hit;
-
-            Vector3 targetPoint;
-            if (Physics.Raycast(ray, out hit, raycastDistance))
-            {
-                targetPoint = hit.point;
-            }
-            else
-            {
-                targetPoint = ray.GetPoint(raycastDistance);
-            }
-
-            // Instantiate the grenade at the spawn point
-            GameObject grenade = Instantiate(gravityGrenadePrefab, grenadeSpawnPoint.position, grenadeSpawnPoint.rotation);
-            Rigidbody rb = grenade.GetComponent<Rigidbody>();
-
-            // Calculate the direction to the target point
-            Vector3 direction = (targetPoint - grenadeSpawnPoint.position).normalized;
-
-            // Apply force to throw the grenade towards the target point
-            rb.AddForce(direction * throwForce, ForceMode.VelocityChange);
+            // Si el raycast golpea algo, obtiene la posición de impacto
+            targetPoint = hit.point;
         }
+        else
+        {
+            // Si no golpea nada, calcula una posición en el espacio
+            targetPoint = ray.GetPoint(raycastDistance);
+        }
+
+        // Instancia la granada en la posición objetivo
+        GameObject grenade = Instantiate(gravityGrenadePrefab, targetPoint, Quaternion.identity);
+        Rigidbody rb = grenade.GetComponent<Rigidbody>();
+
+        // Aplica una fuerza hacia abajo para simular la caída
+        rb.AddForce(Vector3.down * throwForce, ForceMode.VelocityChange);
+
+        currentGrenades--; // Decrementa el número de granadas
+        StartCoroutine(ReloadGrenade()); // Inicia la recarga de la granada
     }
 
     void Grounded()
@@ -447,6 +456,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         aud.PlayOneShot(audioDamage, damageVolume);
         yield return new WaitForSeconds(0.05f);
         isBurning = false;
+    }
+
+    IEnumerator ReloadGrenade()
+    {
+        isReloading = true; // Marca como que está recargando
+        yield return new WaitForSeconds(grenadeCooldown); // Espera el tiempo de recarga
+        currentGrenades++; // Recarga una granada
+        isReloading = false; // Marca que ha terminado la recarga
     }
 
 

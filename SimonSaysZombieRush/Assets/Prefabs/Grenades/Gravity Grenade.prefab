@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39178c295b049b44936a57bc14c9166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionDelay: 3
+  explosionDelay: 1
   explosionRadius: 20
   attractionDuration: 4
   attractionStrength: 10
