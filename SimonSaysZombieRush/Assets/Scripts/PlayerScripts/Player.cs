@@ -13,6 +13,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Animator animator;
+    private Rigidbody playerRigidbody;
 
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip[] audioSteps;
