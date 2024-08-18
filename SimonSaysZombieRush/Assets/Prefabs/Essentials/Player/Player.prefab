@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2448451327720667209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3279185987544552613}
+  m_Layer: 0
+  m_Name: granada
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3279185987544552613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2448451327720667209}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.35999998, y: 0.15999997, z: 0.6000004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8117207031737159191}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3921498464701255060
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +316,7 @@ Transform:
   m_Children:
   - {fileID: 1762811590450879682}
   - {fileID: 367535616766072315}
+  - {fileID: 3279185987544552613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8979203312248720591
@@ -382,12 +414,8 @@ MonoBehaviour:
   damage: 0
   damageRange: 0
   damageDelay: 0
-  grappleSpeed: 10
-  grappleRange: 20
-  grappleMaxConsecutiveUses: 1
-  grappleRenderer: {fileID: 7563562730603081131}
   gravityGrenadePrefab: {fileID: 8517655606910467015, guid: 7000437e52bbe554f80161ddbd405edf, type: 3}
-  grenadeSpawnPoint: {fileID: 8117207031737159191}
+  grenadeSpawnPoint: {fileID: 3279185987544552613}
   throwForce: 15
   raycastDistance: 100
   maxGrenades: 2
