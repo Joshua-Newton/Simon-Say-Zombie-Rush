@@ -303,7 +303,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
 
     public void SlowAreaExit(int slowVariable)
     {
-        agent.speed = originalSpeed;
+        agent.speed *= slowVariable;
         isSlowed = false;
     }
 }

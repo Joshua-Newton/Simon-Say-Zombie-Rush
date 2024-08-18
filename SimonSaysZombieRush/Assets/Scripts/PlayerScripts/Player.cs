@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     int numGrapples;
     int selectedWeapon;
     int originalSpeed;
+    int slowedSpeed;
 
     bool isShooting;
     bool isGrappling;
@@ -107,6 +109,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         EquipStartingWeapons();
         UpdatePlayerUI();
         SpawnPlayer();
+        cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     // Update is called once per frame
@@ -482,6 +485,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             // Set shake intensity proportional to damage, with clamping to ensure reasonable values
             float shakeMagnitude = Mathf.Clamp((float)amount / 100f, 0.1f, 1f);
             cameraController.TriggerShake(0.5f, shakeMagnitude); // Shake for 0.5 seconds with proportional intensity
+
         }
 
         if (HP <= 0)
@@ -596,7 +600,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     public void SlowAreaExit(int slowVariable)
     {
-        speed = originalSpeed;
+        speed *= slowVariable;
         isSlowed = false;
     }
 
