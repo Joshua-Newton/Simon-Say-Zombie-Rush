@@ -43,7 +43,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] private List<GameObject> grenadeInventory; // List to store different grenade prefabs
     [SerializeField] private Transform grenadeSpawnPoint; // Punto de origen (no se usará en este caso)
     [SerializeField] private float throwForce = 15f; // Fuerza de lanzamiento
-    [SerializeField] private float raycastDistance = 100f; // Distancia máxima del raycast
     [SerializeField] public int maxGrenades = 2; // Máximo número de granadas que el jugador puede tener
     [SerializeField] public float grenadeCooldown = 5f; // Tiempo de recarga entre granadas
 
@@ -67,13 +66,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     int slowedSpeed;
 
     bool isShooting;
-    bool isGrappling;
     bool isWallRunning;
     bool isSprinting;
     bool isPlayingStep;
     bool isMeleeing;
-    bool isBurning;
-    bool isSlowed;
+    //bool isBurning;
+    //bool isSlowed;
     private bool isStunned = false;
     public CameraController cameraController;
     private int currentGrenades;
@@ -417,10 +415,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     IEnumerator PlayBurning()
     {
-        isBurning = true;
+        //isBurning = true;
         aud.PlayOneShot(audioDamage, damageVolume);
         yield return new WaitForSeconds(0.05f);
-        isBurning = false;
+        //isBurning = false;
     }
 
     IEnumerator ReloadGrenade()
@@ -578,13 +576,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     public void SlowArea(int slowVariable)
     {
         speed /= slowVariable;
-        isSlowed = true;
+        //isSlowed = true;
     }
 
     public void SlowAreaExit(int slowVariable)
     {
         speed *= slowVariable;
-        isSlowed = false;
+        //isSlowed = false;
     }
 
     public int GetCurrentGrenades()
