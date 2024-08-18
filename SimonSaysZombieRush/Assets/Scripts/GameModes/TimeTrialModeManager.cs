@@ -34,8 +34,7 @@ public class TimeTrialModeManager : GameManager
     [Header("----- Grenade UI -----")]
     [SerializeField] private Image grenadeIcon; // Icono de la granada
     [SerializeField] private TMP_Text grenadeCountText; // Texto para mostrar el número de granadas
-    [SerializeField] private int maxGrenades = 2;
-    [SerializeField] private float grenadeCooldown = 5f;
+    private Player pj; // Referencia al script del jugador
 
     private int currentGrenades;
     private float timePassed;  // Declaración de la variable timePassed
@@ -57,44 +56,30 @@ public class TimeTrialModeManager : GameManager
         playerInventory = new List<GameObject>();
         collectedSequence = new List<GameObject>();
         timers = new List<GameObject>();
+        pj = GameManager.instance.player.GetComponent<Player>();
         InitializePossibleItems();
         InitializeTimerUI();
         ResetTimer();
         GenerateCommand();
         DisplayCommand();
         DisplayImageCommand();
-        InitializeGrenadeUI();
-    }
-
-    void InitializeGrenadeUI()
-    {
-        currentGrenades = maxGrenades;
-        UpdateGrenadeUI();
-    }
-
-    public void UseGrenade()
-    {
-        if (currentGrenades > 0)
-        {
-            currentGrenades--;
-            UpdateGrenadeUI();
-            StartCoroutine(RechargeGrenade());
-        }
-    }
-
-    private IEnumerator RechargeGrenade()
-    {
-        yield return new WaitForSeconds(grenadeCooldown);
-        currentGrenades++;
         UpdateGrenadeUI();
     }
 
     private void UpdateGrenadeUI()
     {
-        grenadeCountText.text = $"{currentGrenades}/{maxGrenades}";
-        grenadeIcon.fillAmount = (float)currentGrenades / maxGrenades;
+        if (pj != null)
+        {
+            int currentGrenades = pj.GetCurrentGrenades();
+            int maxGrenades = pj.GetMaxGrenades();
 
-        Debug.Log($"Cantidad actual de granadas: {currentGrenades}/{maxGrenades}");
+            grenadeCountText.text = currentGrenades.ToString() + "/" + maxGrenades.ToString();
+            grenadeIcon.fillAmount = (float)currentGrenades / maxGrenades;
+        }
+        else
+        {
+            Debug.LogError("Player is not assigned in TimeTrialModeManager.");
+        }
     }
 
     void InitializePossibleItems()
@@ -188,6 +173,7 @@ public class TimeTrialModeManager : GameManager
             timePassed += Time.deltaTime;
             UpdateTimerDisplay();
         }
+        UpdateGrenadeUI();
     }
 
     public void ResetTimer()

@@ -48,8 +48,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] private Transform grenadeSpawnPoint; // Punto de origen (no se usará en este caso)
     [SerializeField] private float throwForce = 15f; // Fuerza de lanzamiento
     [SerializeField] private float raycastDistance = 100f; // Distancia máxima del raycast
-    [SerializeField] private int maxGrenades = 2; // Máximo número de granadas que el jugador puede tener
-    [SerializeField] private float grenadeCooldown = 5f; // Tiempo de recarga entre granadas
+    [SerializeField] public int maxGrenades = 2; // Máximo número de granadas que el jugador puede tener
+    [SerializeField] public float grenadeCooldown = 5f; // Tiempo de recarga entre granadas
 
     [Header("----- Healing -----")]
     [SerializeField] int healAmount; // Amount to heal per tick
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     private bool isStunned = false;
     public CameraController cameraController;
     private int currentGrenades; // Número actual de granadas disponibles
-    private bool isReloading = false; // Indica si se está recargando una granada
+    private bool isRecharging = false; // Indica si se está recargando una granada
 
     bool canHeal;
 
@@ -101,6 +101,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         HPOriginal = HP;
         gunModelOriginal = gunModel;
         currentGrenades = maxGrenades; // Iniciar con la cantidad máxima de granadas
+        isRecharging = false;
         meleeModelOriginal = meleeModel;
         originalSpeed = speed;
         EquipStartingWeapons();
@@ -121,7 +122,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         Sprint();
         Shooting();
         // Llamar a ThrowGrenade solo si hay granadas disponibles y no se está recargando
-        if (Input.GetButtonDown("Grenade") && currentGrenades > 0 && !isReloading)
+        if (Input.GetButtonDown("Grenade") && currentGrenades > 0 && !isRecharging)
         {
             ThrowGrenade();
         }
@@ -306,6 +307,20 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
+    private IEnumerator RechargeGrenade()
+    {
+        isRecharging = true;
+        yield return new WaitForSeconds(grenadeCooldown);
+        currentGrenades++;
+        Debug.Log("Grenades recharged to: " + currentGrenades);
+        isRecharging = false;
+
+        if (currentGrenades < maxGrenades)
+        {
+            StartCoroutine(RechargeGrenade());
+        }
+    }
+
     #endregion
 
     #region IEnumerator Coroutines
@@ -414,11 +429,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     IEnumerator ReloadGrenade()
     {
-        isReloading = true; // Marca como que está recargando
+        isRecharging = true; // Marca como que está recargando
         yield return new WaitForSeconds(grenadeCooldown); // Espera el tiempo de recarga
         currentGrenades++; // Recarga una granada
-        isReloading = false; // Marca que ha terminado la recarga
+        isRecharging = false; // Marca que ha terminado la recarga
     }
+
+
 
 
     #endregion
@@ -576,9 +593,34 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         isSlowed = false;
     }
 
+    public int GetCurrentGrenades()
+    {
+        return currentGrenades;
+    }
+
+    public int GetMaxGrenades()
+    {
+        return maxGrenades;
+    }
+
+    public void UseGrenade()
+    {
+        if (currentGrenades > 0 && !isRecharging)
+        {
+            currentGrenades--;
+            Debug.Log("Grenades remaining: " + currentGrenades);
+
+            if (currentGrenades < maxGrenades)
+            {
+                StartCoroutine(RechargeGrenade());
+            }
+        }
+    }
+
+
     #endregion
 
- 
 
- 
+
+
 }
