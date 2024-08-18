@@ -20,6 +20,8 @@ public class SlowArea : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.isTrigger)
+            { return; }
         ISlowArea slowAreaExit = other.GetComponent<ISlowArea>();
         if (slowAreaExit != null)
         {
