@@ -370,7 +370,7 @@ public class TimeTrialModeManager : GameManager
 
     public override void WinGame()
     {
-        menuActive = lastLevel ? menuWinLastLevel : menuWin;
+        menuActive = (lastLevel || isStandAloneLevel) ? menuWinLastLevel : menuWin;
         DetermineFinalScore();
         UpdateScoreText();
         PauseAndOpenActiveMenu();

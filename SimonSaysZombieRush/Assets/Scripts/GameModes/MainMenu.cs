@@ -30,9 +30,6 @@ public class MainMenu : MonoBehaviour
             timeTrial1Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel1")[0]));
             timeTrial2Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel2")[0]));
             timeTrial3Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel3")[0]));
-            horde1Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel1")[0]));
-            horde2Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel2")[0]));
-            horde3Stats = AssetDatabase.LoadAssetAtPath<HordeStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("HordeModeLevel3")[0]));
         #endif
         if (timeTrial1Stats != null)
         {
@@ -45,18 +42,6 @@ public class MainMenu : MonoBehaviour
         if (timeTrial3Stats != null)
         {
             timeTrial3Text.text = timeTrial3Stats.BestTime.ToString("F0");
-        }
-        if (horde1Stats != null)
-        {
-            horde1Text.text = horde1Stats.HighestWave.ToString();
-        }
-        if (horde2Stats != null)
-        {
-            horde2Text.text = horde2Stats.HighestWave.ToString();
-        }
-        if (horde3Stats != null)
-        {
-            horde3Text.text = horde3Stats.HighestWave.ToString();
         }
     }
 
@@ -77,36 +62,5 @@ public class MainMenu : MonoBehaviour
     #else
         Application.Quit();
     #endif
-    }
-    TimeTrialStats GetTimeTrialStats(string statsName)
-    {
-        #if UNITY_EDITOR
-            string[] assetGuids = AssetDatabase.FindAssets(statsName);
-            if (assetGuids == null || assetGuids.Length <= 0)
-            {
-                return null;
-            }
-
-            string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
-            return AssetDatabase.LoadAssetAtPath<TimeTrialStats>(path);
-        #else
-            return null;
-        #endif
-    }
-
-    HordeStats GetHordeStats(string statsName)
-    {
-        #if UNITY_EDITOR
-            string[] assetGuids = AssetDatabase.FindAssets(statsName);
-            if (assetGuids == null || assetGuids.Length <= 0)
-            {
-                return null;
-            }
-
-            string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
-            return AssetDatabase.LoadAssetAtPath<HordeStats>(path);
-        #else
-            return null;
-        #endif
     }
 }
