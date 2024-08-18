@@ -49,26 +49,27 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isShaking) // Only follow the player when not shaking
+        if (isShaking)
+        {
+            if (currentShakeDuration > 0)
+            {
+                // Apply camera shake using Random.insideUnitSphere for random shaking
+                transform.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
+
+                // Decrease the remaining shake duration over time
+                currentShakeDuration -= Time.deltaTime * dampingSpeed;
+            }
+            else
+            {
+                // Reset the camera position after the shake ends
+                transform.localPosition = initialPosition;
+                isShaking = false; // Stop shaking
+            }
+        }
+        else
         {
             FollowPlayer();
         }
-
-        if (currentShakeDuration > 0)
-        {
-            // Apply camera shake using Random.insideUnitSphere for random shaking
-            transform.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
-
-            // Decrease the remaining shake duration over time
-            currentShakeDuration -= Time.deltaTime * dampingSpeed;
-        }
-        else if (isShaking)
-        {
-            // Reset the camera position after the shake ends
-            transform.localPosition = initialPosition;
-            isShaking = false;
-        }
-        HandleZoom();
     }
 
     private void HandleZoom()
@@ -121,6 +122,7 @@ public class CameraController : MonoBehaviour
         shakeMagnitude = magnitude;
         currentShakeDuration = shakeDuration;
         isShaking = true;
+        initialPosition = transform.localPosition; // Re-save the initial position in case camera moved
     }
 
     // Draw the dead zone in the scene view for debugging purposes
