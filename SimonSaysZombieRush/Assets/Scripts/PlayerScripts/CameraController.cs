@@ -29,7 +29,6 @@ public class CameraController : MonoBehaviour
     private float currentShakeDuration;
     private bool isShaking = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameManager.instance.player;
@@ -42,11 +41,12 @@ public class CameraController : MonoBehaviour
         initialZOffset = transform.position.z - player.transform.position.z;
         initialPosition = transform.localPosition;
 
-        // Set the initial zoom level to the maximum zoom
-        currentZoom = maxZoom;
+        // Set the initial zoom level based on the initial distance to the player
+        currentZoom = distanceToPlayer;
+
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (isShaking)
@@ -69,34 +69,44 @@ public class CameraController : MonoBehaviour
         else
         {
             FollowPlayer();
+            HandleZoom(); // Handle zoom input
         }
     }
 
     private void HandleZoom()
+{
+    // Check if the Control key is held down and if there is scroll input
+    if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0f)
     {
-        // Check if the Control key is held down
-        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-        {
-            // Get the scroll wheel input (positive for up, negative for down)
-            float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        // Get the scroll wheel input (positive for up, negative for down)
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
 
-            // Adjust the current zoom level based on the scroll input
-            currentZoom -= scrollInput * zoomSensitivity;
+        // Adjust the target zoom level based on the scroll input
+        currentZoom -= scrollInput * zoomSensitivity;
 
-            // Clamp the zoom level to ensure it's within the min and max limits
-            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
-
-            // Apply the zoom by adjusting the camera's position
-            AdjustCameraZoom();
-        }
+        // Clamp the zoom level to ensure it's within the min and max limits
+        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
     }
 
-    private void AdjustCameraZoom()
-    {
-        // Assuming the camera is always looking at the player, adjust its distance
-        // Here, we adjust the camera position along its forward axis (relative to its current rotation)
-        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -currentZoom);
-    }
+    // Apply the zoom smoothly by adjusting the camera's position
+    AdjustCameraZoom();
+}
+
+private void AdjustCameraZoom()
+{
+    // Smoothly interpolate the zoom level (distance to the player)
+    float smoothZoom = Mathf.Lerp(Vector3.Distance(transform.position, player.transform.position), currentZoom, Time.deltaTime * 5f);
+
+    // Calculate the zoom direction from the camera to the player
+    Vector3 zoomDirection = (transform.position - player.transform.position).normalized;
+
+    // Calculate the target position based on the smoothed zoom level
+    Vector3 targetZoomPosition = player.transform.position + zoomDirection * smoothZoom;
+
+    // Smoothly interpolate the camera's position towards the target zoom position
+    transform.position = Vector3.Lerp(transform.position, targetZoomPosition, Time.deltaTime * 5f);
+}
+
 
     void FollowPlayer()
     {
@@ -115,17 +125,15 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    // Public method to trigger the camera shake
     public void TriggerShake(float duration, float magnitude)
     {
         shakeDuration = duration;
         shakeMagnitude = magnitude;
         currentShakeDuration = shakeDuration;
         isShaking = true;
-        initialPosition = transform.localPosition; // Re-save the initial position in case camera moved
+        initialPosition = transform.localPosition;
     }
 
-    // Draw the dead zone in the scene view for debugging purposes
     void OnDrawGizmos()
     {
         if (player != null)
