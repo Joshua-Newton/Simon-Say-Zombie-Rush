@@ -261,6 +261,8 @@ GameObject:
   - component: {fileID: 8704252476720124236}
   - component: {fileID: 7563562730603081131}
   - component: {fileID: 1293715369504297785}
+  - component: {fileID: 4405970944682847417}
+  - component: {fileID: 3462400453322918702}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -388,6 +390,8 @@ MonoBehaviour:
   grenadeSpawnPoint: {fileID: 8117207031737159191}
   throwForce: 15
   raycastDistance: 100
+  maxGrenades: 2
+  grenadeCooldown: 5
   healAmount: 1
   healInterval: 2
   healDelay: 2
@@ -701,3 +705,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!81 &4405970944682847417
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713134058560455240}
+  m_Enabled: 1
+--- !u!54 &3462400453322918702
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713134058560455240}
+  serializedVersion: 4
+  m_Mass: 20
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
