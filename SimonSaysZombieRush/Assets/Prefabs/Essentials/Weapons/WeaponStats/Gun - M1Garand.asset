@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Gun - M1Garand
   m_EditorClassIdentifier: 
   weaponModel: {fileID: 4698201593948852689, guid: 185ce04d44da342739f0bef843698e6c, type: 3}
+  projectile: {fileID: 0}
+  weaponType: 0
   damage: 2
   damageRange: 500
   damageDelay: 1
-  ammoCurrent: 7
+  ammoCurrent: 8
   ammoMax: 10
   hitEffect: {fileID: 577812841044345583, guid: fcb74f28d107e284e80af037bfec14ca, type: 3}
   shootSound: {fileID: 8300000, guid: bbd53c35d4d4a8f449760ffa619f79af, type: 3}
-  meleeSound: {fileID: 0}
-  shootVol: 0.25
-  meleeVol: 0.5
+  shootVol: 1

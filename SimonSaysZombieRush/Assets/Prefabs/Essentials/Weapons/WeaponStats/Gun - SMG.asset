@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Gun - SMG
   m_EditorClassIdentifier: 
   weaponModel: {fileID: 919132149155446097, guid: 9c156835c28231245b5203922da8c2fe, type: 3}
+  projectile: {fileID: 0}
+  weaponType: 0
   damage: 1
   damageRange: 200
   damageDelay: 0.2
-  ammoCurrent: 199
+  ammoCurrent: 193
   ammoMax: 200
   hitEffect: {fileID: 1301697207402410478, guid: 39f852c28f9c3fd45a427c24f3564ba7, type: 3}
   shootSound: {fileID: 8300000, guid: bbd53c35d4d4a8f449760ffa619f79af, type: 3}
-  meleeSound: {fileID: 0}
-  shootVol: 0.25
-  meleeVol: 0.5
+  shootVol: 1

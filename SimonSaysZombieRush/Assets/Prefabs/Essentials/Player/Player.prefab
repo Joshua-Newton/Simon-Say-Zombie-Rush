@@ -315,7 +315,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7b13f86d713a0564aa98c3eec0854c6f, type: 3}
   - {fileID: 8300000, guid: 92965a1002b5160449c55cad6e70d844, type: 3}
   - {fileID: 8300000, guid: 3ced55a12345a0845936f65e0f00d60f, type: 3}
-  audioStepsVolume: 0.05
+  audioStepsVolume: 0.25
   audioHurt:
   - {fileID: 8300000, guid: d60323bc98026d742b9a24e762209e7a, type: 3}
   - {fileID: 8300000, guid: 2dca374e4fbad7a409d1a7ec9d56ed3a, type: 3}
@@ -323,7 +323,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d2f515d96ff6be6499149f550a1cf212, type: 3}
   - {fileID: 8300000, guid: ef2d2769036d17d44bd0079248c78112, type: 3}
   - {fileID: 8300000, guid: a959e649699338748a6ae6facdfc4f7d, type: 3}
-  audioHurtVolume: 0.315
+  audioHurtVolume: 1
   audioMelee:
   - {fileID: 8300000, guid: 4dd3709bc57e142658a6b53f15346ce6, type: 3}
   - {fileID: 8300000, guid: 205be67afd3eb43a18e9e78c60a271f1, type: 3}
@@ -366,9 +366,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aae5858ce179c4146a965a329610f5d9, type: 3}
   - {fileID: 8300000, guid: 5e14240ed39c243e598d813e91876436, type: 3}
   - {fileID: 8300000, guid: 3304a2d00b0bc406db9e5374c75d9452, type: 3}
-  audioMeleeVolume: 0.1
+  audioMeleeVolume: 0.5
   audioDamage: {fileID: 8300000, guid: 7cb990e14562b4d43939b5e82742bacf, type: 3}
-  damageVolume: 0.64
+  damageVolume: 1
   HP: 20
   speed: 8
   sprintMultiplier: 2
@@ -496,7 +496,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -1559667293912200592, guid: 751459f5fe7f3114ea673006c402e869, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

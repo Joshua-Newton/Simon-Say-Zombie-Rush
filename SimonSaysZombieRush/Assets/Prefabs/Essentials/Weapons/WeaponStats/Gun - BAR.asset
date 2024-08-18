@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Gun - BAR
   m_EditorClassIdentifier: 
   weaponModel: {fileID: 5571641588984482722, guid: c303a18f1cbdd4156b139b9e5b35d6a9, type: 3}
+  projectile: {fileID: 0}
+  weaponType: 0
   damage: 1
   damageRange: 100
   damageDelay: 0.5
-  ammoCurrent: 17
+  ammoCurrent: 12
   ammoMax: 20
   hitEffect: {fileID: 3249809072487309720, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   shootSound: {fileID: 8300000, guid: bbd53c35d4d4a8f449760ffa619f79af, type: 3}
-  meleeSound: {fileID: 0}
-  shootVol: 0.25
-  meleeVol: 0.5
+  shootVol: 1
