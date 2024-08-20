@@ -8,7 +8,13 @@ public class EnemyMelee : EnemyAI
     [SerializeField] float meleeHitTime;
     [SerializeField] float meleeTriggerRange;
     [SerializeField] Collider meleeHitBox;
+
+    [Header("----- Melee Audio -----")]
+    [SerializeField] AudioClip[] meleeAudioClips;
+    [Range(0, 1)] [SerializeField] float meleeAudioVolume = 0.5f;
+
     bool isMeleeing;
+
 
     // Start is called before the first frame update
     protected override void Start()
@@ -42,6 +48,8 @@ public class EnemyMelee : EnemyAI
         isMeleeing = false;
     }
 
+    #region Animation Events
+
     public void EnableMeleeHitbox()
     {
         meleeHitBox.enabled = true;
@@ -52,4 +60,13 @@ public class EnemyMelee : EnemyAI
         meleeHitBox.enabled = false;
     }
 
+    public void PlayAttackAudio()
+    {
+        if (meleeAudioClips.Length > 0)
+        {
+            PlayAudioClipWithPitchShit(meleeAudioClips[Random.Range(0, meleeAudioClips.Length)], meleeAudioVolume);
+        }
+    }
+
+    #endregion
 }

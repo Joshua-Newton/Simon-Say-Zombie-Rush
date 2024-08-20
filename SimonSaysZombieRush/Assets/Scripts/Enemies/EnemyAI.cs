@@ -116,6 +116,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
 
     }
 
+    protected virtual void PlayAudioClipWithPitchShit(AudioClip audClip, float volume)
+    {
+        if(audSource.isPlaying)
+        {
+            audSource.Stop();
+        }
+        audSource.pitch = Random.Range(pitchShiftMin, pitchShiftMax);
+        audSource.PlayOneShot(audClip, volume);
+    }
+
     protected virtual void Speak()
     {
         if (!isSpeaking)

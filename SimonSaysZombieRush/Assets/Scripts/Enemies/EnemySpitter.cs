@@ -54,14 +54,12 @@ public class EnemySpitter : EnemyAI
 
     public void PlayPreSpitAudio()
     {
-        audSource.pitch = Random.Range(pitchShiftMin, pitchShiftMax);
-        audSource.PlayOneShot(preSpitAudio, preSpitAudioVolume);
+        PlayAudioClipWithPitchShit(preSpitAudio, preSpitAudioVolume);
     }
 
     public void PlaySpitAudio()
     {
-        audSource.pitch = Random.Range(pitchShiftMin, pitchShiftMax);
-        audSource.PlayOneShot(spitAudio, spitAudioVolume);
+        PlayAudioClipWithPitchShit(spitAudio, spitAudioVolume);
     }
 
     #endregion
