@@ -670,7 +670,7 @@ Transform:
   m_GameObject: {fileID: 2343070812200121037}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000018626451, y: 4.2550416e-10, z: 2.7900138e-10, w: 1}
-  m_LocalPosition: {x: -0.0011863303, y: 0.03276114, z: 0.6659473}
+  m_LocalPosition: {x: -0.029030325, y: 0.032761123, z: 0.16672322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -685,11 +685,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3849718709374906693}
+  - component: {fileID: 3975877623519832698}
   - component: {fileID: 5485381378493403346}
   - component: {fileID: 9139125531226603734}
   - component: {fileID: 7868206089718436980}
   - component: {fileID: 6770012889016558053}
-  - component: {fileID: 3975877623519832698}
   - component: {fileID: -1501503814250176387}
   m_Layer: 0
   m_Name: Spitter
@@ -714,6 +714,59 @@ Transform:
   - {fileID: 6564672096232873522}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 176.808, z: 0}
+--- !u!114 &3975877623519832698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376538843085238790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd4d318e12f4d348b38b546dd0c2db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 1714358392516758433}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  HP: 3
+  agent: {fileID: 9139125531226603734}
+  faceTargetSpeed: 5
+  alwaysChasePlayer: 0
+  roamDistance: 10
+  roamTimer: 1
+  headPos: {fileID: 5776537315449240725}
+  viewAngle: 90
+  anim: {fileID: 6770012889016558053}
+  animSpeedTransition: 5
+  sourceWaveSpawner: {fileID: 0}
+  sourceRandomSpawner: {fileID: 0}
+  audSource: {fileID: -1501503814250176387}
+  groanSounds:
+  - {fileID: 8300000, guid: 39a4a3d686f628b42b9072bd06a2172c, type: 3}
+  - {fileID: 8300000, guid: d80bb11aa5a5e314185ea8b8495f1234, type: 3}
+  - {fileID: 8300000, guid: 51adec46e38398d4bbfe5dc6554b904d, type: 3}
+  minTimeBetweenSounds: 8
+  timeVariance: 1
+  groanVolume: 0.3
+  pitchShiftMin: 0.8
+  pitchShiftMax: 1.2
+  canDropItems: 1
+  possibleDrops:
+  - {fileID: 4017155185005024, guid: 7c5f9b64c4b2d9547b693972afc2ac0b, type: 3}
+  - {fileID: 8740908941748765629, guid: 11b58817db7be3a4c8bec43cef9f3dca, type: 3}
+  - {fileID: 8433842422522927380, guid: c21c07d013b84b64899f21af5320b1ac, type: 3}
+  - {fileID: 4014676716666281596, guid: 2be8c153b106f7d4aa9b753ce1f004fe, type: 3}
+  - {fileID: 7859658544650437553, guid: d9b39b58b73efdf489811c431948a958, type: 3}
+  - {fileID: 5978595989182856764, guid: 8df6f2cc33356504ea15bc8e2dbb7c9e, type: 3}
+  dropChance: 5
+  spitProjectile: {fileID: 5197720612276227783, guid: 22f4386bdf9e3fd4baaa3f72c1d683d8, type: 3}
+  shootPos: {fileID: 4870959282976574419}
+  spitDelay: 1.5
+  spitSpeed: 2
+  preSpitAudio: {fileID: 8300000, guid: 2f695f9bfd493b2438354ec6f7a4b3c6, type: 3}
+  preSpitAudioVolume: 0.5
+  spitAudio: {fileID: 8300000, guid: b0eafdd92dc42604a867c45b4f3503c0, type: 3}
+  spitAudioVolume: 0.5
 --- !u!136 &5485381378493403346
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -801,54 +854,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3975877623519832698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2376538843085238790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fd4d318e12f4d348b38b546dd0c2db0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 1714358392516758433}
-  hitColor: {r: 1, g: 0, b: 0, a: 1}
-  HP: 3
-  agent: {fileID: 9139125531226603734}
-  faceTargetSpeed: 5
-  alwaysChasePlayer: 0
-  roamDistance: 10
-  roamTimer: 1
-  headPos: {fileID: 5776537315449240725}
-  viewAngle: 90
-  anim: {fileID: 6770012889016558053}
-  animSpeedTransition: 5
-  isGrenadeEffectActive: 0
-  sourceWaveSpawner: {fileID: 0}
-  sourceRandomSpawner: {fileID: 0}
-  audSource: {fileID: -1501503814250176387}
-  groanSounds:
-  - {fileID: 8300000, guid: 39a4a3d686f628b42b9072bd06a2172c, type: 3}
-  - {fileID: 8300000, guid: d80bb11aa5a5e314185ea8b8495f1234, type: 3}
-  - {fileID: 8300000, guid: 51adec46e38398d4bbfe5dc6554b904d, type: 3}
-  minTimeBetweenSounds: 8
-  timeVariance: 1
-  groanVolume: 0.3
-  canDropItems: 1
-  possibleDrops:
-  - {fileID: 4017155185005024, guid: 7c5f9b64c4b2d9547b693972afc2ac0b, type: 3}
-  - {fileID: 8740908941748765629, guid: 11b58817db7be3a4c8bec43cef9f3dca, type: 3}
-  - {fileID: 8433842422522927380, guid: c21c07d013b84b64899f21af5320b1ac, type: 3}
-  - {fileID: 4014676716666281596, guid: 2be8c153b106f7d4aa9b753ce1f004fe, type: 3}
-  - {fileID: 7859658544650437553, guid: d9b39b58b73efdf489811c431948a958, type: 3}
-  - {fileID: 5978595989182856764, guid: 8df6f2cc33356504ea15bc8e2dbb7c9e, type: 3}
-  dropChance: 5
-  spitProjectile: {fileID: 5197720612276227783, guid: 22f4386bdf9e3fd4baaa3f72c1d683d8, type: 3}
-  shootPos: {fileID: 4870959282976574419}
-  spitDelay: 1
-  spitSpeed: 2
 --- !u!82 &-1501503814250176387
 AudioSource:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
     [SerializeField] protected int animSpeedTransition;
 
     [Header("----- Grenade Effect -----")]
-    public bool isGrenadeEffectActive = false;
+    protected bool isGrenadeEffectActive = false;
 
     [Header("----- Spawn Source -----")]
     // Replace with a system that take advantage of inheritance so that we only need one of these
@@ -37,16 +37,18 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
     public RandomSpawner sourceRandomSpawner;
 
     [Header("----- Audio -----")]
-    [SerializeField] AudioSource audSource;
-    [SerializeField] AudioClip[] groanSounds;
-    [Range(8, 100)] [SerializeField] float minTimeBetweenSounds = 5;
-    [Range(0, 5)] [SerializeField] float timeVariance = 1;
-    [Range(0, 1)] [SerializeField] float groanVolume = 0.3f;
+    [SerializeField] protected AudioSource audSource;
+    [SerializeField] protected AudioClip[] groanSounds;
+    [Range(8, 100)] [SerializeField] protected float minTimeBetweenSounds = 5;
+    [Range(0, 5)] [SerializeField] protected float timeVariance = 1;
+    [Range(0, 1)] [SerializeField] protected float groanVolume = 0.3f;
+    [Range(0, 1)][SerializeField] protected float pitchShiftMin = 0.9f;
+    [Range(1, 2)][SerializeField] protected float pitchShiftMax = 1.1f;
 
     [Header("----- Drops -----")]
-    [SerializeField] bool canDropItems;
-    [SerializeField] GameObject[] possibleDrops;
-    [Range(0, 100)] [SerializeField] float dropChance;
+    [SerializeField] protected bool canDropItems;
+    [SerializeField] protected GameObject[] possibleDrops;
+    [Range(0, 100)] [SerializeField] protected float dropChance;
 
     protected Color originalColor;
     protected bool isRoaming;

@@ -11,6 +11,11 @@ public class EnemySpitter : EnemyAI
     [Range(0.1f, 10)] [SerializeField] float spitSpeed;
     bool isSpitting;
 
+    [Header("----- Spit Audio -----")]
+    [SerializeField] AudioClip preSpitAudio;
+    [Range(0, 1)][SerializeField] float preSpitAudioVolume = 0.5f;
+    [SerializeField] AudioClip spitAudio;
+    [Range(0, 1)] [SerializeField] float spitAudioVolume = 0.5f;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -39,7 +44,7 @@ public class EnemySpitter : EnemyAI
         isSpitting = false;
     }
 
-    // Called from animation event
+    #region Animation Events
     public void SpawnSpit()
     {
         GameObject projectile = Instantiate(spitProjectile, shootPos.position, transform.rotation);
@@ -47,5 +52,18 @@ public class EnemySpitter : EnemyAI
         spitRB.velocity = playerDir.normalized * spitSpeed;
     }
 
+    public void PlayPreSpitAudio()
+    {
+        audSource.pitch = Random.Range(pitchShiftMin, pitchShiftMax);
+        audSource.PlayOneShot(preSpitAudio, preSpitAudioVolume);
+    }
+
+    public void PlaySpitAudio()
+    {
+        audSource.pitch = Random.Range(pitchShiftMin, pitchShiftMax);
+        audSource.PlayOneShot(spitAudio, spitAudioVolume);
+    }
+
+    #endregion
 
 }
