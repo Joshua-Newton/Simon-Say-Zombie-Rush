@@ -34,10 +34,18 @@ public class EnemySpitter : EnemyAI
     IEnumerator Spit()
     {
         isSpitting = true;
-        GameObject projectile = Instantiate(spitProjectile, shootPos.position, transform.rotation);
-        Rigidbody spitRB = projectile.GetComponent<Rigidbody>();
-        spitRB.velocity = playerDir.normalized * spitSpeed;
+        anim.SetTrigger("Spit");
         yield return new WaitForSeconds(spitDelay);
         isSpitting = false;
     }
+
+    // Called from animation event
+    public void SpawnSpit()
+    {
+        GameObject projectile = Instantiate(spitProjectile, shootPos.position, transform.rotation);
+        Rigidbody spitRB = projectile.GetComponent<Rigidbody>();
+        spitRB.velocity = playerDir.normalized * spitSpeed;
+    }
+
+
 }

@@ -16,7 +16,7 @@ public class Damage : MonoBehaviour
     [SerializeField] protected bool repeatDamage;
     [SerializeField] protected float repeatDelay;
     [SerializeField] protected bool damagePlayer = true;
-
+    [SerializeField] protected bool damageEnemies = true;
 
     protected bool hasDamaged;
     protected bool isDamaging;
@@ -49,7 +49,8 @@ public class Damage : MonoBehaviour
         
         if(other.isTrigger || 
             repeatDamage ||
-            (!damagePlayer && other.CompareTag("Player")))
+            (!damagePlayer && other.CompareTag("Player")) ||
+            (!damageEnemies && other.gameObject.CompareTag("Enemy")))
         {
             return;
         }
@@ -75,9 +76,9 @@ public class Damage : MonoBehaviour
 
     void OnTriggerStay (Collider other)
     {
-        if (other.isTrigger || other.CompareTag("Enemy"))
+        if (other.isTrigger || (!damageEnemies && other.gameObject.CompareTag("Enemy")))
         {
-            return; // ignore enemies and other triggers for ontriggerstay interactions
+            return;
         }
 
         if ((type == damageType.stationary || type == damageType.flame || type == damageType.lava) && repeatDamage && !isDamaging)

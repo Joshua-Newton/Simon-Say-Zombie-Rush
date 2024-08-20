@@ -58,6 +58,7 @@ MonoBehaviour:
   repeatDamage: 0
   repeatDelay: 0
   damagePlayer: 1
+  damageEnemies: 0
 --- !u!135 &3197329376116836574
 SphereCollider:
   m_ObjectHideFlags: 0

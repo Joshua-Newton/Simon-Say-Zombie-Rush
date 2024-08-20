@@ -129,6 +129,8 @@ MonoBehaviour:
   acidDuration: 0
   repeatDamage: 1
   repeatDelay: 1
+  damagePlayer: 1
+  damageEnemies: 0
 --- !u!54 &7778251253766833525
 Rigidbody:
   m_ObjectHideFlags: 0
