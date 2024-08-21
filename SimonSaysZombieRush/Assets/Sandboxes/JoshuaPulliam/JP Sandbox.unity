@@ -6249,10 +6249,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1562676470}
     m_Modifications:
-    - target: {fileID: 1884636787665079496, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
-      propertyPath: repeatDelay
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.379999
@@ -6296,6 +6292,22 @@ PrefabInstance:
     - target: {fileID: 3385466897715273237, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_Name
       value: Flamethrower Wall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6342728575477288127, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6342728575477288127, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6342728575477288127, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Size.z
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6342728575477288127, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Center.z
+      value: 32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
