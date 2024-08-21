@@ -19881,6 +19881,8 @@ MonoBehaviour:
   repeatDamage: 1
   repeatDelay: 0.1
   damagePlayer: 1
+  damageEnemies: 1
+  damageSourceString: 
 --- !u!65 &6342728575477288127
 BoxCollider:
   m_ObjectHideFlags: 0
