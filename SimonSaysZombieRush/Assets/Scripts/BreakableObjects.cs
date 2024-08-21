@@ -36,7 +36,7 @@ public class BreakableObjects : MonoBehaviour, IDamage
         originalColor = model.material.color;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, string damageSource = "")
     {
         HP -= amount;
         StartCoroutine(FlashDamage());

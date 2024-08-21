@@ -1911,6 +1911,7 @@ MonoBehaviour:
   repeatDelay: 0
   damagePlayer: 0
   damageEnemies: 1
+  damageSourceString: 
 --- !u!54 &5931582288798661208
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3047,6 +3048,7 @@ MonoBehaviour:
   healAmount: 1
   healInterval: 2
   healDelay: 2
+  immunityAfterDamageFromSameSource: 0.25
   cameraController: {fileID: 0}
 --- !u!114 &-1330740601553871819
 MonoBehaviour:

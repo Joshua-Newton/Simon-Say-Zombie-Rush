@@ -17,6 +17,7 @@ public class Damage : MonoBehaviour
     [SerializeField] protected float repeatDelay;
     [SerializeField] protected bool damagePlayer = true;
     [SerializeField] protected bool damageEnemies = true;
+    [SerializeField] protected string damageSourceString = "";
 
     protected bool hasDamaged;
     protected bool isDamaging;
@@ -59,7 +60,7 @@ public class Damage : MonoBehaviour
 
         if(damageTarget != null && !hasDamaged)
         {
-            damageTarget.TakeDamage(damageAmount);
+            damageTarget.TakeDamage(damageAmount, damageSourceString);
         }
 
         if(type == damageType.bullet)
@@ -118,7 +119,7 @@ public class Damage : MonoBehaviour
     IEnumerator repeatingDamage(IDamage damageTarget)
     {
         isDamaging = true;
-        damageTarget.TakeDamage(damageAmount);
+        damageTarget.TakeDamage(damageAmount, damageSourceString);
         yield return new WaitForSeconds(repeatDelay);
         isDamaging = false;
     }

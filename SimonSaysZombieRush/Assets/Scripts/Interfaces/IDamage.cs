@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IDamage
 {
-    void TakeDamage(int amount);
+    void TakeDamage(int amount, string damageSource = "");
     void Stun(float duration);
 }

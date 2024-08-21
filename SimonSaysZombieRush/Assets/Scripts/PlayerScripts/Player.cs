@@ -51,6 +51,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] int healAmount;
     [SerializeField] float healInterval;
     [SerializeField] float healDelay;
+
+    [Header("----- Other -----")]
+    [SerializeField] float immunityAfterDamageFromSameSource = 0.1f;
+
     #endregion
 
     #region Private fields
@@ -79,6 +83,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     private bool isRecharging;
 
     bool canHeal;
+    private List<string> recentDamageSource = new List<string>();
+    
 
     Collider wallRunCollider;
     Coroutine healingCoroutine;
@@ -434,6 +440,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             StartCoroutine(RechargeGrenade());
         }
     }
+
+    IEnumerator RemoveDamageSourceAfterDelay(string damageSource)
+    {
+        yield return new WaitForSeconds(immunityAfterDamageFromSameSource);
+        recentDamageSource.Remove(damageSource);
+    }
+
     #endregion
 
     #region Public Functions
@@ -468,8 +481,18 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         characterController.enabled = true;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, string damageSource = "")
     {
+        if (!string.IsNullOrEmpty(damageSource) && recentDamageSource.Contains(damageSource))
+        {
+            return;
+        }
+        else if(!string.IsNullOrEmpty(damageSource))
+        {
+            recentDamageSource.Add(damageSource);
+            StartCoroutine(RemoveDamageSourceAfterDelay(damageSource));
+        }
+
         HP -= amount;
         UpdatePlayerUI();
         aud.PlayOneShot(audioHurt[Random.Range(0, audioHurt.Length)], audioHurtVolume);
