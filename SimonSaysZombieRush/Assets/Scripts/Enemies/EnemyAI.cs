@@ -225,7 +225,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, string damageSource = "")
     {
         HP -= amount;
         StartCoroutine(FlashDamage());
