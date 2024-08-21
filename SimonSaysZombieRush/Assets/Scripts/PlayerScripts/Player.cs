@@ -10,6 +10,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] AudioSource aud;
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Animator animator;
+    [SerializeField] int animSpeedTransition;
 
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip[] audioSteps;
@@ -104,6 +105,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         UpdatePlayerUI();
         SpawnPlayer();
         cameraController = Camera.main.GetComponent<CameraController>();
+        animator = GetComponent<Animator>();
+        SetAnimationSpeed();
     }
 
     void Update()
@@ -635,22 +638,27 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     public void SetAnimationSpeed()
     {
-        if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee)
+        if (animator != null)
         {
-
+            float playerSpeed = characterController.velocity.normalized.magnitude;
+            animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), playerSpeed, Time.deltaTime * animSpeedTransition));
         }
-        else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun)
-        {
+        //if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee)
+        //{
 
-        }
-        else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Grenade)
-        {
+        //}
+        //else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun)
+        //{
 
-        }
-        else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Projectile)
-        {
+        //}
+        //else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Grenade)
+        //{
 
-        }
+        //}
+        //else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Projectile)
+        //{
+
+        //}
     }
     #endregion
 }
