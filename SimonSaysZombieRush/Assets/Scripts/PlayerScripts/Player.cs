@@ -102,6 +102,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     void Update()
     {
+
         if (raySource != null && rayDestination != null)
         {
             Debug.DrawRay(raySource, rayDestination);
@@ -606,6 +607,26 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             {
                 StartCoroutine(RechargeGrenade());
             }
+        }
+    }
+
+    public void SetAnimationSpeed()
+    {
+        if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee)
+        {
+
+        }
+        else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun)
+        {
+
+        }
+        else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Grenade)
+        {
+
+        }
+        else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Projectile)
+        {
+
         }
     }
     #endregion
