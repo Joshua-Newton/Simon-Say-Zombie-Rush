@@ -3522,9 +3522,7 @@ MonoBehaviour:
   timeTrial1Text: {fileID: 1173665238}
   timeTrial2Text: {fileID: 2074256073}
   timeTrial3Text: {fileID: 111014239}
-  horde1Text: {fileID: 0}
-  horde2Text: {fileID: 0}
-  horde3Text: {fileID: 0}
+  buildIndexesForLevels: 020000000300000004000000
 --- !u!1 &704487967
 GameObject:
   m_ObjectHideFlags: 0

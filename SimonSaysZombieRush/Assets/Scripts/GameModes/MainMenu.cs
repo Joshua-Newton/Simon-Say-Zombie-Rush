@@ -9,39 +9,24 @@ using UnityEngine.UIElements;
 
 public class MainMenu : MonoBehaviour
 {
-    TimeTrialStats timeTrial1Stats;
-    TimeTrialStats timeTrial2Stats;
-    TimeTrialStats timeTrial3Stats;
-    HordeStats horde1Stats;
-    HordeStats horde2Stats;
-    HordeStats horde3Stats;
-
     [SerializeField] TMP_Text timeTrial1Text;
     [SerializeField] TMP_Text timeTrial2Text;
     [SerializeField] TMP_Text timeTrial3Text;
-    [SerializeField] TMP_Text horde1Text;
-    [SerializeField] TMP_Text horde2Text;
-    [SerializeField] TMP_Text horde3Text;
+    [SerializeField] int[] buildIndexesForLevels;
 
     void Start()
     {
-        // TODO: Replace with a more programatic system without "magic" strings
-        #if UNITY_EDITOR
-            timeTrial1Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel1")[0]));
-            timeTrial2Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel2")[0]));
-            timeTrial3Stats = AssetDatabase.LoadAssetAtPath<TimeTrialStats>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("TimeTrialModeLevel3")[0]));
-        #endif
-        if (timeTrial1Stats != null)
+        if (buildIndexesForLevels.Length > 0)
         {
-            timeTrial1Text.text = timeTrial1Stats.BestTime.ToString("F0");
+            timeTrial1Text.text = PlayerPrefs.GetFloat(buildIndexesForLevels[0].ToString()).ToString("F0");
         }
-        if (timeTrial2Stats != null)
+        if (buildIndexesForLevels.Length > 1)
         {
-            timeTrial2Text.text = timeTrial2Stats.BestTime.ToString("F0");
+            timeTrial2Text.text = PlayerPrefs.GetFloat(buildIndexesForLevels[1].ToString()).ToString("F0");
         }
-        if (timeTrial3Stats != null)
+        if (buildIndexesForLevels.Length > 2)
         {
-            timeTrial3Text.text = timeTrial3Stats.BestTime.ToString("F0");
+            timeTrial3Text.text = PlayerPrefs.GetFloat(buildIndexesForLevels[2].ToString()).ToString("F0");
         }
     }
 

@@ -368,21 +368,11 @@ public class TimeTrialModeManager : GameManager
 
     void SaveStats()
     {
-        TimeTrialStats currentStats = GetStats();
-        if (currentStats != null)
+        string statKey = SceneManager.GetActiveScene().buildIndex.ToString();
+        float bestTime = PlayerPrefs.GetFloat(statKey, float.MaxValue);
+        if(timePassed < bestTime)
         {
-            if (timePassed > currentStats.TimeUsed)
-            {
-                UpdateStats(currentStats);
-            }
-        }
-        else
-        {
-            TimeTrialStats newStats = ScriptableObject.CreateInstance<TimeTrialStats>();
-            UpdateStats(newStats);
-#if UNITY_EDITOR
-            AssetDatabase.CreateAsset(newStats, savePath);
-#endif
+            PlayerPrefs.SetFloat(statKey, timePassed);
         }
     }
 
