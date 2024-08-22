@@ -89,6 +89,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     private List<string> recentDamageSource = new List<string>();
 
     Collider wallRunCollider;
+    Collider meleeCollider;
     Coroutine healingCoroutine;
     Coroutine healingDelayCoroutine;
     #endregion
@@ -105,6 +106,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         UpdatePlayerUI();
         SpawnPlayer();
         cameraController = Camera.main.GetComponent<CameraController>();
+        meleeCollider = meleeModel.GetComponentInChildren<Collider>();
     }
 
     void Update()
@@ -305,8 +307,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (currentWeapon.weaponType == WeaponStats.WeaponType.Melee)
         {
             isMeleeing = true;
-            aud.PlayOneShot(audioMelee[Random.Range(0, audioMelee.Length)], audioMeleeVolume);
+            meleeCollider.enabled = true;
             animator.SetTrigger("Melee");
+            aud.PlayOneShot(audioMelee[Random.Range(0, audioMelee.Length)], audioMeleeVolume);
+            meleeCollider.enabled = false;
+            isMeleeing = false;
         }
     }
 
@@ -606,7 +611,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
                 meleeCollider.enabled = false;
             }
         }
-        isMeleeing = false;
     }
 
     public void MeleeOn()
