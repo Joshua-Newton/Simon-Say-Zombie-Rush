@@ -18,21 +18,21 @@ public class MainMenu : MonoBehaviour
     {
         if (buildIndexesForLevels.Length > 0)
         {
-            UpdateHighScore(timeTrial1Text);
+            UpdateHighScore(timeTrial1Text, 0);
         }
         if (buildIndexesForLevels.Length > 1)
         {
-            UpdateHighScore(timeTrial2Text);
+            UpdateHighScore(timeTrial2Text, 1);
         }
         if (buildIndexesForLevels.Length > 2)
         {
-            UpdateHighScore(timeTrial3Text);
+            UpdateHighScore(timeTrial3Text, 2);
         }
     }
 
-    private void UpdateHighScore(TMP_Text text)
+    private void UpdateHighScore(TMP_Text text, int index)
     {
-        float bestTime = PlayerPrefs.GetFloat(buildIndexesForLevels[0].ToString());
+        float bestTime = PlayerPrefs.GetFloat(buildIndexesForLevels[index].ToString());
         if (bestTime > 0)
         {
             text.text = bestTime.ToString("F0");
