@@ -13,9 +13,12 @@ public class MainMenu : MonoBehaviour
     [SerializeField] TMP_Text timeTrial2Text;
     [SerializeField] TMP_Text timeTrial3Text;
     [SerializeField] int[] buildIndexesForLevels;
+    [SerializeField] SettingsMenuManager settingsMenuManager;
 
     void Start()
     {
+        InitializeSound();
+
         if (buildIndexesForLevels.Length > 0)
         {
             UpdateHighScore(timeTrial1Text, 0);
@@ -61,4 +64,17 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     #endif
     }
+
+    private void InitializeSound()
+    {
+        float cachedMasterVol = PlayerPrefs.GetFloat(SettingsMenuManager.MASTER_VOLUME_NAME, SettingsMenuManager.defaultMasterVol);
+        float cachedMusicVol =  PlayerPrefs.GetFloat(SettingsMenuManager.MUSIC_VOLUME_NAME, SettingsMenuManager.defaultMusicVol);
+        float cachedSFXVol =    PlayerPrefs.GetFloat(SettingsMenuManager.SFX_VOLUME_NAME, SettingsMenuManager.defaultSFXVol);
+        float cachedMenuVol =   PlayerPrefs.GetFloat(SettingsMenuManager.MENU_VOLUME_NAME, SettingsMenuManager.defaultMenuVol);
+        settingsMenuManager.mainAudioMixer.SetFloat(SettingsMenuManager.MASTER_VOLUME_NAME, SettingsMenuManager.SliderValToDecibels(cachedMasterVol));
+        settingsMenuManager.mainAudioMixer.SetFloat(SettingsMenuManager.MUSIC_VOLUME_NAME, SettingsMenuManager.SliderValToDecibels(cachedMusicVol));
+        settingsMenuManager.mainAudioMixer.SetFloat(SettingsMenuManager.SFX_VOLUME_NAME, SettingsMenuManager.SliderValToDecibels(cachedSFXVol));
+        settingsMenuManager.mainAudioMixer.SetFloat(SettingsMenuManager.MENU_VOLUME_NAME, SettingsMenuManager.SliderValToDecibels(cachedMenuVol));
+    }
+
 }

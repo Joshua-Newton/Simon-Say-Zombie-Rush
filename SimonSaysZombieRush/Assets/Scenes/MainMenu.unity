@@ -763,8 +763,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1322467917}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.24992499, y: 0}
+  m_AnchorMax: {x: 0.24992499, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3523,6 +3523,7 @@ MonoBehaviour:
   timeTrial2Text: {fileID: 2074256073}
   timeTrial3Text: {fileID: 111014239}
   buildIndexesForLevels: 020000000300000004000000
+  settingsMenuManager: {fileID: 817601086}
 --- !u!1 &704487967
 GameObject:
   m_ObjectHideFlags: 0
@@ -5062,10 +5063,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 3436385}
   m_HandleRect: {fileID: 1820024914}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 0
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -6848,10 +6849,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1656560009}
   m_HandleRect: {fileID: 85291595}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 0
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.25
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -7339,10 +7340,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 555664371}
   m_HandleRect: {fileID: 1222142559}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 0
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -7776,7 +7777,7 @@ RectTransform:
   m_Father: {fileID: 730966788}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0.24992499, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9499,10 +9500,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1671355689}
   m_HandleRect: {fileID: 1952068316}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 0
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
