@@ -36,6 +36,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject meleeModel;
+    [SerializeField] GameObject muzzleFlash;
     [SerializeField] Transform shootPos;
     [SerializeField] int damage;
     [SerializeField] float damageRange;
@@ -108,7 +109,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     void Update()
     {
-        BaseballBatMovement();
+        WeaponMovement();
         if (raySource != null && rayDestination != null)
         {
             Debug.DrawRay(raySource, rayDestination);
@@ -400,6 +401,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             isShooting = true;
             aud.PlayOneShot(currentWeapon.shootSound, currentWeapon.shootVol);
+            StartCoroutine(MuzzleFlash());
 
             currentWeapon.ammoCurrent--;
             UpdatePlayerUI();
@@ -460,6 +462,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         yield return new WaitForSeconds(immunityAfterDamageFromSameSource);
         recentDamageSource.Remove(damageSource);
     }
+
+    IEnumerator MuzzleFlash()
+    {
+        GameObject flash = Instantiate(muzzleFlash, shootPos.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.02f);
+        Destroy(flash);
+    }
+
 
     #endregion
 
@@ -643,7 +653,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    public void BaseballBatMovement()
+    public void WeaponMovement()
     {
         if (animator != null)
         {

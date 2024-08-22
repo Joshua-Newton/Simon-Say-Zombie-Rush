@@ -18,8 +18,9 @@ MonoBehaviour:
   damage: 1
   damageRange: 50
   damageDelay: 0.2
-  ammoCurrent: 80
+  ammoCurrent: 100
   ammoMax: 100
   hitEffect: {fileID: 1301697207402410478, guid: 39f852c28f9c3fd45a427c24f3564ba7, type: 3}
+  shootEffect: {fileID: 8672298416351423396, guid: 212ef1a41838ce044a9ac54994866708, type: 3}
   shootSound: {fileID: 8300000, guid: bbd53c35d4d4a8f449760ffa619f79af, type: 3}
   shootVol: 1
