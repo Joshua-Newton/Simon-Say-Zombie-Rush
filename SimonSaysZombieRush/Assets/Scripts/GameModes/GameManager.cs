@@ -17,6 +17,7 @@ public abstract class GameManager : MonoBehaviour
     [SerializeField] protected GameObject menuWin;
     [SerializeField] protected GameObject menuWinLastLevel;
     [SerializeField] protected GameObject menuLose;
+    [SerializeField] protected GameObject menuOptions;
     [Header("----- Text Fields -----")]
     [SerializeField] protected TMP_Text loseMessage;
     [SerializeField] protected TMP_Text enemyCountText;
@@ -42,7 +43,7 @@ public abstract class GameManager : MonoBehaviour
 
     [Header("----- Other -----")]
     [SerializeField] protected bool isStandAloneLevel = false;
-
+    [SerializeField] protected SettingsMenuManager settingsMenuManager;
 
     protected float initialTimeScale;
     protected int enemyCount;
@@ -65,7 +66,6 @@ public abstract class GameManager : MonoBehaviour
         playerScript = player.GetComponent<Player>();
         playerCollider = player.GetComponent<Collider>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
-
         initialTimeScale = Time.timeScale;
         int currentBuildIndex = SceneUtility.GetBuildIndexByScenePath(SceneManager.GetActiveScene().path);
         if (currentBuildIndex < SceneManager.sceneCountInBuildSettings - 1)
@@ -79,6 +79,11 @@ public abstract class GameManager : MonoBehaviour
 
         statsAssetName = SceneManager.GetActiveScene().name + ".asset";
         savePath = saveFolder + statsAssetName;
+    }
+
+    protected virtual void Start()
+    {
+        InitializeSound();
     }
 
     protected virtual void Update()
@@ -139,5 +144,22 @@ public abstract class GameManager : MonoBehaviour
         StatePause();
         menuActive.SetActive(true);
     }
-   
+
+    protected void InitializeSound()
+    {
+        float cachedMasterVol = PlayerPrefs.GetFloat(SettingsMenuManager.MASTER_VOLUME_NAME, SettingsMenuManager.defaultMasterVol);
+        float cachedMusicVol = PlayerPrefs.GetFloat(SettingsMenuManager.MUSIC_VOLUME_NAME, SettingsMenuManager.defaultMusicVol);
+        float cachedSFXVol = PlayerPrefs.GetFloat(SettingsMenuManager.SFX_VOLUME_NAME, SettingsMenuManager.defaultSFXVol);
+        float cachedMenuVol = PlayerPrefs.GetFloat(SettingsMenuManager.MENU_VOLUME_NAME, SettingsMenuManager.defaultMenuVol);
+        settingsMenuManager.mainAudioMixer.SetFloat(SettingsMenuManager.MASTER_VOLUME_NAME, SettingsMenuManager.SliderValToDecibels(cachedMasterVol));
+        settingsMenuManager.mainAudioMixer.SetFloat(SettingsMenuManager.MUSIC_VOLUME_NAME, SettingsMenuManager.SliderValToDecibels(cachedMusicVol));
+        settingsMenuManager.mainAudioMixer.SetFloat(SettingsMenuManager.SFX_VOLUME_NAME, SettingsMenuManager.SliderValToDecibels(cachedSFXVol));
+        settingsMenuManager.mainAudioMixer.SetFloat(SettingsMenuManager.MENU_VOLUME_NAME, SettingsMenuManager.SliderValToDecibels(cachedMenuVol));
+    }
+
+    public void PlayButtonClick()
+    {
+        playerScript.PlayButtonClick();
+    }
+
 }

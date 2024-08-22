@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] Animator animator;
     [SerializeField] int animSpeedTransition;
+    [SerializeField] AudioSource menuButtonClickSource;
 
     [Header("----- Sounds -----")]
     [SerializeField] AudioClip[] audioSteps;
@@ -670,6 +671,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
                 animator.SetTrigger("Move Back");
             }
         }
+    }
+
+    public void PlayButtonClick()
+    {
+        menuButtonClickSource.Play();
     }
     #endregion
 }

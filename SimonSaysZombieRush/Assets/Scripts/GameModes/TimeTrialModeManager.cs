@@ -51,8 +51,9 @@ public class TimeTrialModeManager : GameManager
         instance = this;
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         playerInventory = new List<GameObject>();
         collectedSequence = new List<GameObject>();
         timers = new List<GameObject>();
