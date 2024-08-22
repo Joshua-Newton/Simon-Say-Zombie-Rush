@@ -10778,6 +10778,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3159149167010677992, guid: ca606dd1deed81343bd35a4856f89454, type: 3}
+      propertyPath: maxZoom
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3159149167010677992, guid: ca606dd1deed81343bd35a4856f89454, type: 3}
+      propertyPath: minZoom
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3159149167010677992, guid: ca606dd1deed81343bd35a4856f89454, type: 3}
+      propertyPath: zoomSensitivity
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5388445965917804767, guid: ca606dd1deed81343bd35a4856f89454, type: 3}
       propertyPath: m_Name
       value: Main Camera

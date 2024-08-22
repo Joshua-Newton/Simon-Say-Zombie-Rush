@@ -42,9 +42,9 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     [Header("----- Grenade -----")]
     [SerializeField] private List<GameObject> grenadeInventory; // List to store different grenade prefabs
-    [SerializeField] private Transform grenadeSpawnPoint; // Punto de origen (no se usará en este caso)
+    [SerializeField] private Transform grenadeSpawnPoint; // Punto de origen (no se usarÃ¡ en este caso)
     [SerializeField] private float throwForce = 15f; // Fuerza de lanzamiento
-    [SerializeField] public int maxGrenades = 2; // Máximo número de granadas que el jugador puede tener
+    [SerializeField] public int maxGrenades = 2; // MÃ¡ximo nÃºmero de granadas que el jugador puede tener
     [SerializeField] public float grenadeCooldown = 5f; // Tiempo de recarga entre granadas
 
 
@@ -97,7 +97,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     {
         HPOriginal = HP;
         gunModelOriginal = gunModel;
-        currentGrenades = maxGrenades; // Iniciar con la cantidad máxima de granadas
+        currentGrenades = maxGrenades; // Iniciar con la cantidad mÃ¡xima de granadas
         isRecharging = false;
         meleeModelOriginal = meleeModel;
         originalSpeed = speed;
@@ -319,7 +319,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             currentGrenades++;
             Debug.Log("Grenades recharged to: " + currentGrenades);
 
-            UpdatePlayerUI(); // Asegúrate de actualizar la UI después de cada recarga
+            UpdatePlayerUI(); // AsegÃºrate de actualizar la UI despuÃ©s de cada recarga
         }
         isRecharging = false;
     }
@@ -499,10 +499,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         aud.PlayOneShot(audioHurt[Random.Range(0, audioHurt.Length)], audioHurtVolume);
         StartCoroutine(flashScreenDamage());
 
+        // Trigger the camera shake when the player takes damage
         if (cameraController != null)
         {
-            float shakeMagnitude = Mathf.Clamp((float)amount / 100f, 0.1f, 1f);
-            //cameraController.TriggerShake(0.5f, shakeMagnitude);
+            cameraController.TriggerShake(0.5f, 0.3f); // Customize the shake duration and magnitude
         }
 
         if (HP <= 0)
