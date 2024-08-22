@@ -26,9 +26,9 @@ public class HordeModeManager : GameManager
         enemySpawner = FindObjectOfType<RandomSpawner>();
     }
 
-    public void Start()
+    protected override void Start()
     {
-        
+        base.Start();
         StartCoroutine(StartWave());
     }
 
