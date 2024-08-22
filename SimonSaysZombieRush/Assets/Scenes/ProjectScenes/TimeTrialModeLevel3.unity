@@ -3881,18 +3881,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 387381418}
     m_Modifications:
     - target: {fileID: 1054616411244693176, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054616411244693176, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054616411244693176, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054616411244693176, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 64.22961
       objectReference: {fileID: 0}
@@ -3932,25 +3920,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2461764252620026313, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
-      propertyPath: m_Size.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2461764252620026313, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
-      propertyPath: m_Center.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5306956766666353349, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8060653879913880717, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
       propertyPath: m_Name
       value: MudTrap
-      objectReference: {fileID: 0}
-    - target: {fileID: 8060653879913880717, guid: 1883f4bcaceba8548a076bdf0bab7cab, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
