@@ -8,25 +8,11 @@ public class BreakableObjects : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] Renderer model;
     [SerializeField] Color hitColor;
-    [SerializeField] GameObject explosion;
     [SerializeField] MeshRenderer barrel;
-
-    [Header("----- Sounds -----")]
-    [SerializeField] AudioSource soundSource;
-    [SerializeField] AudioClip breakSound;
-    [Range(0, 20)] [SerializeField] float breakVolume = 3.0f;
 
     [Header("----- Exploding Object -----")]
     [SerializeField] int explosionDamage;
-    [SerializeField] ParticleSystem explosionEffect;
-
-    [SerializeField] SphereCollider sphereCollider;
-    [SerializeField] float explodeLength;
-    
-    float explosionDist;
-
-    Vector3 origin;
-    Vector3 direction;
+    [SerializeField] GameObject explosionPrefab;
 
     Color originalColor;
 
@@ -42,9 +28,10 @@ public class BreakableObjects : MonoBehaviour, IDamage
         StartCoroutine(FlashDamage());
         if (HP < 0)
         {
-            soundSource.PlayOneShot(breakSound, breakVolume);
-            Instantiate(explosionEffect, gameObject.transform.position, Quaternion.identity);
-            StartCoroutine(Explode());
+            //soundSource.PlayOneShot(breakSound, breakVolume);
+            GameObject explosion = Instantiate(explosionPrefab, gameObject.transform.position, Quaternion.identity);
+            explosion.GetComponent<Explosion>().SetExplosionDamage(explosionDamage);
+            Destroy(gameObject);
         }
     }
 
@@ -58,15 +45,6 @@ public class BreakableObjects : MonoBehaviour, IDamage
         model.material.color = hitColor;
         yield return new WaitForSeconds(.1f);
         model.material.color = originalColor;
-    }
-
-    IEnumerator Explode()
-    {
-        sphereCollider.enabled = true;
-        barrel.enabled = false;
-        yield return new WaitForSeconds(explodeLength);
-        sphereCollider.enabled = false;
-        Destroy(gameObject, 0.5f);
     }
 
 }

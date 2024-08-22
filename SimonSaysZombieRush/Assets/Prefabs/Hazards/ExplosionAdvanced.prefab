@@ -77,6 +77,8 @@ MonoBehaviour:
   repeatDamage: 0
   repeatDelay: 0
   damagePlayer: 1
+  damageEnemies: 1
+  damageSourceString: 
 --- !u!54 &5704103268390196095
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -123,7 +125,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3459727964917204220
 Transform:
   m_ObjectHideFlags: 0

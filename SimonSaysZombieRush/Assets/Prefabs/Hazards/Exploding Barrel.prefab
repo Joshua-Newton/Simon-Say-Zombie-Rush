@@ -128,7 +128,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.5101902, z: 0, w: 0.86006165}
   m_LocalPosition: {x: -13.208833, y: 0, z: 16.505175}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.5000001, y: 1.5, z: 1.5000001}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3221492239713852047}
@@ -156,6 +156,7 @@ MonoBehaviour:
   breakVolume: 1
   explosionDamage: 2
   explosionEffect: {fileID: 1301697207402410478, guid: 57c2935077afc164a9b9c3a8bb016aad, type: 3}
+  explosionPrefab: {fileID: 9041289702761694404, guid: 7ac727ba91ef46b4f9e59006f4c08ad2, type: 3}
   sphereCollider: {fileID: 5005633595870921180}
   explodeLength: 0.5
 --- !u!114 &6246893193295455716
@@ -180,6 +181,8 @@ MonoBehaviour:
   repeatDamage: 0
   repeatDelay: 0
   damagePlayer: 1
+  damageEnemies: 1
+  damageSourceString: 
 --- !u!33 &8731035523719621522
 MeshFilter:
   m_ObjectHideFlags: 0
