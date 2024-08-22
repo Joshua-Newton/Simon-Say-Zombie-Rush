@@ -414,7 +414,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             currentWeapon.ammoCurrent--;
             UpdatePlayerUI();
 
-            Instantiate(currentWeapon.projectile, shootPos.position, shootPos.rotation);
+            Instantiate(currentWeapon.projectile, shootPos.position, transform.rotation);
         }
 
         yield return new WaitForSeconds(damageDelay);
