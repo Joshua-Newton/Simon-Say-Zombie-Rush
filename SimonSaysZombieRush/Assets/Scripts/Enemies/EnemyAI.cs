@@ -169,6 +169,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
         {
             if ((hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle) || alwaysChasePlayer)
             {
+                PlayerDetected();
                 Move();
                 Attack();
                 agent.stoppingDistance = stoppingDistOrig;
@@ -178,6 +179,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
         }
         agent.stoppingDistance = 0;
         return false;
+    }
+
+    protected virtual void PlayerDetected()
+    {
+        // TODO: fill out a default behavior for when an enemy detects a player
     }
 
     protected bool CanSeePlayerWithoutMovingOrAttacking()
