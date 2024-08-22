@@ -1332,13 +1332,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3921498464701255060}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.014553222, y: 0.000000007063742, z: -0.000000007818302, w: 0.99989414}
-  m_LocalPosition: {x: 0.707, y: 0.16900003, z: 1.2910004}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8117207031737159191}
-  m_LocalEulerAnglesHint: {x: -12.569, y: 14.55, z: 69.105}
+  m_Father: {fileID: 6866986455161749182}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6302416489586075568
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2447,6 +2447,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1762811590450879682}
   - {fileID: 3768529794926406040}
   - {fileID: 6574578730198097574}
   - {fileID: 7352847145174232484}
@@ -2939,10 +2940,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1762811590450879682}
+  - {fileID: 1919868681844347491}
   - {fileID: 367535616766072315}
   - {fileID: 3279185987544552613}
-  - {fileID: 1919868681844347491}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8979203312248720591
@@ -2963,6 +2963,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   animator: {fileID: 1293715369504297785}
+  animSpeedTransition: 4
   audioSteps:
   - {fileID: 8300000, guid: 0459655a50d29174cb2ecf660ee9dc01, type: 3}
   - {fileID: 8300000, guid: 4a8ea0d06b9edb1438c15d37e9dd23d6, type: 3}
@@ -3347,10 +3348,10 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8713134058560455240}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: e73049be0758dbd4585a4244fbd94f77, type: 3}
   m_Controller: {fileID: 9100000, guid: 97fee126991118c499563da3437b4366, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0

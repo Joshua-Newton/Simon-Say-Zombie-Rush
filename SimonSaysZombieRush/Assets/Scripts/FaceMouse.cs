@@ -18,7 +18,10 @@ public class FaceMouse : MonoBehaviour
     void Update()
     {
         distanceToCamera = (Camera.main.transform.position - GameManager.instance.player.transform.position).magnitude;
-        RotateToFaceMouse();
+        if (!GameManager.instance.isPaused)
+        { 
+            RotateToFaceMouse();
+        }
     }
 
     void RotateToFaceMouse()

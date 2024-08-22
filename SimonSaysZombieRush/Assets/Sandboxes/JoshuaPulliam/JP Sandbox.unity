@@ -3252,6 +3252,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 122146156}
     m_Modifications:
     - target: {fileID: 2634453622915885898, guid: d9b39b58b73efdf489811c431948a958, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634453622915885898, guid: d9b39b58b73efdf489811c431948a958, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634453622915885898, guid: d9b39b58b73efdf489811c431948a958, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634453622915885898, guid: d9b39b58b73efdf489811c431948a958, type: 3}
       propertyPath: m_LocalPosition.x
       value: -24.493916
       objectReference: {fileID: 0}
@@ -3290,6 +3302,10 @@ PrefabInstance:
     - target: {fileID: 2634453622915885898, guid: d9b39b58b73efdf489811c431948a958, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634453622915885898, guid: d9b39b58b73efdf489811c431948a958, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7859658544650437553, guid: d9b39b58b73efdf489811c431948a958, type: 3}
       propertyPath: m_Name
@@ -6433,26 +6449,61 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1293715369504297785, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: e73049be0758dbd4585a4244fbd94f77, type: 3}
-    - target: {fileID: 1293715369504297785, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
-      propertyPath: m_CullingMode
-      value: 0
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
       objectReference: {fileID: 0}
-    - target: {fileID: 1293715369504297785, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
-      propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig10:Hips'\n\tTransform 'mixamorig10:Neck'\n\tTransform
-        'mixamorig10:RightHandIndex2'\n\tTransform 'mixamorig10:Spine'\n\tTransform
-        'mixamorig10:RightHandThumb3'\n\tTransform 'mixamorig10:RightHandRing2'\n\tTransform
-        'mixamorig10:LeftHandPinky1'\n\tTransform 'mixamorig10:RightHandThumb2'\n\tTransform
-        'mixamorig10:LeftHandRing2'\n\tTransform 'mixamorig10:RightHandThumb1'\n\tand
-        more ...\n\tFrom animation clip 'Baseball_Bat_Idle'\n\tFrom animation clip
-        'Baseball_Bat_Walk'\n\tFrom animation clip 'Baseball_Bat_Idle'\n\tFrom animation
-        clip 'Baseball_Bat_Walk'\n\tFrom animation clip 'Baseball_Bat_Run'"
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.033
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.263
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.544156
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.59785247
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.38040072
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.4491793
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -82.925
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 268.016
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -196.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762811590450879682, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8117207031737159191, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6497,10 +6548,6 @@ PrefabInstance:
     - target: {fileID: 8713134058560455240, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8979203312248720591, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
-      propertyPath: animSpeedTransition
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -105,13 +105,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         UpdatePlayerUI();
         SpawnPlayer();
         cameraController = Camera.main.GetComponent<CameraController>();
-        animator = GetComponent<Animator>();
-        SetAnimationSpeed();
     }
 
     void Update()
     {
-
+        BaseballBatMovement();
         if (raySource != null && rayDestination != null)
         {
             Debug.DrawRay(raySource, rayDestination);
@@ -636,29 +634,49 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    public void SetAnimationSpeed()
+    public void BaseballBatMovement()
     {
         if (animator != null)
         {
-            float playerSpeed = characterController.velocity.normalized.magnitude;
-            animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), playerSpeed, Time.deltaTime * animSpeedTransition));
+            //float moveSpeed = 0;
+            //if (movementDirection.magnitude > 0 && !isSprinting)
+            //{
+            //    moveSpeed = 0.5f;
+            //}
+            //else if (movementDirection.magnitude > 0 && isSprinting)
+            //{
+            //    moveSpeed = 1;
+            //}
+            //animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), moveSpeed, Time.deltaTime * animSpeedTransition)); 
+
+            if (movementDirection.magnitude == 0)
+            {
+                animator.SetTrigger("Idle");
+                return;
+            }
+
+            float angle = Vector3.SignedAngle(transform.forward, movementDirection, Vector3.up);
+            if (angle <= 45 && angle >= -45)
+            {
+                // forward anim
+                animator.SetTrigger("Move Forward");
+            }
+            else if (angle <= 135 && angle >= 45)
+            {
+                // left anim
+                animator.SetTrigger("Move Left");
+            }
+            else if (angle <= -45 && angle >= -135)
+            {
+                // right anim
+                animator.SetTrigger("Move Right");
+            }
+            else 
+            {
+                // back anim
+                animator.SetTrigger("Move Back");
+            }
         }
-        //if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee)
-        //{
-
-        //}
-        //else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun)
-        //{
-
-        //}
-        //else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Grenade)
-        //{
-
-        //}
-        //else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Projectile)
-        //{
-
-        //}
     }
     #endregion
 }
