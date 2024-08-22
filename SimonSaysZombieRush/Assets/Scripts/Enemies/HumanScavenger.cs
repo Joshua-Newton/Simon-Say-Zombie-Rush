@@ -7,11 +7,13 @@ public class HumanScavenger : EnemyShooter
 {
     [Header("---- Territory -----")]
     [SerializeField] protected float territoryDistance = 15f;
-    [Range(0,180)] [SerializeField] protected float swivelAngle = 90f;
+    [Range(0f, 180f)] [SerializeField] protected float swivelAngle = 90f;
+    [Range(0f, 60f)] [SerializeField] protected float seekAttackerTime = 5f;
 
     GameObject supplyItem;
     bool foundItem;
     bool isSwiveling;
+    bool isSeekingAttacker;
     bool swivelDirection;
     float playerDistFromSupply;
     float randomOffset;
@@ -64,7 +66,7 @@ public class HumanScavenger : EnemyShooter
         if (other.CompareTag("Enemy") && Physics.Raycast(headPos.position, otherDirection, out hit))
         {
             // TODO: Implement Scavenger attacking zombies
-            Debug.Log("Enemy detected");
+            //Debug.Log("Enemy detected");
         }
 
     }
@@ -85,9 +87,9 @@ public class HumanScavenger : EnemyShooter
         playerDistFromSupply = (GameManager.instance.player.transform.position - supplyItem.transform.position).magnitude;
         playerInRange = (playerDistFromSupply < territoryDistance);
 
-        if(!playerInRange || !CanSeePlayerWithoutMovingOrAttacking())
+        if(!playerInRange || !CanSeePlayerWithoutMovingOrAttacking() || !isSeekingAttacker)
         {
-            agent.stoppingDistance = 0;
+            agent.stoppingDistance = 2;
             agent.SetDestination(supplyItem.transform.position);
             
         }
@@ -135,5 +137,26 @@ public class HumanScavenger : EnemyShooter
         base.Attack();
     }
 
+    public override void TakeDamage(int amount, string damageSource = "")
+    {
+        HP -= amount;
+        StartCoroutine(FlashDamage());
+        if (HP <= 0)
+        {
+            Die();
+        }
+        if (agent.isOnNavMesh && !isSeekingAttacker)
+        {
+            StartCoroutine(SeekAttacker());
+        }
+    }
+
+    IEnumerator SeekAttacker()
+    {
+        isSeekingAttacker = true;
+        agent.SetDestination(GameManager.instance.player.transform.position);
+        yield return new WaitForSeconds(seekAttackerTime);
+        isSeekingAttacker = false;
+    }
 
 }

@@ -42,8 +42,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
     [Range(8, 100)] [SerializeField] protected float minTimeBetweenSounds = 5;
     [Range(0, 5)] [SerializeField] protected float timeVariance = 1;
     [Range(0, 1)] [SerializeField] protected float groanVolume = 0.3f;
-    [Range(0, 1)][SerializeField] protected float pitchShiftMin = 0.9f;
-    [Range(1, 2)][SerializeField] protected float pitchShiftMax = 1.1f;
+    [Range(0, 1)] [SerializeField] protected float pitchShiftMin = 0.9f;
+    [Range(1, 2)] [SerializeField] protected float pitchShiftMax = 1.1f;
 
     [Header("----- Drops -----")]
     [SerializeField] protected bool canDropItems;
@@ -231,7 +231,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
         }
     }
 
-    public void TakeDamage(int amount, string damageSource = "")
+    public virtual void TakeDamage(int amount, string damageSource = "")
     {
         HP -= amount;
         StartCoroutine(FlashDamage());
@@ -307,7 +307,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, faceTargetSpeed * Time.deltaTime);
     }
 
-    IEnumerator FlashDamage()
+    protected IEnumerator FlashDamage()
     {
         model.material.color = hitColor;
         yield return new WaitForSeconds(.1f);
