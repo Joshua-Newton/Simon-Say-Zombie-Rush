@@ -10,12 +10,6 @@ public class EnemyShooter : EnemyAI
     [SerializeField] protected float shootDelay;
     protected bool isShooting;
 
-    [Header("----- Audio -----")]
-    [SerializeField] AudioClip[] detectSounds;
-    [Range(0, 1)][SerializeField] float detectSoundsVolum = 0.5f;
-    [SerializeField] AudioClip[] shootAudio;
-    [Range(0, 1)][SerializeField] float shootAudioVolume = 0.5f;
-
     // Start is called before the first frame update
     protected override void Start()
     {
