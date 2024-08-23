@@ -106,7 +106,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         UpdatePlayerUI();
         SpawnPlayer();
         cameraController = Camera.main.GetComponent<CameraController>();
-        meleeCollider = meleeModel.GetComponentInChildren<Collider>();
+        meleeCollider = meleeModel.GetComponent<Collider>();
+        if (meleeCollider != null)
+        {
+            meleeCollider.enabled = false;
+        }
     }
 
     void Update()
@@ -307,10 +311,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (currentWeapon.weaponType == WeaponStats.WeaponType.Melee)
         {
             isMeleeing = true;
-            meleeCollider.enabled = true;
             animator.SetTrigger("Melee");
-            aud.PlayOneShot(audioMelee[Random.Range(0, audioMelee.Length)], audioMeleeVolume);
-            meleeCollider.enabled = false;
             isMeleeing = false;
         }
     }
@@ -603,23 +604,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     public void MeleeOff()
     {
-        if (weaponList.Count > 0 && weaponList[selectedWeapon].weaponModel != null)
-        {
-            Collider meleeCollider = meleeModel.GetComponent<Collider>();
-            if (meleeCollider != null)
-            {
-                meleeCollider.enabled = false;
-            }
-        }
+        meleeCollider.enabled = false;
     }
 
     public void MeleeOn()
     {
-        Collider meleeCollider = meleeModel.GetComponent<Collider>();
-        if (meleeCollider != null)
-        {
-            meleeCollider.enabled = true;
-        }
+        meleeCollider.enabled = true;
+    }
+
+    public void PlayMeleeAudio()
+    {
+        aud.PlayOneShot(audioMelee[Random.Range(0, audioMelee.Length)], audioMeleeVolume);
     }
 
 
