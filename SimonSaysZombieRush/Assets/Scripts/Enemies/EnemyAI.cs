@@ -60,7 +60,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
     protected Vector3 startingPos;
     protected bool isSpeaking;
     private bool isStunned = false;
-    protected bool isSlowed;
+    protected int numSlowAreas;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -315,13 +315,21 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
     }
     public void SlowArea(int slowVariable)
     {
-        agent.speed /= slowVariable;
-        isSlowed = true;
+        numSlowAreas++;
+        if (numSlowAreas == 1)
+        {
+            // modify speed if this is the first area that has been entered (i.e. this is the only slow area entered)
+            agent.speed /= slowVariable;
+        }
     }
 
     public void SlowAreaExit(int slowVariable)
     {
-        agent.speed *= slowVariable;
-        isSlowed = false;
+        numSlowAreas--;
+        if (numSlowAreas == 0)
+        {
+            // modify speed if this is the last area that has been exited (i.e. not in another slow area)
+            agent.speed *= slowVariable;
+        }
     }
 }

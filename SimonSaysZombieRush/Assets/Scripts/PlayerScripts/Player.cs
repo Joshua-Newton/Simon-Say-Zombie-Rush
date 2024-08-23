@@ -72,6 +72,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     int selectedWeapon;
     int originalSpeed;
     int slowedSpeed;
+    int numSlowAreas;
 
     bool isShooting;
     bool isWallRunning;
@@ -633,12 +634,22 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     public void SlowArea(int slowVariable)
     {
-        speed /= slowVariable;
+        numSlowAreas++;
+        if (numSlowAreas == 1)
+        {
+            // modify speed if this is the first area that has been entered (i.e. this is the only slow area entered)
+            speed /= slowVariable;    
+        }
     }
 
     public void SlowAreaExit(int slowVariable)
     {
-        speed *= slowVariable;
+        numSlowAreas--;
+        if (numSlowAreas == 0)
+        {
+            // modify speed if this is the last area that has been exited (i.e. not in another slow area)
+            speed *= slowVariable;
+        }
     }
 
     public int GetCurrentGrenades()
