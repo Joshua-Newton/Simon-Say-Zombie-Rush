@@ -10,6 +10,10 @@ public class HumanScavenger : EnemyShooter
     [Range(0f, 180f)] [SerializeField] protected float swivelAngle = 90f;
     [Range(0f, 60f)] [SerializeField] protected float seekAttackerTime = 5f;
 
+    [Header("----- Scavenger Audio -----")]
+    [SerializeField] AudioClip[] detectSounds;
+    [Range(0, 10)][SerializeField] float detectVolume = 0.5f;
+
     GameObject supplyItem;
     bool foundItem;
     bool isSwiveling;
@@ -67,6 +71,11 @@ public class HumanScavenger : EnemyShooter
         {
             // TODO: Implement Scavenger attacking zombies
             //Debug.Log("Enemy detected");
+        }
+
+        if(other.CompareTag("Player"))
+        {
+            StartCoroutine(PlayDetectionAudio());
         }
 
     }
@@ -157,6 +166,12 @@ public class HumanScavenger : EnemyShooter
         agent.SetDestination(GameManager.instance.player.transform.position);
         yield return new WaitForSeconds(seekAttackerTime);
         isSeekingAttacker = false;
+    }
+
+    IEnumerator PlayDetectionAudio()
+    {
+        audSource.PlayOneShot(detectSounds[Random.Range(0, detectSounds.Length)], detectVolume);
+        yield return new WaitForSeconds(0.5f);
     }
 
 }

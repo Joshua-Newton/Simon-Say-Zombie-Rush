@@ -3636,8 +3636,16 @@ MonoBehaviour:
   bullet: {fileID: 4730036690490732152, guid: 44c74124242374f4c9a2bb2cec8609e8, type: 3}
   shootPos: {fileID: 4576652994339465472}
   shootDelay: 1
+  shootAudio: {fileID: 8300000, guid: d8f1e056c9d60f24b8af3f1b02089e6c, type: 3}
+  shootAudioVolume: 1
   territoryDistance: 15
   swivelAngle: 90
+  seekAttackerTime: 5
+  detectSounds:
+  - {fileID: 8300000, guid: 74873b847f4b00f46bed0aa1505eab9a, type: 3}
+  - {fileID: 8300000, guid: 7edc3126fca4e174ea362ab28c5ede6a, type: 3}
+  - {fileID: 8300000, guid: ae0ad0563de8e9a41be8834607a688d5, type: 3}
+  detectVolume: 4.33
 --- !u!33 &7471459622015518534
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3774,7 +3782,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 15
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

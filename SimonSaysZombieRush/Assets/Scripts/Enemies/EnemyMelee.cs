@@ -64,7 +64,7 @@ public class EnemyMelee : EnemyAI
     {
         if (meleeAudioClips.Length > 0)
         {
-            PlayAudioClipWithPitchShit(meleeAudioClips[Random.Range(0, meleeAudioClips.Length)], meleeAudioVolume);
+            PlayAudioClipWithPitchShift(meleeAudioClips[Random.Range(0, meleeAudioClips.Length)], meleeAudioVolume);
         }
     }
 

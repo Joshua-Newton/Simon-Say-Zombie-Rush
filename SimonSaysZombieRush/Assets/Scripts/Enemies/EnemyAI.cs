@@ -116,7 +116,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
 
     }
 
-    protected virtual void PlayAudioClipWithPitchShit(AudioClip audClip, float volume)
+    protected virtual void PlayAudioClipWithPitchShift(AudioClip audClip, float volume)
     {
         if(audSource.isPlaying)
         {

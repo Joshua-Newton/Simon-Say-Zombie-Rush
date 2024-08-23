@@ -10,10 +10,7 @@ public class EnemyShooter : EnemyAI
     [SerializeField] protected float shootDelay;
     protected bool isShooting;
 
-    [Header("----- Audio -----")]
-    [SerializeField] AudioClip[] detectSounds;
-    [Range(0, 1)][SerializeField] float detectSoundsVolum = 0.5f;
-    [SerializeField] AudioClip[] shootAudio;
+    [SerializeField] AudioClip shootAudio;
     [Range(0, 1)][SerializeField] float shootAudioVolume = 0.5f;
 
     // Start is called before the first frame update
@@ -39,6 +36,7 @@ public class EnemyShooter : EnemyAI
     {
         isShooting = true;
         Instantiate(bullet, shootPos.position, transform.rotation);
+        audSource.PlayOneShot(shootAudio, shootAudioVolume);
         yield return new WaitForSeconds(shootDelay);
         isShooting = false;
     }

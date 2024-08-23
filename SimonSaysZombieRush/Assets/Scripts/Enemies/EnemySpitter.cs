@@ -54,12 +54,12 @@ public class EnemySpitter : EnemyAI
 
     public void PlayPreSpitAudio()
     {
-        PlayAudioClipWithPitchShit(preSpitAudio, preSpitAudioVolume);
+        PlayAudioClipWithPitchShift(preSpitAudio, preSpitAudioVolume);
     }
 
     public void PlaySpitAudio()
     {
-        PlayAudioClipWithPitchShit(spitAudio, spitAudioVolume);
+        PlayAudioClipWithPitchShift(spitAudio, spitAudioVolume);
     }
 
     #endregion
