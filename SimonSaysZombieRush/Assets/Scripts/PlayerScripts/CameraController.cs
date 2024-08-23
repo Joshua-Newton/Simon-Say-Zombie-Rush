@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [Range(1, 100)][SerializeField] float distanceToPlayer = 10f;
+    [Range(1, 100)][SerializeField] float initialDistanceToPlayer = 10f;
     [Range(0, 90)][SerializeField] float angleToPlayer = 75f;
 
-    [Header("Dead Zone Settings")]
-    [SerializeField] private Vector2 deadZoneSize = new Vector2(2f, 2f);
-
     [Header("Zoom Settings")]
-    [Range(1, 100)][SerializeField] private float minZoom;    // Minimum zoom distance
-    [Range(1, 100)][SerializeField] private float maxZoom;   // Maximum zoom distance
-    [Range(1, 100)][SerializeField] private float zoomSensitivity; // How sensitive the zoom control is
-    private float currentZoom;
+    [Range(0, 10f)][SerializeField] private float minZoom = 5f;    // Minimum zoom distance
+    [Range(0, 10f)][SerializeField] private float maxZoom = 5f;   // Maximum zoom distance
+    [Range(0, 1f)][SerializeField] private float zoomSensitivity = 0.05f; // How sensitive the zoom control is
 
     [Header("Camera Shake Settings")]
     [Range(0, 1f)] [SerializeField] private float shakeDuration = 0.5f;
@@ -23,10 +19,10 @@ public class CameraController : MonoBehaviour
     [Range(0, 1f)] [SerializeField] float shakeFrameDuration = 0.01f;
 
     private GameObject player;
-    private Vector3 initialPosition;
     private Vector3 shakeOffset = Vector3.zero;
     private float initialZOffset;
-    private float currentShakeDuration;
+    private float currentZOffset;
+    private float currentDistanceToPlayer;
     private bool isShaking;
     private bool isRandomizingShake;
     void Start()
@@ -36,13 +32,11 @@ public class CameraController : MonoBehaviour
         Quaternion newRotation = Quaternion.identity;
         newRotation = Quaternion.Euler(newRotation.x + angleToPlayer, newRotation.y, newRotation.z);
         transform.SetPositionAndRotation(player.transform.position, newRotation);
-        transform.position -= transform.TransformDirection(Vector3.forward) * distanceToPlayer;
+        transform.position -= transform.TransformDirection(Vector3.forward) * initialDistanceToPlayer;
 
         initialZOffset = transform.position.z - player.transform.position.z;
-        initialPosition = transform.position;
-
-        // Set the initial zoom level based on the initial distance to the player
-        currentZoom = distanceToPlayer;
+        currentZOffset = initialZOffset;
+        currentDistanceToPlayer = initialDistanceToPlayer;
     }
 
     void Update()
@@ -61,42 +55,35 @@ public class CameraController : MonoBehaviour
     private void HandleZoom()
     {
         // Check if the Control key is held down and if there is scroll input
-        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0f)
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        if (Input.GetButton("EnableZoom") && Mathf.Abs(scrollInput) > 0f)
         {
-            // Get the scroll wheel input (positive for up, negative for down)
-            float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+            if (scrollInput > 0f)
+            {
+                currentDistanceToPlayer -= zoomSensitivity;
+                UpdateCameraDistance();
+            }
+            else if(scrollInput < 0f)
+            {
+                currentDistanceToPlayer += zoomSensitivity;
+                UpdateCameraDistance();
+            }
 
-            // Adjust the target zoom level based on the scroll input
-            currentZoom -= scrollInput * zoomSensitivity;
-
-            // Clamp the zoom level to ensure it's within the min and max limits
-            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
         }
-
-        // Apply the zoom smoothly by adjusting the camera's position
-        AdjustCameraZoom();
     }
 
-    private void AdjustCameraZoom()
+    private void UpdateCameraDistance()
     {
-        // Smoothly interpolate the zoom level (distance to the player)
-        float smoothZoom = Mathf.Lerp(Vector3.Distance(transform.position, player.transform.position), currentZoom, Time.deltaTime * 5f);
-
-        // Calculate the zoom direction from the camera to the player
-        Vector3 zoomDirection = (transform.position - player.transform.position).normalized;
-
-        // Calculate the target position based on the smoothed zoom level
-        Vector3 targetZoomPosition = player.transform.position + zoomDirection * smoothZoom;
-
-        // Smoothly interpolate the camera's position towards the target zoom position
-        transform.position = Vector3.Lerp(transform.position, targetZoomPosition, Time.deltaTime * 5f);
+        currentDistanceToPlayer = Mathf.Clamp(currentDistanceToPlayer, initialDistanceToPlayer - minZoom, initialDistanceToPlayer + maxZoom);
+        transform.position = player.transform.position - (transform.TransformDirection(Vector3.forward) * currentDistanceToPlayer);
+        currentZOffset = transform.position.z - player.transform.position.z;
     }
 
     void FollowPlayer()
     {
         Vector3 cameraPosition = new Vector3(player.transform.position.x,
             transform.position.y,
-            player.transform.position.z + initialZOffset);
+            player.transform.position.z + currentZOffset);
         
         cameraPosition += shakeOffset;
 
@@ -108,7 +95,6 @@ public class CameraController : MonoBehaviour
     {
         shakeDuration = duration;
         shakeMagnitude = magnitude;
-        currentShakeDuration = shakeDuration;
         StartCoroutine(EnableCameraShake());
     }
 
