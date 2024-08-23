@@ -36,6 +36,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject meleeModel;
+    [SerializeField] GameObject rpgModel;
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] Transform shootPos;
     [SerializeField] int damage;
@@ -62,6 +63,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     #region Private fields
     GameObject gunModelOriginal;
     GameObject meleeModelOriginal;
+    GameObject rpgModelOriginal;
 
     Vector3 movementDirection;
     Vector3 playerVelocity;
@@ -101,12 +103,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         gunModelOriginal = gunModel;
         isRecharging = false;
         meleeModelOriginal = meleeModel;
+        rpgModelOriginal = rpgModel;
         originalSpeed = speed;
         EquipStartingWeapons();
         UpdatePlayerUI();
         SpawnPlayer();
         cameraController = Camera.main.GetComponent<CameraController>();
-        meleeCollider = meleeModel.GetComponentInChildren<Collider>();
+        meleeCollider = meleeModel.GetComponent<Collider>();
+        if (meleeCollider != null)
+        {
+            meleeCollider.enabled = false;
+        }
     }
 
     void Update()
@@ -285,10 +292,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         damageRange = weaponList[selectedWeapon].damageRange;
         damageDelay = weaponList[selectedWeapon].damageDelay;
 
-        if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun || weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Projectile)
+        if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Gun)
         {
             gunModel.SetActive(true);
             meleeModel.SetActive(false);
+            rpgModel.SetActive(false);
             gunModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
             gunModel.GetComponent<MeshRenderer>().sharedMaterials = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
         }
@@ -296,8 +304,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             gunModel.SetActive(false);
             meleeModel.SetActive(true);
+            rpgModel.SetActive(false);
             meleeModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
             meleeModel.GetComponent<MeshRenderer>().sharedMaterials = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
+        }
+        else if (weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Projectile)
+        {
+            gunModel.SetActive(false);
+            meleeModel.SetActive(false);
+            rpgModel.SetActive(true);
+            rpgModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
+            rpgModel.GetComponent<MeshRenderer>().sharedMaterials = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterials;
         }
     }
 
@@ -307,10 +324,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (currentWeapon.weaponType == WeaponStats.WeaponType.Melee)
         {
             isMeleeing = true;
-            meleeCollider.enabled = true;
             animator.SetTrigger("Melee");
-            aud.PlayOneShot(audioMelee[Random.Range(0, audioMelee.Length)], audioMeleeVolume);
-            meleeCollider.enabled = false;
             isMeleeing = false;
         }
     }
@@ -603,23 +617,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     public void MeleeOff()
     {
-        if (weaponList.Count > 0 && weaponList[selectedWeapon].weaponModel != null)
-        {
-            Collider meleeCollider = meleeModel.GetComponent<Collider>();
-            if (meleeCollider != null)
-            {
-                meleeCollider.enabled = false;
-            }
-        }
+        meleeCollider.enabled = false;
     }
 
     public void MeleeOn()
     {
-        Collider meleeCollider = meleeModel.GetComponent<Collider>();
-        if (meleeCollider != null)
-        {
-            meleeCollider.enabled = true;
-        }
+        meleeCollider.enabled = true;
+    }
+
+    public void PlayMeleeAudio()
+    {
+        aud.PlayOneShot(audioMelee[Random.Range(0, audioMelee.Length)], audioMeleeVolume);
     }
 
 

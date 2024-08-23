@@ -3187,7 +3187,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aae5858ce179c4146a965a329610f5d9, type: 3}
   - {fileID: 8300000, guid: 5e14240ed39c243e598d813e91876436, type: 3}
   - {fileID: 8300000, guid: 3304a2d00b0bc406db9e5374c75d9452, type: 3}
-  audioMeleeVolume: 0.5
+  audioMeleeVolume: 0.61
   audioDamage: {fileID: 8300000, guid: 7cb990e14562b4d43939b5e82742bacf, type: 3}
   damageVolume: 1
   HP: 20
