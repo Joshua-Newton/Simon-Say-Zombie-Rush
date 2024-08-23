@@ -26,7 +26,6 @@ public class RoomBehaviour : MonoBehaviour
     {
         if (status == null || status.Length != wallDoorPairs.Count)
         {
-            Debug.LogError("Status array length must match the number of wall-door pairs.");
             return;
         }
 
@@ -36,7 +35,6 @@ public class RoomBehaviour : MonoBehaviour
 
             if (pair.door == null || pair.wall == null)
             {
-                Debug.LogWarning($"Wall or Door object at index {i} is null.");
                 continue;
             }
 

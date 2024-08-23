@@ -34,7 +34,7 @@ public class HordeModeManager : GameManager
 
     public override void CollectItem(GameObject item)
     {
-        Debug.Log("Picked up: " + item.name);
+
     }
 
     public override void LoseGame(string reason)

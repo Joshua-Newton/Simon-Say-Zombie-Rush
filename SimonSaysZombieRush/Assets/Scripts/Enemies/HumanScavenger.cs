@@ -70,7 +70,6 @@ public class HumanScavenger : EnemyShooter
         if (other.CompareTag("Enemy") && Physics.Raycast(headPos.position, otherDirection, out hit))
         {
             // TODO: Implement Scavenger attacking zombies
-            //Debug.Log("Enemy detected");
         }
         
         if (other.CompareTag("Player") && CanSeePlayerWithoutMovingOrAttacking())
