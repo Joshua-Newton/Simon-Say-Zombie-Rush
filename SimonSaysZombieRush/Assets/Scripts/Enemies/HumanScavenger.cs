@@ -72,8 +72,8 @@ public class HumanScavenger : EnemyShooter
             // TODO: Implement Scavenger attacking zombies
             //Debug.Log("Enemy detected");
         }
-
-        if(other.CompareTag("Player"))
+        
+        if (other.CompareTag("Player") && CanSeePlayerWithoutMovingOrAttacking())
         {
             StartCoroutine(PlayDetectionAudio());
         }
@@ -89,6 +89,8 @@ public class HumanScavenger : EnemyShooter
             Attack();
             agent.stoppingDistance = stoppingDistOrig;
         }
+
+        
     }
 
     protected void ProtectSupply()
