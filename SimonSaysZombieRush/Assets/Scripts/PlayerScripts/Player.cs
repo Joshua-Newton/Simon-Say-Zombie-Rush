@@ -520,7 +520,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
         if (HP <= 0)
         {
-            GameManager.instance.LoseGame("You died!");
+            Die();
         }
         else
         {
@@ -535,6 +535,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             canHeal = false;
             healingDelayCoroutine = StartCoroutine(HealDelay());
         }
+    }
+
+    private void Die()
+    {
+        cameraController.ZeroShakeOffset();
+        GameManager.instance.LoseGame("You died!");
+
     }
 
     public void Stun(float duration)

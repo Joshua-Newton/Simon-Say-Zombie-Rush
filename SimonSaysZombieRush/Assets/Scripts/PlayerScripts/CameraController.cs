@@ -17,16 +17,18 @@ public class CameraController : MonoBehaviour
     private float currentZoom;
 
     [Header("Camera Shake Settings")]
-    [SerializeField] private float shakeDuration = 0.5f;
+    [Range(0, 1f)] [SerializeField] private float shakeDuration = 0.5f;
     [SerializeField] private float shakeMagnitude = 0.5f;
     [SerializeField] private float dampingSpeed = 1.0f;
+    [Range(0, 1f)] [SerializeField] float shakeFrameDuration = 0.01f;
 
     private GameObject player;
     private Vector3 initialPosition;
+    private Vector3 shakeOffset = Vector3.zero;
     private float initialZOffset;
     private float currentShakeDuration;
-    private bool isShaking = false;
-
+    private bool isShaking;
+    private bool isRandomizingShake;
     void Start()
     {
         player = GameManager.instance.player;
@@ -45,32 +47,14 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (isShaking)
+        if(GameManager.instance != null && !GameManager.instance.isPaused)
         {
-            HandleShake();
-        }
-        else
-        {
-            FollowPlayer();
             HandleZoom(); // Handle zoom input
-        }
-    }
-
-    private void HandleShake()
-    {
-        if (currentShakeDuration > 0)
-        {
-            // Apply camera shake using Random.insideUnitSphere for random shaking
-            transform.position = initialPosition + Random.insideUnitSphere * shakeMagnitude;
-
-            // Decrease the remaining shake duration over time
-            currentShakeDuration -= Time.deltaTime * dampingSpeed;
-        }
-        else
-        {
-            // Reset the camera position after the shake ends and update the initial position
-            initialPosition = transform.position;
-            isShaking = false;
+            FollowPlayer();
+            if (isShaking && !isRandomizingShake)
+            {
+                StartCoroutine(RandomizeShakeOffset());
+            }
         }
     }
 
@@ -110,20 +94,14 @@ public class CameraController : MonoBehaviour
 
     void FollowPlayer()
     {
-        // Make the camera follow the player within a dead zone
-        transform.SetPositionAndRotation(new Vector3(player.transform.position.x,
+        Vector3 cameraPosition = new Vector3(player.transform.position.x,
             transform.position.y,
-            player.transform.position.z + initialZOffset),
-            transform.rotation);
+            player.transform.position.z + initialZOffset);
+        
+        cameraPosition += shakeOffset;
 
-        Vector3 cameraCenter = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
-        Vector3 playerPositionInCamera = player.transform.position - cameraCenter;
-
-        if (Mathf.Abs(playerPositionInCamera.x) > deadZoneSize.x / 2 || Mathf.Abs(playerPositionInCamera.z) > deadZoneSize.y / 2)
-        {
-            Vector3 targetPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z + initialZOffset);
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 5f);
-        }
+        // Make the camera follow the player
+        transform.SetPositionAndRotation(cameraPosition, transform.rotation);
     }
 
     public void TriggerShake(float duration, float magnitude)
@@ -131,17 +109,28 @@ public class CameraController : MonoBehaviour
         shakeDuration = duration;
         shakeMagnitude = magnitude;
         currentShakeDuration = shakeDuration;
-        isShaking = true;
-        initialPosition = transform.position;
+        StartCoroutine(EnableCameraShake());
     }
 
-    void OnDrawGizmos()
+    IEnumerator EnableCameraShake()
     {
-        if (player != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(new Vector3(transform.position.x, player.transform.position.y, transform.position.z),
-                new Vector3(deadZoneSize.x, 0, deadZoneSize.y));
-        }
+        isShaking = true;
+        yield return new WaitForSeconds(shakeDuration);
+        StopCoroutine(RandomizeShakeOffset());
+        shakeOffset = Vector3.zero;
+        isShaking = false;
+    }
+
+    IEnumerator RandomizeShakeOffset()
+    {
+        isRandomizingShake = true;
+        shakeOffset = Random.insideUnitSphere * shakeMagnitude;
+        yield return new WaitForSeconds(shakeFrameDuration);
+        isRandomizingShake = false;
+    }
+
+    public void ZeroShakeOffset()
+    {
+        shakeOffset = Vector3.zero;
     }
 }
