@@ -106,7 +106,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamage, ISlowArea
                 Attack();
             }
         }
-        else if (!playerInRange || (playerInRange && CanSeePlayer()))
+        else if (!playerInRange || (playerInRange && !CanSeePlayer()))
         {
             if (!isRoaming && agent.remainingDistance < 0.05f)
             {

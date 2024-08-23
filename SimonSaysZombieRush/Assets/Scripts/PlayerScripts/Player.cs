@@ -258,12 +258,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     void SelectWeapon()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
+        if (!Input.GetButton("EnableZoom") && Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
         {
             selectedWeapon++;
             ChangeWeapon();
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
+        else if (!Input.GetButton("EnableZoom") && Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
         {
             selectedWeapon--;
             ChangeWeapon();

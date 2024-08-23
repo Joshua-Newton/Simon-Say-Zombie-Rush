@@ -15,7 +15,6 @@ public class CameraController : MonoBehaviour
     [Header("Camera Shake Settings")]
     [Range(0, 1f)] [SerializeField] private float shakeDuration = 0.5f;
     [SerializeField] private float shakeMagnitude = 0.5f;
-    [SerializeField] private float dampingSpeed = 1.0f;
     [Range(0, 1f)] [SerializeField] float shakeFrameDuration = 0.01f;
 
     private GameObject player;

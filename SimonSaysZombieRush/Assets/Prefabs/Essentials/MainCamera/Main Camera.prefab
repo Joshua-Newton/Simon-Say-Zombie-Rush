@@ -46,15 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b49d2bd6db44d148a3cac3b743cce52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToPlayer: 15
+  initialDistanceToPlayer: 15
   angleToPlayer: 75
-  deadZoneSize: {x: 2, y: 2}
   minZoom: 5
-  maxZoom: 20
-  zoomSensitivity: 2
+  maxZoom: 5
+  zoomSensitivity: 1
   shakeDuration: 0.5
   shakeMagnitude: 0.5
-  dampingSpeed: 1
+  shakeFrameDuration: 0.01
 --- !u!20 &5752410519773709996
 Camera:
   m_ObjectHideFlags: 0
