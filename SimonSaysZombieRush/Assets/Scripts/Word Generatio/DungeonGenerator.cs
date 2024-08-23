@@ -61,19 +61,16 @@ public class DungeonGenerator : MonoBehaviour
     {
         if (size.x <= 0 || size.y <= 0)
         {
-            Debug.LogError("Dungeon size must be greater than zero.");
             return false;
         }
 
         if (rooms == null || rooms.Length == 0)
         {
-            Debug.LogError("Rooms array cannot be null or empty.");
             return false;
         }
 
         if (startPos < 0 || startPos >= size.x * size.y)
         {
-            Debug.LogError("Invalid start position.");
             return false;
         }
 

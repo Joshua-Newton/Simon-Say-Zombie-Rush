@@ -10,7 +10,6 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player") && GameManager.instance.playerSpawnPos.transform.position != transform.position)
         {
-            Debug.Log("Player CheckPoint");
             GameManager.instance.playerSpawnPos.transform.position = transform.position;
             StartCoroutine(FlashModel());
         }

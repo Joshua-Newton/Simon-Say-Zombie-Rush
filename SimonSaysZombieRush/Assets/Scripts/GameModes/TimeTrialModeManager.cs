@@ -79,7 +79,7 @@ public class TimeTrialModeManager : GameManager
         }
         else
         {
-            Debug.LogError("Player is not assigned in TimeTrialModeManager.");
+
         }
     }
 

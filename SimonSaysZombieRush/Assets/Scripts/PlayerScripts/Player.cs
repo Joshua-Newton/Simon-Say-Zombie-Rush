@@ -117,10 +117,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     void Update()
     {
         WeaponMovement();
-        if (raySource != null && rayDestination != null)
-        {
-            Debug.DrawRay(raySource, rayDestination);
-        }
         Grounded();
         Movement();
         Sprint();
@@ -162,7 +158,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (grenadeInventory.Count > 1)
         {
             selectedGrenadeIndex = (selectedGrenadeIndex + 1) % grenadeInventory.Count;
-            Debug.Log("Selected Grenade: " + grenadeInventory[selectedGrenadeIndex].name);
         }
     }
 
@@ -172,7 +167,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             selectedGrenadeIndex--;
             if (selectedGrenadeIndex < 0) selectedGrenadeIndex = grenadeInventory.Count - 1;
-            Debug.Log("Selected Grenade: " + grenadeInventory[selectedGrenadeIndex].name);
         }
     }
 
@@ -338,7 +332,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             yield return new WaitForSeconds(grenadeCooldown);
             currentGrenades++;
-            Debug.Log("Grenades recharged to: " + currentGrenades);
 
             UpdatePlayerUI(); // Update the UI after each grenade recharge
         }
@@ -645,7 +638,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (currentGrenades > 0 && !isRecharging)
         {
             currentGrenades--;
-            Debug.Log("Grenades remaining: " + currentGrenades);
 
             if (currentGrenades < maxGrenades)
             {

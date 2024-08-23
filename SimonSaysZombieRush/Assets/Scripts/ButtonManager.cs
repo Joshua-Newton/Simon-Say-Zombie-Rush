@@ -19,11 +19,12 @@ public class ButtonManager : MonoBehaviour
 
     public void Quit()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#elif UNITY_WEBGL
+#else
         Application.Quit();
-    #endif
+#endif
     }
 
     public void LoadNextLevel()
