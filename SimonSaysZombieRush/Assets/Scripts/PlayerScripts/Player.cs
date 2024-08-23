@@ -45,10 +45,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     [Header("----- Grenade -----")]
     [SerializeField] private List<GameObject> grenadeInventory; // List to store different grenade prefabs
-    [SerializeField] private Transform grenadeSpawnPoint; // Punto de origen (no se usará en este caso)
-    [SerializeField] private float throwForce = 15f; // Fuerza de lanzamiento
-    [SerializeField] public int maxGrenades = 2; // Máximo número de granadas que el jugador puede tener
-    [SerializeField] public float grenadeCooldown = 5f; // Tiempo de recarga entre granadas
+    [SerializeField] private Transform grenadeSpawnPoint; // Grenade spawn point
+    [SerializeField] private float throwForce = 15f; // Throw force
+    [SerializeField] public int maxGrenades = 2; // Maximum number of grenades the player can hold
+    [SerializeField] public float grenadeCooldown = 5f; // Cooldown time between grenade throws
 
     [Header("----- Healing -----")]
     [SerializeField] int healAmount;
@@ -72,6 +72,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     int selectedWeapon;
     int originalSpeed;
     int slowedSpeed;
+    int numSlowAreas;
 
     bool isShooting;
     bool isWallRunning;
@@ -83,9 +84,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     private int currentGrenades;
     private int selectedGrenadeIndex;
     private bool isRecharging;
-
-    private float grenadeSwitchHoldTime = 2f; // Time required to hold the button to switch grenades
-    private float grenadeSwitchTimer = 0f; // Timer to track the hold duration
 
     bool canHeal;
     private List<string> recentDamageSource = new List<string>();
@@ -127,12 +125,17 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         Movement();
         Sprint();
         Shooting();
-        HandleGrenadeSwitch(); // Handle grenade switching with hold
 
         if (Input.GetButtonDown("Grenade") && currentGrenades > 0)
         {
             ThrowGrenade();
         }
+
+        if (Input.GetButtonDown("SwitchGrenade"))
+        {
+            SelectNextGrenade(); // Switch to the next grenade type
+        }
+
         if (!GameManager.instance.isPaused)
         {
             SelectWeapon();
@@ -151,23 +154,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             {
                 GetWeaponStats(pickup.GetWeaponStats());
             }
-        }
-    }
-
-    private void HandleGrenadeSwitch()
-    {
-        if (Input.GetButton("Grenade"))
-        {
-            grenadeSwitchTimer += Time.deltaTime;
-            if (grenadeSwitchTimer >= grenadeSwitchHoldTime)
-            {
-                SelectNextGrenade();
-                grenadeSwitchTimer = 0f; // Reset the timer after switching
-            }
-        }
-        else
-        {
-            grenadeSwitchTimer = 0f; // Reset the timer if the button is released early
         }
     }
 
@@ -354,7 +340,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             currentGrenades++;
             Debug.Log("Grenades recharged to: " + currentGrenades);
 
-            UpdatePlayerUI(); // Asegúrate de actualizar la UI después de cada recarga
+            UpdatePlayerUI(); // Update the UI after each grenade recharge
         }
         isRecharging = false;
     }
@@ -463,19 +449,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         yield return new WaitForSeconds(0.05f);
     }
 
-    IEnumerator ReloadGrenade()
-    {
-        isRecharging = true;
-        yield return new WaitForSeconds(grenadeCooldown);
-        currentGrenades++;
-        isRecharging = false;
-
-        if (currentGrenades < maxGrenades)
-        {
-            StartCoroutine(RechargeGrenade());
-        }
-    }
-
     IEnumerator RemoveDamageSourceAfterDelay(string damageSource)
     {
         yield return new WaitForSeconds(immunityAfterDamageFromSameSource);
@@ -529,7 +502,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             return;
         }
-        else if (!string.IsNullOrEmpty(damageSource))
+        else if(!string.IsNullOrEmpty(damageSource))
         {
             recentDamageSource.Add(damageSource);
             StartCoroutine(RemoveDamageSourceAfterDelay(damageSource));
@@ -542,12 +515,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
         if (cameraController != null)
         {
-            cameraController.TriggerShake(0.5f, 0.3f);
+            cameraController.TriggerShake(0.5f, 0.3f); // Customize the shake duration and magnitude
         }
 
         if (HP <= 0)
         {
-            GameManager.instance.LoseGame("You died!");
+            Die();
         }
         else
         {
@@ -562,6 +535,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             canHeal = false;
             healingDelayCoroutine = StartCoroutine(HealDelay());
         }
+    }
+
+    private void Die()
+    {
+        cameraController.ZeroShakeOffset();
+        GameManager.instance.LoseGame("You died!");
+
     }
 
     public void Stun(float duration)
@@ -630,15 +610,24 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         aud.PlayOneShot(audioMelee[Random.Range(0, audioMelee.Length)], audioMeleeVolume);
     }
 
-
     public void SlowArea(int slowVariable)
     {
-        speed /= slowVariable;
+        numSlowAreas++;
+        if (numSlowAreas == 1)
+        {
+            // modify speed if this is the first area that has been entered (i.e. this is the only slow area entered)
+            speed /= slowVariable;    
+        }
     }
 
     public void SlowAreaExit(int slowVariable)
     {
-        speed *= slowVariable;
+        numSlowAreas--;
+        if (numSlowAreas == 0)
+        {
+            // modify speed if this is the last area that has been exited (i.e. not in another slow area)
+            speed *= slowVariable;
+        }
     }
 
     public int GetCurrentGrenades()
@@ -688,7 +677,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             {
                 animator.SetTrigger("Move Right");
             }
-            else
+            else 
             {
                 animator.SetTrigger("Move Back");
             }

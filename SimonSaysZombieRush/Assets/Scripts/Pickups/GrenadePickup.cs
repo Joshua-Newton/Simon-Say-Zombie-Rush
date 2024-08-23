@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrenadePickup : MonoBehaviour
+public class GrenadePickup : PickupBase
 {
     [SerializeField] private GameObject grenadePrefab; // The grenade prefab to be added to the player's inventory
 
