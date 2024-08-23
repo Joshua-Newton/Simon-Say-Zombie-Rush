@@ -431,24 +431,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 276dd22c4764a4145b92e1355d0079ff, type: 3}
---- !u!1 &586777428 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9012085221907413483, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-  m_PrefabInstance: {fileID: 6331088567173451226}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &586777429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 586777428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22cc6560f98933d45b95e79a67778188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grenadePrefab: {fileID: 8517655606910467015, guid: 7000437e52bbe554f80161ddbd405edf, type: 3}
 --- !u!1001 &644064873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -798,6 +780,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8979203312248720591, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: grenadeInventory.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979203312248720591, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: grenadeInventory.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979203312248720591, guid: 4995834faf5565c4faf36dd2d385769c, type: 3}
+      propertyPath: grenadeInventory.Array.data[1]
+      value: 
+      objectReference: {fileID: 8517655606910467015, guid: 85b1f732987275a4fa5911be59467633, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1108,6 +1102,120 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd64439755d263743a9a0db462b0a710, type: 3}
+--- !u!1001 &1462289014609944868
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031759650998699810, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7905262581591469419, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+      propertyPath: m_Name
+      value: Pick up Frag Grenade
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+--- !u!1001 &2191036225292530325
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.3506575
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8047022
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.3894677
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180081783490251757, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7435866850224235906, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+      propertyPath: m_Name
+      value: Pick up Gravity Grenade
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
 --- !u!1001 &2626616579071062776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1222,70 +1330,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd7128ab78e13164f95346837f93dc25, type: 3}
---- !u!1001 &6331088567173451226
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.9299998
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4.0099998
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937361518775889555, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7675969499761675140, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9012085221907413483, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      propertyPath: m_Name
-      value: Pick up Gravity Grenade
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9012085221907413483, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 586777429}
-  m_SourcePrefab: {fileID: 100100000, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
 --- !u!1001 &6466968529281514364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1539,4 +1583,5 @@ SceneRoots:
   - {fileID: 21911366}
   - {fileID: 1706998506}
   - {fileID: 1777239653}
-  - {fileID: 6331088567173451226}
+  - {fileID: 1462289014609944868}
+  - {fileID: 2191036225292530325}
