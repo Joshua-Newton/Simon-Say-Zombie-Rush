@@ -31,8 +31,8 @@ public class CameraController : MonoBehaviour
 
         Quaternion newRotation = Quaternion.identity;
         newRotation = Quaternion.Euler(newRotation.x + angleToPlayer, newRotation.y, newRotation.z);
-        transform.SetPositionAndRotation(player.transform.position, newRotation);
-        transform.position -= transform.TransformDirection(Vector3.forward) * initialDistanceToPlayer;
+        Vector3 newPosition = player.transform.position - (transform.TransformDirection(Vector3.forward) * initialDistanceToPlayer);
+        transform.SetPositionAndRotation(newPosition, newRotation);
 
         initialZOffset = transform.position.z - player.transform.position.z;
         currentZOffset = initialZOffset;
@@ -81,11 +81,11 @@ public class CameraController : MonoBehaviour
 
     void FollowPlayer()
     {
-        Vector3 cameraPosition = new Vector3(player.transform.position.x,
-            transform.position.y,
-            player.transform.position.z + currentZOffset);
-        
-        cameraPosition += shakeOffset;
+        Vector3 cameraPosition = player.transform.position - (transform.TransformDirection(Vector3.forward) * currentDistanceToPlayer);
+        if (isShaking)
+        {
+            cameraPosition += shakeOffset;
+        }
 
         // Make the camera follow the player
         transform.SetPositionAndRotation(cameraPosition, transform.rotation);
@@ -112,6 +112,7 @@ public class CameraController : MonoBehaviour
         isRandomizingShake = true;
         shakeOffset = Random.insideUnitSphere * shakeMagnitude;
         yield return new WaitForSeconds(shakeFrameDuration);
+        shakeOffset = Vector3.zero;
         isRandomizingShake = false;
     }
 
