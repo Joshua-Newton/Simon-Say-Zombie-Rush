@@ -1,48 +1,162 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class Teleporter : MonoBehaviour
 {
-    [Header("Teleporter Settings")]
-    [SerializeField] private Teleporter targetTeleporter; // The target teleporter to teleport to
-    [SerializeField] private bool isOneWay = false; // One-way teleport option
-    [SerializeField] private KeyCode interactKey = KeyCode.E; // Key to trigger teleportation
+    [SerializeField] private bool instantTeleport;
+    [SerializeField] private bool randomTeleport;
+    [SerializeField] private bool buttonTeleport;
+    [SerializeField] private string buttonName;
+    [SerializeField] private bool delayedTeleport;
+    [SerializeField] private float teleportTime = 3f;
+    [SerializeField] private Transform[] destinationPad;
+    [SerializeField] private float teleportationHeightOffset = 1f;
+    [SerializeField] private bool allowEntry = true;
+    [SerializeField] private bool allowExit = true;
 
-    private bool playerInRange = false;
-    private GameObject player;
+    private float curTeleportTime;
+    private bool inside;
+    private Transform subject;
+    private bool arrived;
+
+    public AudioSource teleportSound;
+    public AudioSource teleportPadSound;
+    public bool teleportPadOn = true;
+
+    // Array of tags that are allowed to teleport (e.g., "Player" and "Zombies")
+    [SerializeField] private string[] allowedTags = { "Player", "Zombies" };
+
+    void Start()
+    {
+        // Initialize the countdown timer
+        curTeleportTime = teleportTime;
+    }
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(interactKey))
+        // Check if an object is inside and teleport is ready
+        if (inside && teleportPadOn && !arrived)
         {
-            TeleportPlayer();
+            Teleport();
         }
     }
 
-    private void TeleportPlayer()
+    void Teleport()
     {
-        if (targetTeleporter != null && (!isOneWay || playerInRange))
+        if (subject == null) return; // Ensure subject is not null before teleporting
+
+        if (instantTeleport)
         {
-            player.transform.position = targetTeleporter.transform.position;
+            ExecuteTeleport(randomTeleport);
+        }
+        else if (delayedTeleport)
+        {
+            curTeleportTime -= Time.deltaTime; // Use Time.deltaTime for smooth countdown
+
+            if (curTeleportTime <= 0f)
+            {
+                curTeleportTime = teleportTime; // Reset the countdown
+                ExecuteTeleport(randomTeleport);
+            }
+        }
+        else if (buttonTeleport && Input.GetButtonDown(buttonName))
+        {
+            if (delayedTeleport)
+            {
+                curTeleportTime -= Time.deltaTime;
+
+                if (curTeleportTime <= 0f)
+                {
+                    curTeleportTime = teleportTime;
+                    ExecuteTeleport(randomTeleport);
+                }
+            }
+            else
+            {
+                ExecuteTeleport(randomTeleport);
+            }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void ExecuteTeleport(bool random)
     {
-        if (other.CompareTag("Player"))
+        if (destinationPad == null || destinationPad.Length == 0) return; // Safety check for valid destinations
+
+        int chosenPad = random ? Random.Range(0, destinationPad.Length) : 0;
+
+        if (destinationPad[chosenPad] == null) return; // Ensure chosen destination is valid
+
+        // Temporarily disable the subject's collider to prevent getting stuck in the pad's collider
+        Collider subjectCollider = subject.GetComponent<Collider>();
+        if (subjectCollider != null)
         {
-            player = other.gameObject;
-            playerInRange = true;
+            subjectCollider.enabled = false;
+        }
+
+        // Teleport the subject to the destination pad, applying height offset
+        subject.position = destinationPad[chosenPad].position + new Vector3(0, teleportationHeightOffset, 0);
+
+        // Play teleport sound if available
+        if (teleportSound != null)
+        {
+            teleportSound.Play();
+        }
+
+        // Re-enable the subject's collider after teleporting
+        if (subjectCollider != null)
+        {
+            StartCoroutine(EnableColliderAfterDelay(subjectCollider, 0.1f));
+        }
+
+        // Mark the destination pad to prevent back teleportation
+        destinationPad[chosenPad].GetComponent<Teleporter>().arrived = true;
+    }
+
+    void OnTriggerEnter(Collider trig)
+    {
+        if (!allowEntry) return;
+
+        if (IsTeleportable(trig))
+        {
+            subject = trig.transform; // Set the subject to the object entering
+            inside = true;
+            arrived = !buttonTeleport; // Ready for teleport if not using button-based teleport
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider trig)
     {
-        if (other.CompareTag("Player"))
+        if (!allowExit) return;
+
+        if (IsTeleportable(trig))
         {
-            playerInRange = false;
-            player = null;
+            inside = false;
+            curTeleportTime = teleportTime; // Reset countdown time
+
+            if (trig.transform == subject)
+            {
+                arrived = false; // Reset arrived status
+                subject = null; // Clear the subject
+            }
         }
+    }
+
+    bool IsTeleportable(Collider trig)
+    {
+        // Check if the object's tag matches any of the allowed tags
+        foreach (string tag in allowedTags)
+        {
+            if (trig.CompareTag(tag))
+            {
+                return true; // If the object has a matching tag, allow teleportation
+            }
+        }
+        return false; // If no matching tag is found, deny teleportation
+    }
+
+    IEnumerator EnableColliderAfterDelay(Collider col, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        col.enabled = true; // Re-enable the collider after a short delay
     }
 }

@@ -1839,6 +1839,7 @@ GameObject:
   - component: {fileID: 3387116265195445786}
   - component: {fileID: 3086732575868236158}
   - component: {fileID: 5280201795012706418}
+  - component: {fileID: 8637268002574915295}
   m_Layer: 0
   m_Name: ZombieKamikaze
   m_TagString: Enemy
@@ -1884,7 +1885,7 @@ MonoBehaviour:
   roamTimer: 1
   headPos: {fileID: 1037588542918528042}
   viewAngle: 90
-  anim: {fileID: 0}
+  anim: {fileID: 8637268002574915295}
   animSpeedTransition: 0
   sourceWaveSpawner: {fileID: 0}
   sourceRandomSpawner: {fileID: 0}
@@ -1902,6 +1903,7 @@ MonoBehaviour:
   distanceToTriggerExplosion: 2
   explosionDelay: 0.25
   explosionCooldown: 1
+  screamDelay: 1
   screamAudio:
   - {fileID: 8300000, guid: b0f576d221f1da0429230c2cc3f3a4cc, type: 3}
   - {fileID: 8300000, guid: e02eaeeae80e82347aa8a46c36f115c9, type: 3}
@@ -2071,6 +2073,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &8637268002574915295
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5682341714111051054}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: bc35035e9b61c6444b382fb398b478ed, type: 3}
+  m_Controller: {fileID: 9100000, guid: c5d545d2f62773548a3614fb6ae5d90f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5729130788526510876
 GameObject:
   m_ObjectHideFlags: 0

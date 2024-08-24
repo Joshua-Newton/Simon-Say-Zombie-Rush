@@ -13,6 +13,7 @@ TagManager:
   - Breakable Object
   - Flame
   - Lava
+  - Zombies
   layers:
   - Default
   - TransparentFX
