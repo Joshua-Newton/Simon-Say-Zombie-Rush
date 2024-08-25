@@ -30,6 +30,11 @@ public class EnemyKamikaze : EnemyAI
         {
             agent.SetDestination(transform.position);
         }
+        if (CanSeePlayerWithoutMovingOrAttacking())
+        {
+            anim.SetTrigger("Scream");
+        }
+
     }
 
     protected IEnumerator StartExploding()
