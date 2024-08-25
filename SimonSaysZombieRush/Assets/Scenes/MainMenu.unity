@@ -1839,8 +1839,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00032698325}
-  m_SizeDelta: {x: 0, y: 1800}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 2000}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &298090814
 GameObject:
@@ -2496,7 +2496,27 @@ MonoBehaviour:
 
 
     Animations
-    by Adobe from Mixamo.com'
+    by Adobe from Mixamo.com
+
+
+    God character - deep male voice saying - ''hey''
+    - dry by Articulated Sounds from SoundSnap.com
+
+
+    God character - deep male
+    voice saying - ''I see you'' - dry by  Articulated Sounds from SoundSnap.com
+
+
+    Male
+    cartoon voice says "hey" by Soundsnap Originals from SoundSnap.com
+
+
+    50
+    caliber muzzle loader rifle Remington, single shot by Soundsnap Originals from
+    SoundSnap.com
+
+
+    Sci-Fi Styled Modular Pack by karboosx from Unity Asset Store'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
