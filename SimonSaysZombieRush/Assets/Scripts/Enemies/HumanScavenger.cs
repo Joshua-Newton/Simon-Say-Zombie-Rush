@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
@@ -45,8 +46,14 @@ public class HumanScavenger : EnemyShooter
         AggroEnemy();
         Swivel();
         CheckIfItemStillExists();
-
-        animator.SetBool("isWalking", true);
+        
+        if (agent.remainingDistance < agent.stoppingDistance + 0.05f)
+        {
+            anim.SetTrigger("Stop");
+        }
+        else if(anim.GetFloat("Speed") > 0f) {
+            anim.SetTrigger("Walking");
+        }
     }
 
     protected void Search()
@@ -92,6 +99,7 @@ public class HumanScavenger : EnemyShooter
         if(playerInRange && CanSeePlayerWithoutMovingOrAttacking())
         {
             Move();
+            anim.SetTrigger("Shoot");
             Attack();
             agent.stoppingDistance = stoppingDistOrig;
         }

@@ -2332,7 +2332,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6012595324804858270}
-  - component: {fileID: 6505379462219766110}
   m_Layer: 0
   m_Name: Man_04
   m_TagString: Untagged
@@ -2373,27 +2372,6 @@ Transform:
   - {fileID: 8687772149832198246}
   m_Father: {fileID: 3356894510944855071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &6505379462219766110
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6773615027452709411}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b8a7488d12adc39498433d60811eab1a, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7254813286194337028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3573,6 +3551,7 @@ GameObject:
   - component: {fileID: 6634477645168807961}
   - component: {fileID: 5178804829282356988}
   - component: {fileID: 980853089215506242}
+  - component: {fileID: 7287613637544632134}
   m_Layer: 0
   m_Name: Scavenger
   m_TagString: Enemy
@@ -3619,8 +3598,8 @@ MonoBehaviour:
   roamTimer: 2
   headPos: {fileID: 3356894510944855071}
   viewAngle: 90
-  anim: {fileID: 0}
-  animSpeedTransition: 0
+  anim: {fileID: 7287613637544632134}
+  animSpeedTransition: 4
   sourceWaveSpawner: {fileID: 0}
   sourceRandomSpawner: {fileID: 0}
   audSource: {fileID: 980853089215506242}
@@ -3858,6 +3837,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &7287613637544632134
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8958555333110522590}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b8a7488d12adc39498433d60811eab1a, type: 3}
+  m_Controller: {fileID: 9100000, guid: ed6f6d4c960c2c743b0c78eb6047a02d, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'root'\n\tTransform 'lowerarm_l'\n\tTransform
+    'root'\n\tTransform 'neck_01'\n\tTransform 'clavicle_l'\n\tTransform 'ring_02_l'\n\tTransform
+    'hand_l'\n\tTransform 'middle_01_l'\n\tTransform 'ring_01_r'\n\tTransform 'spine_02'\n\tand
+    more ...\n\tFrom animation clip 'Riffle_Idle'\n\tFrom animation clip 'Riffle_Idle_Crouch'\n\tFrom
+    animation clip 'Walk_Shoot'\n\tFrom animation clip 'ShootRiffle_Walk'"
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9095113186927905635
 GameObject:
   m_ObjectHideFlags: 0
