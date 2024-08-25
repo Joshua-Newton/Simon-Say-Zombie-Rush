@@ -117,10 +117,27 @@ public class TimeTrialModeManager : GameManager
         for (int i = 0; i < commandLength; i++)
         {
             if (possibleItems.Count == 0) break;
-            int randomIndex = Random.Range(0, possibleItems.Count);
-            commandSequence.Add(possibleItems[randomIndex]);
-            Resources.Load<GameObject>($"Prefabs/Essentials/SimonImg{possibleItems[randomIndex].name}");
+            int nextItemIndex = GetLowestTimeItemIndex(possibleItems);
+            commandSequence.Add(possibleItems[nextItemIndex]);
+            Resources.Load<GameObject>($"Prefabs/Essentials/SimonImg{possibleItems[nextItemIndex].name}");
         }
+    }
+
+    int GetLowestTimeItemIndex(List<GameObject> objectives)
+    {
+        int min = int.MaxValue;
+        int minIndex = -1;
+        for (int i = 0; i < objectives.Count(); i++)
+        {
+            GameObject objective = objectives[i];
+            int seconds = objective.GetComponent<ItemCollection>().GetSecondsToRetrieve();
+            if (seconds < min)
+            {
+                min = Mathf.Min(min, seconds);
+                minIndex = i;
+            }
+        }
+        return minIndex;
     }
 
     void DisplayCommand()
