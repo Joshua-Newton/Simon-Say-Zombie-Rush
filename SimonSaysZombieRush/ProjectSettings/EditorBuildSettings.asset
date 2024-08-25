@@ -6,18 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Sandboxes/Scenes/MainMenu.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: d1f1261e81e9eff46913fea40b7e0784
   - enabled: 1
-    path: Assets/Sandboxes/Scenes/TimeTrialModeTutorial.unity
+    path: Assets/Scenes/TimeTrialModeTutorial.unity
     guid: aa75f7853ae5c4f47beac76711635cfe
   - enabled: 1
-    path: Assets/Sandboxes/Scenes/ProjectScenes/TimeTrialModeLevel1.unity
+    path: Assets/Scenes/ProjectScenes/TimeTrialModeLevel1.unity
     guid: 3fe2d997c93b7a84daa3e7384e600bfd
   - enabled: 1
-    path: Assets/Sandboxes/Scenes/ProjectScenes/TimeTrialModeLevel2.unity
+    path: Assets/Scenes/ProjectScenes/TimeTrialModeLevel2.unity
     guid: afbfe1cd94e66194bb75852b46f531d8
   - enabled: 1
-    path: Assets/Sandboxes/Scenes/ProjectScenes/TimeTrialModeLevel3.unity
+    path: Assets/Scenes/ProjectScenes/TimeTrialModeLevel3.unity
     guid: 973eb7d8bcce90141a88ad8a380088b0
   m_configObjects: {}
