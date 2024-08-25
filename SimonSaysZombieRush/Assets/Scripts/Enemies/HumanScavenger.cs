@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
@@ -22,15 +23,20 @@ public class HumanScavenger : EnemyShooter
     float playerDistFromSupply;
     float randomOffset;
 
+    Animator animator;
+
     // Start is called before the first frame update
     protected override void Start()
     {
+    animator = GetComponent<Animator>();
         base.Start();
+
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        base.Update();
         UpdatePlayerPositionData();
         if(foundItem)
         {
@@ -40,6 +46,14 @@ public class HumanScavenger : EnemyShooter
         AggroEnemy();
         Swivel();
         CheckIfItemStillExists();
+        
+        if (agent.remainingDistance < agent.stoppingDistance + 0.05f)
+        {
+            anim.SetTrigger("Stop");
+        }
+        else if(anim.GetFloat("Speed") > 0f) {
+            anim.SetTrigger("Walking");
+        }
     }
 
     protected void Search()
@@ -85,6 +99,7 @@ public class HumanScavenger : EnemyShooter
         if(playerInRange && CanSeePlayerWithoutMovingOrAttacking())
         {
             Move();
+            anim.SetTrigger("Shoot");
             Attack();
             agent.stoppingDistance = stoppingDistOrig;
         }

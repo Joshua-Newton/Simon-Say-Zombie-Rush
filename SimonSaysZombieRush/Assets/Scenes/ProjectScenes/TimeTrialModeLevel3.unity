@@ -5984,6 +5984,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieKamikaze
       objectReference: {fileID: 0}
+    - target: {fileID: 6393220561331377734, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
+      propertyPath: animSpeedTransition
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8614,7 +8618,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.93364716
+      value: 2.71
       objectReference: {fileID: 0}
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8622,11 +8626,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -25.23462
+      value: -26.45
       objectReference: {fileID: 0}
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7332766
       objectReference: {fileID: 0}
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -8634,7 +8638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000013411044
+      value: -0.67993045
       objectReference: {fileID: 0}
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalRotation.z
@@ -8646,7 +8650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -85.676
       objectReference: {fileID: 0}
     - target: {fileID: 1037588542918528042, guid: 7429af4c883975e4c818e458ff0cf3e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

@@ -1886,7 +1886,7 @@ MonoBehaviour:
   headPos: {fileID: 1037588542918528042}
   viewAngle: 90
   anim: {fileID: 8637268002574915295}
-  animSpeedTransition: 0
+  animSpeedTransition: 4
   sourceWaveSpawner: {fileID: 0}
   sourceRandomSpawner: {fileID: 0}
   audSource: {fileID: 5280201795012706418}
