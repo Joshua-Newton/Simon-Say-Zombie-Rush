@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 3325397814799098809}
   - component: {fileID: 5085242357308415721}
   - component: {fileID: 5349999526822399873}
+  - component: {fileID: 6854842569029516237}
   m_Layer: 0
   m_Name: MeleeHitBox
   m_TagString: Untagged
@@ -442,6 +443,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &6854842569029516237
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011892207706059065}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1158191797538262233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,7 +1156,7 @@ MonoBehaviour:
   dropChance: 5
   meleeHitTime: 1.5
   meleeTriggerRange: 1.5
-  meleeHitBox: {fileID: 0}
+  meleeHitBox: {fileID: 6854842569029516237}
   meleeAudioClips:
   - {fileID: 8300000, guid: ee12ef8c3b02f6a49bf7b056cb330ac8, type: 3}
   - {fileID: 8300000, guid: 7833cb14fa9716841a5d47c63cd1e799, type: 3}
