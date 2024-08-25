@@ -3545,8 +3545,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3356894510944855071}
   - component: {fileID: 5517288222097010233}
-  - component: {fileID: 7471459622015518534}
-  - component: {fileID: 1548375415623660428}
   - component: {fileID: 4297097525403679147}
   - component: {fileID: 6634477645168807961}
   - component: {fileID: 5178804829282356988}
@@ -3588,7 +3586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca3d1b5fe7840a24989ca8cafc4a4623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 1548375415623660428}
+  model: {fileID: 7538014011938066988}
   hitColor: {r: 1, g: 0, b: 0, a: 0}
   HP: 10
   agent: {fileID: 5178804829282356988}
@@ -3625,56 +3623,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7edc3126fca4e174ea362ab28c5ede6a, type: 3}
   - {fileID: 8300000, guid: ae0ad0563de8e9a41be8834607a688d5, type: 3}
   detectVolume: 4.33
---- !u!33 &7471459622015518534
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8958555333110522590}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1548375415623660428
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8958555333110522590}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: f3db3bd8c8f02bd46a1cbeb697343ecf, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &4297097525403679147
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3853,13 +3801,7 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'root'\n\tTransform 'lowerarm_l'\n\tTransform
-    'root'\n\tTransform 'neck_01'\n\tTransform 'clavicle_l'\n\tTransform 'ring_02_l'\n\tTransform
-    'hand_l'\n\tTransform 'middle_01_l'\n\tTransform 'ring_01_r'\n\tTransform 'spine_02'\n\tand
-    more ...\n\tFrom animation clip 'Riffle_Idle'\n\tFrom animation clip 'Riffle_Idle_Crouch'\n\tFrom
-    animation clip 'Walk_Shoot'\n\tFrom animation clip 'ShootRiffle_Walk'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
