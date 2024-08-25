@@ -22,15 +22,20 @@ public class HumanScavenger : EnemyShooter
     float playerDistFromSupply;
     float randomOffset;
 
+    Animator animator;
+
     // Start is called before the first frame update
     protected override void Start()
     {
+    animator = GetComponent<Animator>();
         base.Start();
+
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        base.Update();
         UpdatePlayerPositionData();
         if(foundItem)
         {
@@ -40,6 +45,8 @@ public class HumanScavenger : EnemyShooter
         AggroEnemy();
         Swivel();
         CheckIfItemStillExists();
+
+        animator.SetBool("isWalking", true);
     }
 
     protected void Search()
