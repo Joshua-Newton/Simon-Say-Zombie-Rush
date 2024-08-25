@@ -97,7 +97,7 @@ public class HumanScavenger : EnemyShooter
         playerDistFromSupply = (GameManager.instance.player.transform.position - supplyItem.transform.position).magnitude;
         playerInRange = (playerDistFromSupply < territoryDistance);
 
-        if(!playerInRange || !CanSeePlayerWithoutMovingOrAttacking() || !isSeekingAttacker)
+        if((!playerInRange || !CanSeePlayerWithoutMovingOrAttacking()) && !isSeekingAttacker)
         {
             agent.stoppingDistance = 2;
             agent.SetDestination(supplyItem.transform.position);
