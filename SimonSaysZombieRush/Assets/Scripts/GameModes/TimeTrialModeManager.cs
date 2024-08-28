@@ -90,6 +90,8 @@ public class TimeTrialModeManager : GameManager
 
     void InitializeTimerUI()
     {
+        possibleItems.Sort((a, b) => a.GetComponent<ItemCollection>().GetSecondsToRetrieve().CompareTo(b.GetComponent<ItemCollection>().GetSecondsToRetrieve()));
+
         for (int i = 0; i < possibleItems.Count; ++i)
         {
             GameObject newTimer = Instantiate(itemTimerPrefab, timerParent.transform);

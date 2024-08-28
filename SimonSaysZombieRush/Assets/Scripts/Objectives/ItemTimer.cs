@@ -37,6 +37,7 @@ public class ItemTimer : MonoBehaviour
     }
 
     public void SetRemainingTime(float remainingTime) { this.remainingTime = remainingTime; }
+    public float GetRemainingTime() { return remainingTime;}
 
     public void InitializeTimer(int index)
     {
@@ -58,5 +59,6 @@ public class ItemTimer : MonoBehaviour
             TimeTrialModeManager.instance.HandleExpiredItem(item, timerIndex);
         }
     }
+
 
 }
