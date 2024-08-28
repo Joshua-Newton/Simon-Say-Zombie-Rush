@@ -665,11 +665,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             }
             else if (angle <= 135 && angle >= 45)
             {
-                animator.SetTrigger("Move Left");
+                animator.SetTrigger("Move Right");
             }
             else if (angle <= -45 && angle >= -135)
             {
-                animator.SetTrigger("Move Right");
+                animator.SetTrigger("Move Left");
             }
             else 
             {
