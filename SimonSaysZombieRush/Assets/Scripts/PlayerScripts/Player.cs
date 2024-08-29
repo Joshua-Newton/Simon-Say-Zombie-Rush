@@ -652,14 +652,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     {
         if (animator != null)
         {
+            float angle = Vector3.SignedAngle(transform.forward, movementDirection, Vector3.up);
+            
             if (movementDirection.magnitude == 0)
             {
                 animator.SetTrigger("Idle");
                 return;
             }
-
-            float angle = Vector3.SignedAngle(transform.forward, movementDirection, Vector3.up);
-            if (angle <= 45 && angle >= -45)
+            else if (angle <= 45 && angle >= -45)
             {
                 animator.SetTrigger("Move Forward");
             }
