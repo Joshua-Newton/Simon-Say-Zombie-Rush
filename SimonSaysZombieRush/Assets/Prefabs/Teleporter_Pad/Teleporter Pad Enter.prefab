@@ -131,13 +131,16 @@ MonoBehaviour:
   buttonName: Action
   delayedTeleport: 0
   teleportTime: 0
-  objectTag: empty = any object
   destinationPad: []
   teleportationHeightOffset: 0
-  arrived: 0
+  allowEntry: 1
+  allowExit: 1
   teleportSound: {fileID: 8200002}
   teleportPadSound: {fileID: 8200000}
   teleportPadOn: 1
+  allowedTags:
+  - Player
+  - Zombies
 --- !u!64 &6400000
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4972,7 +4975,7 @@ AudioSource:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1559667293912200592, guid: 751459f5fe7f3114ea673006c402e869, type: 2}
   m_audioClip: {fileID: 8300000, guid: 191047cc3db95a741af12a1f8b69fb51, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -5068,7 +5071,7 @@ AudioSource:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1559667293912200592, guid: 751459f5fe7f3114ea673006c402e869, type: 2}
   m_audioClip: {fileID: 8300000, guid: c83d290580d9743409e4185fd2e1c647, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.4
