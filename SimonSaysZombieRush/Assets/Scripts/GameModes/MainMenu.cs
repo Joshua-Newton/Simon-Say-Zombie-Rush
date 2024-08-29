@@ -14,9 +14,12 @@ public class MainMenu : MonoBehaviour
     [SerializeField] TMP_Text timeTrial3Text;
     [SerializeField] int[] buildIndexesForLevels;
     [SerializeField] SettingsMenuManager settingsMenuManager;
+    [SerializeField] float defaultTimeScale = 1f;
 
     void Start()
     {
+        Time.timeScale = defaultTimeScale;
+
         InitializeSound();
 
         if (buildIndexesForLevels.Length > 0)
