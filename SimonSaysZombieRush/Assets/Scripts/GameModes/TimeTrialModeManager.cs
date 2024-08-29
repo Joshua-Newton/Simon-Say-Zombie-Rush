@@ -273,6 +273,7 @@ public class TimeTrialModeManager : GameManager
         NotifyPlayerOfMissedItem(item);
         CheckSimonSequenceForUpdate();
         CheckForLossByMissingItems();
+        playerScript.UpdateTargetObjective();
     }
 
     public void EndTimer(int timerIndex)

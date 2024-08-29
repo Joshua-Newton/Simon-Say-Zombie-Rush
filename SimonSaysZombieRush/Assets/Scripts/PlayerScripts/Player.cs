@@ -687,9 +687,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             float angle = Vector3.SignedAngle(transform.forward, movementDirection, Vector3.up);
             
-            if (movementDirection.magnitude == 0)
+            if (movementDirection.magnitude == 0 && weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee)
             {
-                animator.SetTrigger("Idle");
+                animator.SetTrigger("Idle Melee");
+                return;
+            }
+            else if (movementDirection.magnitude == 0 && weaponList[selectedWeapon].weaponType != WeaponStats.WeaponType.Melee)
+            {
+                animator.SetTrigger("Idle Gun");
                 return;
             }
             else if (angle <= 45 && angle >= -45)
