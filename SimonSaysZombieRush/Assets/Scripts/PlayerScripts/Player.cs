@@ -57,6 +57,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     [Header("----- Other -----")]
     [SerializeField] float immunityAfterDamageFromSameSource = 0.1f;
+    [SerializeField] GameObject objectivePointer;
 
     #endregion
 
@@ -75,7 +76,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     int numSlowAreas;
 
     bool isShooting;
-    bool isWallRunning;
     bool isSprinting;
     bool isPlayingStep;
     bool isMeleeing;
@@ -84,14 +84,16 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     private int currentGrenades;
     private int selectedGrenadeIndex;
     private bool isRecharging;
+    private bool allItemsFound;
 
     bool canHeal;
     private List<string> recentDamageSource = new List<string>();
 
-    Collider wallRunCollider;
     Collider meleeCollider;
     Coroutine healingCoroutine;
     Coroutine healingDelayCoroutine;
+
+    GameObject currentUrgentObjective;
     #endregion
 
     #region Unity Methods
@@ -112,10 +114,15 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             meleeCollider.enabled = false;
         }
+        
     }
 
     void Update()
     {
+        if (currentUrgentObjective == null && !allItemsFound)
+        {
+            UpdateTargetObjective();
+        }
         WeaponMovement();
         Grounded();
         Movement();
@@ -139,6 +146,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             SelectWeapon();
         }
         Heal();
+        UpdateObjectivePointer();
     }
     #endregion
 
@@ -311,6 +319,19 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
+    void UpdateObjectivePointer()
+    {
+        if(currentUrgentObjective != null)
+        {
+            objectivePointer.transform.LookAt(currentUrgentObjective.transform.position);
+            objectivePointer.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
+        }
+        else
+        {
+            objectivePointer.SetActive(false);
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Lava")
@@ -461,6 +482,18 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     #endregion
 
     #region Public Functions
+
+    public void UpdateTargetObjective()
+    {
+        if(TimeTrialModeManager.instance != null)
+        {
+            currentUrgentObjective = TimeTrialModeManager.instance.GetNextActiveObjective();
+            if(currentUrgentObjective == null )
+            {
+                currentUrgentObjective = TimeTrialModeManager.instance.GetBaseReturnZone();
+            }
+        }
+    }
 
     public void AddGrenade(GameObject grenadePrefab)
     {

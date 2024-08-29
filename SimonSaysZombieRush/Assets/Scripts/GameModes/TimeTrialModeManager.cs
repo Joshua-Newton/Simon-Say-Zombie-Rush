@@ -44,6 +44,7 @@ public class TimeTrialModeManager : GameManager
     private List<GameObject> playerInventory;
     private List<GameObject> timers;
     private int totalCollectedItems = 0;
+    private GameObject baseReturnZone;
 
     protected override void Awake()
     {
@@ -54,6 +55,7 @@ public class TimeTrialModeManager : GameManager
     protected override void Start()
     {
         base.Start();
+        baseReturnZone = FindObjectOfType<BaseReturnZone>().gameObject;
         playerInventory = new List<GameObject>();
         collectedSequence = new List<GameObject>();
         timers = new List<GameObject>();
@@ -232,7 +234,7 @@ public class TimeTrialModeManager : GameManager
         playerInventory.Add(item);
         collectedSequence.Add(item);
         possibleItems.Remove(item);
-
+        playerScript.UpdateTargetObjective();
         CheckCollectedSequence();
     }
 
@@ -394,6 +396,21 @@ public class TimeTrialModeManager : GameManager
         {
             PlayerPrefs.SetFloat(statKey, timePassed);
         }
+    }
+
+    public GameObject GetNextActiveObjective()
+    {
+        if(possibleItems.Count > 0)
+        {
+            possibleItems.Sort((a, b) => a.GetComponent<ItemCollection>().GetSecondsToRetrieve().CompareTo(b.GetComponent<ItemCollection>().GetSecondsToRetrieve()));
+            return possibleItems[0];
+        }
+        return null;
+    }
+
+    public GameObject GetBaseReturnZone()
+    {
+        return baseReturnZone;
     }
 
     TimeTrialStats GetStats()
