@@ -12144,7 +12144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1758834858
 Transform:
   m_ObjectHideFlags: 0
@@ -12662,27 +12662,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6668205183905061555, guid: 7de0751ed0ec4d844af745d96195df82, type: 3}
   m_PrefabInstance: {fileID: 1258012922}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1899305289 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
-  m_PrefabInstance: {fileID: 2015817253}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1899305296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899305289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b14944ed86018a42a5a5891bd3ee8a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teleportDestinations:
-  - {fileID: 919582484}
-  - {fileID: 413424815}
-  - {fileID: 206434586}
 --- !u!4 &1899305299 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
@@ -13412,8 +13391,28 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9003111098524442179, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
+      propertyPath: teleportDestinations.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9003111098524442179, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
+      propertyPath: teleportDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 919582484}
+    - target: {fileID: 9003111098524442179, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
+      propertyPath: teleportDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 413424815}
+    - target: {fileID: 9003111098524442179, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
+      propertyPath: teleportDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 206434586}
+    - target: {fileID: 9003111098524442179, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
+      propertyPath: teleportDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1758834858}
     m_RemovedComponents:
-    - {fileID: 11400000, guid: e8e372e327eb06f409ea590b2535bcbd, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 400000, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
@@ -13428,10 +13427,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 400000, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1758834858}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 1899305296}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60ea8a8ee79fc564294d0a35f8b0ae4a, type: 3}
 --- !u!1001 &2040995900
 PrefabInstance:

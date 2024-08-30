@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TeleportationTrap : MonoBehaviour
 {
-    [SerializeField] private Transform[] teleportDestinations = new Transform[3];  // Serialized field for destination points
+    [SerializeField] private Transform[] teleportDestinations;  // Serialized field for destination points
 
     private void OnTriggerEnter(Collider other)
     {
