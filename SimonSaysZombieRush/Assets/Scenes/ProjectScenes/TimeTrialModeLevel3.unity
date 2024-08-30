@@ -16007,6 +16007,10 @@ PrefabInstance:
       value: Decorative_Wall_2_with_box_collider (153)
       objectReference: {fileID: 0}
     - target: {fileID: 8651429677616655949, guid: 00547075d993d104492b8fbd98a3b168, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651429677616655949, guid: 00547075d993d104492b8fbd98a3b168, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -32236,6 +32240,10 @@ PrefabInstance:
     - target: {fileID: 8651429677616655949, guid: 00547075d993d104492b8fbd98a3b168, type: 3}
       propertyPath: m_Name
       value: Decorative_Wall_2_with_box_collider (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651429677616655949, guid: 00547075d993d104492b8fbd98a3b168, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8651429677616655949, guid: 00547075d993d104492b8fbd98a3b168, type: 3}
       propertyPath: m_NavMeshLayer

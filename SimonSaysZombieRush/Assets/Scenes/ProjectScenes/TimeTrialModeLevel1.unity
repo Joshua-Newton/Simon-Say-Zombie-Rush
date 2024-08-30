@@ -3460,7 +3460,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9
+      value: -8.19
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3468,7 +3468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 56.4785
+      value: 56.48
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5996,6 +5996,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bf8e6e5911f933845a7b71a95748d804, type: 3}
       propertyPath: m_Name
       value: Wall_Single_DoublePost (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf8e6e5911f933845a7b71a95748d804, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bf8e6e5911f933845a7b71a95748d804, type: 3}
       propertyPath: m_NavMeshLayer

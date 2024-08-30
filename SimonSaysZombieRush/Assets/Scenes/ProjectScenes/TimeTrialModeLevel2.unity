@@ -5961,6 +5961,10 @@ PrefabInstance:
       value: Int_FFK_01_Wall_01 (140)
       objectReference: {fileID: 0}
     - target: {fileID: 1954185702199161507, guid: e0f2df96b7a2b1b4eb0445c0a3be5515, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1954185702199161507, guid: e0f2df96b7a2b1b4eb0445c0a3be5515, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -15975,7 +15979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21
+      value: -21.25
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16016,6 +16020,18 @@ PrefabInstance:
     - target: {fileID: 3385466897715273237, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_Name
       value: Flamethrower Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6342728575477288127, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Size.z
+      value: 47
+      objectReference: {fileID: 0}
+    - target: {fileID: 9069923278636218304, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9069923278636218304, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18841,6 +18857,10 @@ PrefabInstance:
     - target: {fileID: 1954185702199161507, guid: e0f2df96b7a2b1b4eb0445c0a3be5515, type: 3}
       propertyPath: m_Name
       value: Int_FFK_01_Wall_01 (141)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1954185702199161507, guid: e0f2df96b7a2b1b4eb0445c0a3be5515, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1954185702199161507, guid: e0f2df96b7a2b1b4eb0445c0a3be5515, type: 3}
       propertyPath: m_NavMeshLayer
@@ -31260,6 +31280,10 @@ PrefabInstance:
       value: Ext_BA_01_Wall_01 (40)
       objectReference: {fileID: 0}
     - target: {fileID: 6526184997809920213, guid: aec71fa5d6ab24744bbfb3afb66de766, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526184997809920213, guid: aec71fa5d6ab24744bbfb3afb66de766, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -38580,7 +38604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21
+      value: -21.5
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38610,17 +38634,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2140893589985368053, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
-      propertyPath: flameRest
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2140893589985368053, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
-      propertyPath: flameTime
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3385466897715273237, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_Name
       value: Flamethrower Wall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6342728575477288127, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Size.z
+      value: 47
+      objectReference: {fileID: 0}
+    - target: {fileID: 9069923278636218304, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9069923278636218304, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -16.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -50930,6 +50958,10 @@ PrefabInstance:
     - target: {fileID: 6526184997809920213, guid: aec71fa5d6ab24744bbfb3afb66de766, type: 3}
       propertyPath: m_Name
       value: Ext_BA_01_Wall_01 (41)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6526184997809920213, guid: aec71fa5d6ab24744bbfb3afb66de766, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6526184997809920213, guid: aec71fa5d6ab24744bbfb3afb66de766, type: 3}
       propertyPath: m_NavMeshLayer
