@@ -16,6 +16,7 @@ public class WeaponStats : ScriptableObject
     public float damageDelay;
     public int ammoCurrent;
     public int ammoMax;
+    public string weaponName;
 
     public ParticleSystem hitEffect;
     public AudioClip shootSound;

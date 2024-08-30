@@ -603,6 +603,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
         if (weaponList.Count > 0)
         {
+            GameManager.instance.currWeapon.text = weaponList[selectedWeapon].weaponName;
             GameManager.instance.ammoCurrent.text = weaponList[selectedWeapon].ammoCurrent.ToString("F0");
             GameManager.instance.ammoMax.text = weaponList[selectedWeapon].ammoMax.ToString("F0");
         }

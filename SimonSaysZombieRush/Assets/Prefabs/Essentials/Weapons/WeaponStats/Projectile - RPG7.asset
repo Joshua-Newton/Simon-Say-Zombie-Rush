@@ -18,8 +18,9 @@ MonoBehaviour:
   damage: 1
   damageRange: 0
   damageDelay: 0
-  ammoCurrent: 0
+  ammoCurrent: 1
   ammoMax: 1
+  weaponName: RPG
   hitEffect: {fileID: 0}
   shootSound: {fileID: 8300000, guid: ea6a40d4ad6b9284a958522f42176b5f, type: 3}
   shootVol: 1

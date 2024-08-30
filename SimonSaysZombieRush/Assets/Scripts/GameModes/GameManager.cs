@@ -29,7 +29,7 @@ public abstract class GameManager : MonoBehaviour
     [Header("----- HUD -----")]
     public Image playerHPBar;
     public GameObject dmgFlashBckgrnd;
-    public TMP_Text ammoCurrent, ammoMax;
+    public TMP_Text ammoCurrent, ammoMax, currWeapon;
     public GameObject checkpointPopup;
 
     [Header("----- Player -----")]

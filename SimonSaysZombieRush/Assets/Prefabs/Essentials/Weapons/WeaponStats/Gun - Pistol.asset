@@ -20,6 +20,7 @@ MonoBehaviour:
   damageDelay: 0.4
   ammoCurrent: 22
   ammoMax: 25
+  weaponName: 
   hitEffect: {fileID: 3249809072487309720, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   shootSound: {fileID: 8300000, guid: bbd53c35d4d4a8f449760ffa619f79af, type: 3}
   shootVol: 1
