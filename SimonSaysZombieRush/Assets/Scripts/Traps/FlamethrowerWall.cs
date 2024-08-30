@@ -17,7 +17,6 @@ public class FlamethrowerWall : MonoBehaviour
     bool expanding;
     
     float farthesetDistance;
-    Transform flameHitBoxTransform;
     BoxCollider flameHitBoxCollider;
     Vector3 initialHitBoxSize;
     private void Start()
@@ -27,7 +26,6 @@ public class FlamethrowerWall : MonoBehaviour
         mainSettings.startSpeed = flameParticleSpeed;
 
         farthesetDistance = flameParticleLifetime * flameParticleSpeed;
-        flameHitBoxTransform = flameHitBox.gameObject.transform;
         flameHitBoxCollider = flameHitBox.gameObject.GetComponent<BoxCollider>();
         initialHitBoxSize = flameHitBoxCollider.size;
     }
