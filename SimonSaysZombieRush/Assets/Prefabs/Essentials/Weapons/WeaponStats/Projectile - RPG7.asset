@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86eb52872ad28a045a7ba979ee2acd1e, type: 3}
   m_Name: Projectile - RPG7
   m_EditorClassIdentifier: 
-  weaponModel: {fileID: 6463698166872759388, guid: 635f151bde9e9974dace0c6d003dac5c, type: 3}
+  weaponModel: {fileID: 846000718910443197, guid: fe090424b2480964a94001b65c13ad77, type: 3}
   projectile: {fileID: 4730036690490732152, guid: 4fb44336285968d4ebf1fbafa5ea69cb, type: 3}
   weaponType: 3
   damage: 1
   damageRange: 0
   damageDelay: 0
-  ammoCurrent: 1
+  ammoCurrent: 0
   ammoMax: 1
   hitEffect: {fileID: 0}
   shootSound: {fileID: 8300000, guid: ea6a40d4ad6b9284a958522f42176b5f, type: 3}

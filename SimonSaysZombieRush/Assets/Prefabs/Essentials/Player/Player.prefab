@@ -1322,7 +1322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &176360577514892445
 Transform:
   m_ObjectHideFlags: 0
@@ -1366,7 +1366,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 28f0b13c7e9707746b5e0b3336181560, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2157,6 +2157,7 @@ GameObject:
   - component: {fileID: 2075630758910559802}
   - component: {fileID: 1330372268249846656}
   - component: {fileID: 7551203245809079469}
+  - component: {fileID: 2608931811548204428}
   m_Layer: 0
   m_Name: Rpg Model
   m_TagString: Untagged
@@ -2172,10 +2173,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5582588579681054550}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.57393634, y: 0.47505277, z: -0.5132156, w: 0.4260655}
+  m_LocalRotation: {x: -0.7934217, y: 0.1771101, z: -0.0816404, w: 0.57658386}
   m_LocalPosition: {x: -0.22192875, y: 0.11497277, z: -0.0715297}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.125, y: 0.125, z: 0.125}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 176360577514892445}
   - {fileID: 1269843882082680811}
@@ -2231,6 +2232,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!895512359 &2608931811548204428
+AimConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582588579681054550}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 0.75
+  m_RotationAtRest: {x: -0.08364932, y: 96.32432, z: -100.695335}
+  m_RotationOffset: {x: -1.4413995, y: -76.65206, z: 6.05158}
+  m_AimVector: {x: 1, y: 0, z: 0}
+  m_UpVector: {x: 0, y: 1, z: 0}
+  m_WorldUpVector: {x: 0, y: 1, z: 0}
+  m_WorldUpObject: {fileID: 0}
+  m_UpType: 0
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 6768844016668983484}
+    weight: 1
 --- !u!1 &5591057806303626684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2719,7 +2745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1269843882082680811
 Transform:
   m_ObjectHideFlags: 0
@@ -2763,7 +2789,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 28f0b13c7e9707746b5e0b3336181560, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
