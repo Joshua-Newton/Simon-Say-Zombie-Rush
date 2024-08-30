@@ -3274,6 +3274,9 @@ MonoBehaviour:
   timeTrial3Text: {fileID: 111014239}
   buildIndexesForLevels: 020000000300000004000000
   settingsMenuManager: {fileID: 817601086}
+  defaultTimeScale: 1
+  objectsToHideForWebGL:
+  - {fileID: 1380456815}
 --- !u!1 &704487967
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] int[] buildIndexesForLevels;
     [SerializeField] SettingsMenuManager settingsMenuManager;
     [SerializeField] float defaultTimeScale = 1f;
+    [SerializeField] GameObject[] objectsToHideForWebGL;
+
 
     void Start()
     {
@@ -34,6 +36,14 @@ public class MainMenu : MonoBehaviour
         {
             UpdateHighScore(timeTrial3Text, 2);
         }
+
+#if UNITY_WEBGL
+        foreach (GameObject item in objectsToHideForWebGL)
+        {
+            item.SetActive(false);
+        }
+#endif
+
     }
 
     private void UpdateHighScore(TMP_Text text, int index)

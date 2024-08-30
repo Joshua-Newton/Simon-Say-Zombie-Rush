@@ -5209,6 +5209,11 @@ MonoBehaviour:
   isPaused: 0
   isStandAloneLevel: 0
   settingsMenuManager: {fileID: 386960758489442870}
+  objectsToHideForWebGL:
+  - {fileID: 6073029671973442157}
+  - {fileID: 5794492548736571759}
+  - {fileID: 738938761173840315}
+  - {fileID: 531354041425529637}
   commandLength: 1
   commandDisplay: {fileID: 6087879501224194326}
   commandImageObjects:

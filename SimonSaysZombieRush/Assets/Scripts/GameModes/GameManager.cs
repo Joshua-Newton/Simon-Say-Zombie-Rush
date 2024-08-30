@@ -44,6 +44,7 @@ public abstract class GameManager : MonoBehaviour
     [Header("----- Other -----")]
     [SerializeField] protected bool isStandAloneLevel = false;
     [SerializeField] protected SettingsMenuManager settingsMenuManager;
+    [SerializeField] GameObject[] objectsToHideForWebGL;
 
     protected float initialTimeScale;
     protected int enemyCount;
@@ -84,6 +85,12 @@ public abstract class GameManager : MonoBehaviour
     protected virtual void Start()
     {
         InitializeSound();
+#if UNITY_WEBGL
+        foreach (GameObject item in objectsToHideForWebGL)
+        {
+            item.SetActive(false);
+        }
+#endif
     }
 
     protected virtual void Update()
