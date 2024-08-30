@@ -124,6 +124,13 @@ public class Damage : MonoBehaviour
         isDamaging = false;
     }
 
+    public void DisableAndStopCoroutines()
+    {
+        StopAllCoroutines();
+        isDamaging = false;
+        gameObject.SetActive(false);
+    }
+
     public void SetDamage(int newDamage)
     {
         damageAmount = newDamage;

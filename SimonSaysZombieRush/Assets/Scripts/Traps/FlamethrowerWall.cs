@@ -35,7 +35,7 @@ public class FlamethrowerWall : MonoBehaviour
         flameHitBox.gameObject.SetActive(true);
         yield return new WaitForSeconds(flameTime);
         flamethrower.Stop();
-        flameHitBox.gameObject.SetActive(false);
+        flameHitBox.gameObject.GetComponent<Damage>().DisableAndStopCoroutines();
         yield return new WaitForSeconds(flameRest);
         isFlaming = false;
     }
