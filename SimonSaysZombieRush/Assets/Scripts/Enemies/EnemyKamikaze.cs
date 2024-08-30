@@ -7,9 +7,10 @@ public class EnemyKamikaze : EnemyAI
     [Header("----- Explosion -----")]
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] float distanceToTriggerExplosion;
+    [Range(1, 100)] [SerializeField] int explosionDamage = 15;
     [Range(0.05f, 100)] [SerializeField] float explosionDelay;
     [Range(0.05f, 100)] [SerializeField] float explosionCooldown;
-
+    
     [Header("----- Kamikaze Sounds -----")]
     [Range(0f, 100f)] [SerializeField] float screamDelay = 1f;
     [SerializeField] AudioClip[] screamAudio;
@@ -53,13 +54,17 @@ public class EnemyKamikaze : EnemyAI
     protected override void Die()
     {
         StopAllCoroutines();
-        SpawnExplosion();
+        if(!isExploding)
+        {
+            SpawnExplosion();
+        }
         base.Die();
     }
 
     protected void SpawnExplosion()
     {
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        explosion.GetComponent<Explosion>().SetExplosionDamage(explosionDamage);
     }
 
     protected override void Attack()
