@@ -6650,7 +6650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -29.29
+      value: -28.88
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6680,9 +6680,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2140893589985368053, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: flameParticleLifetime
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3385466897715273237, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_Name
       value: Flamethrower Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151586564368409508, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028254324085123667, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15349,7 +15361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21
+      value: -21.91
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15379,9 +15391,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2140893589985368053, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: flameParticleLifetime
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3385466897715273237, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_Name
       value: Flamethrower Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151586564368409508, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028254324085123667, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16246,7 +16270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -29.41
+      value: -28.889997
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16276,9 +16300,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2140893589985368053, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: flameParticleLifetime
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3385466897715273237, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_Name
       value: Flamethrower Wall (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151586564368409508, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028254324085123667, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -39696,7 +39732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21
+      value: -21.91
       objectReference: {fileID: 0}
     - target: {fileID: 1953033568946873475, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -39726,9 +39762,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2140893589985368053, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: flameParticleLifetime
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3385466897715273237, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
       propertyPath: m_Name
       value: Flamethrower Wall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151586564368409508, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028254324085123667, guid: 5c0cfc10cbdc9b2448076c3a068ea6bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
