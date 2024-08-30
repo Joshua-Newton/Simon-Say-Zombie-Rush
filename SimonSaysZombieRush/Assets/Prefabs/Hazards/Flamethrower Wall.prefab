@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6021741296582771057
 Transform:
   m_ObjectHideFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 247032016223104802}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -7.76}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9988,12 +9988,11 @@ Transform:
   m_GameObject: {fileID: 3123608511785466439}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 8.81}
+  m_LocalPosition: {x: -0, y: 0, z: 3.53}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6021741296582771057}
-  - {fileID: 9069923278636218304}
   m_Father: {fileID: 1953033568946873475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &197946822369174596
@@ -10019,7 +10018,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.5
+    scalar: 0
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -10950,21 +10949,39 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.3862152
-          inSlope: 1.022986
-          outSlope: 1.022986
-          tangentMode: 0
+          value: 0
+          inSlope: 2.8032792
+          outSlope: 2.8032792
+          tangentMode: 34
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.108980834
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.3567251
+          value: 1
+          inSlope: -0.000741737
+          outSlope: -0.000741737
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.61988306
+          value: 0.9945946
+          inSlope: -0.05601991
+          outSlope: -0.05601991
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 1
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
+          value: 0
+          inSlope: -2.616549
+          outSlope: -2.616549
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.33333334
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -13582,7 +13599,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -14827,6 +14844,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2314568571008430456}
+  - {fileID: 9069923278636218304}
   - {fileID: 7585163639427713266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14842,8 +14860,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2e7aabf547eb24e980f09db5918a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flameRest: 1
-  flameTime: 1
+  emissionRest: 2
+  emissionTime: 1
+  flameParticleLifetime: 1.5
+  flameParticleSpeed: 5
   sparkTime: 0.5
   flameHitBox: {fileID: 6342728575477288127}
   flameSparks: {fileID: 7965852787340828523}
@@ -19852,12 +19872,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8847164478779446187}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -7.19}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3.5299997}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 6.6666665}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7585163639427713266}
+  m_Father: {fileID: 1953033568946873475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1884636787665079496
 MonoBehaviour:
@@ -19902,8 +19922,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 65}
-  m_Center: {x: 0, y: 0, z: 32}
+  m_Size: {x: 1, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7355320891670468135
 Rigidbody:
   m_ObjectHideFlags: 0
