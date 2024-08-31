@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8799701765952747480}
   - component: {fileID: 2027266752182785012}
   - component: {fileID: 9110581190182132236}
-  - component: {fileID: 5247756306241944379}
   m_Layer: 0
   m_Name: Pick up Frag Grenade
   m_TagString: Untagged
@@ -76,27 +75,6 @@ MonoBehaviour:
   spinSpeed: 1
   grenadePrefab: {fileID: 380330440337929944, guid: d7313d0acc607e640a6c6de20be174f5, type: 3}
   grenadeAmount: 1
---- !u!65 &5247756306241944379
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 380330440337929944}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1448491424181270394
 GameObject:
   m_ObjectHideFlags: 0
