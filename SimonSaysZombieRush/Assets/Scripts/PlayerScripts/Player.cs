@@ -172,14 +172,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (grenadeTypes.Count > 1)
         {
             selectedGrenadeIndex = (selectedGrenadeIndex + 1) % grenadeTypes.Count;
-
-            // Debug log to check if the grenade type is switched
-            Debug.Log($"Switched to grenade type: {grenadeTypes[selectedGrenadeIndex].name}");
-        }
-        else
-        {
-            // Optional: Log if there's only one or no grenades available to switch to
-            Debug.Log("No other grenade types to switch to.");
         }
     }
 
@@ -233,7 +225,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             speed /= sprintMultiplier;
             isSprinting = false;
         }
-
     }
 
     void Shooting()
@@ -478,7 +469,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     #region Public Functions
 
-
     public void UpdateTargetObjective()
     {
         if (TimeTrialModeManager.instance != null)
@@ -505,9 +495,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
         // Auto-select the new grenade type if it's new
         selectedGrenadeIndex = grenadeTypes.IndexOf(grenadePrefab);
-
-        // Debug log to check if the grenade count is updated
-        Debug.Log($"Added {quantity} grenade(s) of type {grenadePrefab.name}. Current count: {grenadeInventory[grenadePrefab]}");
 
         UpdatePlayerUI(); // Update UI to reflect the new grenade count
     }

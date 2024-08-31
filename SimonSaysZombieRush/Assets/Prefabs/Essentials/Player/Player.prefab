@@ -3535,11 +3535,12 @@ MonoBehaviour:
   damage: 0
   damageRange: 0
   damageDelay: 0
-  grenadeInventory: []
+  grenadeTypes:
+  - {fileID: 7773907341529077982, guid: 55684cb84da6f164aa7a55885cd0528f, type: 3}
+  - {fileID: 7773907341529077982, guid: 5de914134443a6e4997665656e536627, type: 3}
   grenadeSpawnPoint: {fileID: 6768844016668983484}
   throwForce: 15
-  maxGrenades: 2
-  grenadeCooldown: 5
+  maxGrenadesPerType: 2
   healAmount: 1
   healInterval: 2
   healDelay: 2
