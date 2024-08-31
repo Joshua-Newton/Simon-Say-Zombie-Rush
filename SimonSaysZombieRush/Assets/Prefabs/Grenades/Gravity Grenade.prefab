@@ -169,12 +169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39178c295b049b44936a57bc14c9166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionDelay: 0.5
+  explosionDelay: 1
   explosionRadius: 5
   attractionDuration: 4
   attractionStrength: 6
   floatHeight: 0.5
-  floatDuration: 4
   floatLerpDuration: 0.5
   aud: {fileID: 1364017262751702449}
   pullEffect: {fileID: 7927052286661353364, guid: 9515a01e917be044c95793bb1eb133c6, type: 3}

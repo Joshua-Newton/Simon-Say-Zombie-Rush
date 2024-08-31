@@ -53,12 +53,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed0844ae612d7e4fb751057fe6bd486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionDelay: 0.5
+  explosionDelay: 1
   explosionRadius: 5
   attractionDuration: 0
   attractionStrength: 0
   floatHeight: 0
-  floatDuration: 0
   floatLerpDuration: 0.5
   aud: {fileID: 0}
   pullEffect: {fileID: 0}

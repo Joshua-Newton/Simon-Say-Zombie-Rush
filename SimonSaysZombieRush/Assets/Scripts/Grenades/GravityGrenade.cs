@@ -43,8 +43,8 @@ public class GravityGrenade : MonoBehaviour
         StartCoroutine(FloatToPosition(transform.position + Vector3.up * floatHeight));
 
         // Instantiate and play the particle effect
-        pullParticleInstance = Instantiate(pullEffect, transform.position, Quaternion.identity);
-        pullParticleInstance.transform.localScale = new Vector3(1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
+        ParticleSystem pullParticle = Instantiate(pullEffect, gameObject.transform.position, Quaternion.identity);
+        pullParticle.gameObject.transform.localScale.Set(1 / gameObject.transform.localScale.x, 1 / gameObject.transform.localScale.y, 1 / gameObject.transform.localScale.z);
         aud.PlayOneShot(pullSound);
 
         // Start coroutine to destroy the particle effect after the attraction duration
