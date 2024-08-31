@@ -73,17 +73,23 @@ public class TimeTrialModeManager : GameManager
     {
         if (pj != null)
         {
-            int currentGrenades = pj.GetCurrentGrenades();
-            int maxGrenades = pj.GetMaxGrenades();
+            GameObject selectedGrenade = pj.GetSelectedGrenade();
+            if (selectedGrenade != null)
+            {
+                int currentGrenades = pj.GetCurrentGrenades();
+                int maxGrenades = pj.GetMaxGrenades(selectedGrenade);
 
-            grenadeCountText.text = $"{currentGrenades}/{maxGrenades}";
-            grenadeIcon.fillAmount = (float)currentGrenades / maxGrenades;
-        }
-        else
-        {
-
+                grenadeCountText.text = $"{currentGrenades}/{maxGrenades}";
+                grenadeIcon.fillAmount = (float)currentGrenades / maxGrenades;
+            }
+            else
+            {
+                grenadeCountText.text = "0/0";
+                grenadeIcon.fillAmount = 0;
+            }
         }
     }
+
 
     void InitializePossibleItems()
     {

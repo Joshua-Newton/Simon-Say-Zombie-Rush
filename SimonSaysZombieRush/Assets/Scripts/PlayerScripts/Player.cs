@@ -44,11 +44,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     [SerializeField] float damageDelay;
 
     [Header("----- Grenade -----")]
-    [SerializeField] private List<GameObject> grenadeInventory; // List to store different grenade prefabs
+    [SerializeField] private List<GameObject> grenadeTypes; // List to store different grenade prefabs
     [SerializeField] private Transform grenadeSpawnPoint; // Grenade spawn point
     [SerializeField] private float throwForce = 15f; // Throw force
-    [SerializeField] public int maxGrenades = 2; // Maximum number of grenades the player can hold
-    [SerializeField] public float grenadeCooldown = 5f; // Cooldown time between grenade throws
+    [SerializeField] private int maxGrenadesPerType = 2; // Maximum number of grenades of each type the player can hold
 
     [Header("----- Healing -----")]
     [SerializeField] int healAmount;
@@ -81,9 +80,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     bool isMeleeing;
     private bool isStunned = false;
     public CameraController cameraController;
-    private int currentGrenades;
-    private int selectedGrenadeIndex;
-    private bool isRecharging;
+    private bool isThrowingGrenade;
     private bool allItemsFound;
 
     bool canHeal;
@@ -94,6 +91,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     Coroutine healingDelayCoroutine;
 
     GameObject currentUrgentObjective;
+
+    // Grenade inventory to track quantities for each grenade type
+    private Dictionary<GameObject, int> grenadeInventory = new Dictionary<GameObject, int>();
+    private int selectedGrenadeIndex = 0;
+
     #endregion
 
     #region Unity Methods
@@ -101,7 +103,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     {
         HPOriginal = HP;
         gunModelOriginal = gunModel;
-        isRecharging = false;
         meleeModelOriginal = meleeModel;
         rpgModelOriginal = rpgModel;
         originalSpeed = speed;
@@ -114,7 +115,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             meleeCollider.enabled = false;
         }
-        
+
+        // Initialize grenade inventory with 0 grenades for each type
+        foreach (GameObject grenade in grenadeTypes)
+        {
+            grenadeInventory[grenade] = 0;
+        }
     }
 
     void Update()
@@ -129,15 +135,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         Sprint();
         Shooting();
 
-        if (Input.GetButtonDown("Grenade") && currentGrenades > 0)
+        if (Input.GetButtonDown("Grenade") && !isThrowingGrenade)
         {
-            // TODO: Re-implement once stable (removing for Beta Milestone)
             ThrowGrenade();
         }
 
         if (Input.GetButtonDown("SwitchGrenade"))
         {
-            // TODO: Re-implement once stable (removing for Beta Milestone)
             SelectNextGrenade(); // Switch to the next grenade type
         }
 
@@ -165,18 +169,26 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     private void SelectNextGrenade()
     {
-        if (grenadeInventory.Count > 1)
+        if (grenadeTypes.Count > 1)
         {
-            selectedGrenadeIndex = (selectedGrenadeIndex + 1) % grenadeInventory.Count;
+            selectedGrenadeIndex = (selectedGrenadeIndex + 1) % grenadeTypes.Count;
+
+            // Debug log to check if the grenade type is switched
+            Debug.Log($"Switched to grenade type: {grenadeTypes[selectedGrenadeIndex].name}");
+        }
+        else
+        {
+            // Optional: Log if there's only one or no grenades available to switch to
+            Debug.Log("No other grenade types to switch to.");
         }
     }
 
     private void SelectPreviousGrenade()
     {
-        if (grenadeInventory.Count > 1)
+        if (grenadeTypes.Count > 1)
         {
             selectedGrenadeIndex--;
-            if (selectedGrenadeIndex < 0) selectedGrenadeIndex = grenadeInventory.Count - 1;
+            if (selectedGrenadeIndex < 0) selectedGrenadeIndex = grenadeTypes.Count - 1;
         }
     }
 
@@ -214,14 +226,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             speed /= sprintMultiplier;
             isSprinting = false;
         }
-        
+
         // This fixes a WebGL bug where player could let go of shift when not focused on the game to get a huge speed increase
         if (isSprinting && !Input.GetButton("Sprint"))
         {
             speed /= sprintMultiplier;
             isSprinting = false;
         }
-        
+
     }
 
     void Shooting()
@@ -237,19 +249,10 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    private void ThrowGrenade()
+    private IEnumerator GrenadeThrowCooldown()
     {
-        if (grenadeInventory.Count == 0) return;
-
-        GameObject grenadePrefab = grenadeInventory[selectedGrenadeIndex];
-        Vector3 targetPoint = transform.position + transform.forward * 5f; // Throws the grenade forward
-
-        GameObject grenade = Instantiate(grenadePrefab, grenadeSpawnPoint.position, Quaternion.identity);
-        Rigidbody rb = grenade.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
-
-        currentGrenades--;
-        StartCoroutine(RechargeGrenade());
+        yield return new WaitForSeconds(1f); // Example cooldown time, adjust as needed
+        isThrowingGrenade = false;
     }
 
     void Grounded()
@@ -329,7 +332,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     void UpdateObjectivePointer()
     {
-        if(currentUrgentObjective != null)
+        if (currentUrgentObjective != null)
         {
             objectivePointer.transform.LookAt(currentUrgentObjective.transform.position);
             objectivePointer.transform.Rotate(new Vector3(90, 0, 0), Space.Self);
@@ -354,19 +357,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             StopCoroutine(PlayBurning());
         }
-    }
-
-    private IEnumerator RechargeGrenade()
-    {
-        isRecharging = true;
-        while (currentGrenades < maxGrenades)
-        {
-            yield return new WaitForSeconds(grenadeCooldown);
-            currentGrenades++;
-
-            UpdatePlayerUI(); // Update the UI after each grenade recharge
-        }
-        isRecharging = false;
     }
 
     #endregion
@@ -415,8 +405,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    Vector3 raySource;
-    Vector3 rayDestination;
     IEnumerator HealDelay()
     {
         yield return new WaitForSeconds(healDelay);
@@ -435,8 +423,8 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             currentWeapon.ammoCurrent--;
             UpdatePlayerUI();
 
-            raySource = GameManager.instance.player.transform.position;
-            rayDestination = GameManager.instance.player.GetComponent<FaceMouse>().GetCurrentMousePos() - raySource;
+            Vector3 raySource = GameManager.instance.player.transform.position;
+            Vector3 rayDestination = GameManager.instance.player.GetComponent<FaceMouse>().GetCurrentMousePos() - raySource;
 
             RaycastHit hit;
             if (Physics.Raycast(raySource, rayDestination, out hit, damageRange, ~ignoreLayer))
@@ -486,31 +474,42 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         Destroy(flash);
     }
 
-
     #endregion
 
     #region Public Functions
 
+
     public void UpdateTargetObjective()
     {
-        if(TimeTrialModeManager.instance != null)
+        if (TimeTrialModeManager.instance != null)
         {
             currentUrgentObjective = TimeTrialModeManager.instance.GetNextActiveObjective();
-            if(currentUrgentObjective == null )
+            if (currentUrgentObjective == null)
             {
                 currentUrgentObjective = TimeTrialModeManager.instance.GetBaseReturnZone();
             }
         }
     }
 
-    public void AddGrenade(GameObject grenadePrefab)
+    public void AddGrenade(GameObject grenadePrefab, int quantity)
     {
-        if (!grenadeInventory.Contains(grenadePrefab))
+        if (grenadeInventory.ContainsKey(grenadePrefab))
         {
-            grenadeInventory.Add(grenadePrefab);
-            currentGrenades = maxGrenades; // Refill grenades when a new type is picked up
-            selectedGrenadeIndex = grenadeInventory.Count - 1; // Automatically switch to the new grenade type
+            grenadeInventory[grenadePrefab] = Mathf.Min(grenadeInventory[grenadePrefab] + quantity, maxGrenadesPerType);
         }
+        else
+        {
+            grenadeInventory[grenadePrefab] = Mathf.Min(quantity, maxGrenadesPerType);
+            grenadeTypes.Add(grenadePrefab); // Add to the available grenade types if it's new
+        }
+
+        // Auto-select the new grenade type if it's new
+        selectedGrenadeIndex = grenadeTypes.IndexOf(grenadePrefab);
+
+        // Debug log to check if the grenade count is updated
+        Debug.Log($"Added {quantity} grenade(s) of type {grenadePrefab.name}. Current count: {grenadeInventory[grenadePrefab]}");
+
+        UpdatePlayerUI(); // Update UI to reflect the new grenade count
     }
 
     public void ChangeHP(int HealthAmount)
@@ -538,7 +537,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         {
             return;
         }
-        else if(!string.IsNullOrEmpty(damageSource))
+        else if (!string.IsNullOrEmpty(damageSource))
         {
             recentDamageSource.Add(damageSource);
             StartCoroutine(RemoveDamageSourceAfterDelay(damageSource));
@@ -577,7 +576,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     {
         cameraController.ZeroShakeOffset();
         GameManager.instance.LoseGame("You died!");
-
     }
 
     public void Stun(float duration)
@@ -615,6 +613,46 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             GameManager.instance.ammoCurrent.text = weaponList[selectedWeapon].ammoCurrent.ToString("F0");
             GameManager.instance.ammoMax.text = weaponList[selectedWeapon].ammoMax.ToString("F0");
         }
+
+        // Update grenade UI here based on the current selected grenade and its quantity
+        // Example:
+        // GameManager.instance.grenadeCountText.text = grenadeInventory[grenadeTypes[selectedGrenadeIndex]].ToString();
+    }
+
+    private void ThrowGrenade()
+    {
+        GameObject selectedGrenade = grenadeTypes[selectedGrenadeIndex];
+
+        if (grenadeInventory[selectedGrenade] > 0)
+        {
+            isThrowingGrenade = true;
+            grenadeInventory[selectedGrenade]--; // Decrease the count
+
+            GameObject grenade = Instantiate(selectedGrenade, grenadeSpawnPoint.position, Quaternion.identity);
+            Rigidbody rb = grenade.GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * throwForce, ForceMode.VelocityChange);
+
+            UpdatePlayerUI(); // Update UI to reflect the current grenade count
+
+            // Optional: Implement cooldown or delay for next grenade throw
+            StartCoroutine(GrenadeThrowCooldown());
+        }
+    }
+
+    public int GetCurrentGrenades()
+    {
+        GameObject selectedGrenade = grenadeTypes[selectedGrenadeIndex];
+        return grenadeInventory[selectedGrenade];
+    }
+
+    public GameObject GetSelectedGrenade()
+    {
+        return grenadeTypes[selectedGrenadeIndex];
+    }
+
+    public int GetMaxGrenades(GameObject grenadePrefab)
+    {
+        return maxGrenadesPerType;
     }
 
     public void GetWeaponStats(WeaponStats weapon)
@@ -653,7 +691,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (numSlowAreas == 1)
         {
             // modify speed if this is the first area that has been entered (i.e. this is the only slow area entered)
-            speed /= slowVariable;    
+            speed /= slowVariable;
         }
     }
 
@@ -667,35 +705,12 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         }
     }
 
-    public int GetCurrentGrenades()
-    {
-        return currentGrenades;
-    }
-
-    public int GetMaxGrenades()
-    {
-        return maxGrenades;
-    }
-
-    public void UseGrenade()
-    {
-        if (currentGrenades > 0 && !isRecharging)
-        {
-            currentGrenades--;
-
-            if (currentGrenades < maxGrenades)
-            {
-                StartCoroutine(RechargeGrenade());
-            }
-        }
-    }
-
     public void WeaponMovement()
     {
         if (animator != null)
         {
             float angle = Vector3.SignedAngle(transform.forward, movementDirection, Vector3.up);
-            
+
             if (movementDirection.magnitude == 0 && weaponList[selectedWeapon].weaponType == WeaponStats.WeaponType.Melee)
             {
                 animator.SetTrigger("Idle Melee");
@@ -718,7 +733,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             {
                 animator.SetTrigger("Move Left");
             }
-            else 
+            else
             {
                 animator.SetTrigger("Move Back");
             }
@@ -729,5 +744,6 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     {
         menuButtonClickSource.Play();
     }
+
     #endregion
 }

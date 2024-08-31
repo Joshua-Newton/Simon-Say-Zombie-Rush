@@ -8,10 +8,12 @@ public class GrenadeUIManager : MonoBehaviour
     [SerializeField] private Image grenadeIcon; // Icono de la granada
     [SerializeField] private TMP_Text grenadeCountText; // Texto para mostrar el número de granadas
     private int currentGrenades;
+    private int maxGrenades;
     private float cooldownTime;
 
     public void Initialize(int maxGrenades, float cooldown)
     {
+        this.maxGrenades = maxGrenades;
         currentGrenades = maxGrenades;
         cooldownTime = cooldown;
         UpdateUI();
@@ -30,13 +32,20 @@ public class GrenadeUIManager : MonoBehaviour
     private IEnumerator RechargeGrenade()
     {
         yield return new WaitForSeconds(cooldownTime);
-        currentGrenades++;
+        currentGrenades = Mathf.Min(currentGrenades + 1, maxGrenades);
         UpdateUI();
     }
 
     private void UpdateUI()
     {
         grenadeCountText.text = currentGrenades.ToString();
-        grenadeIcon.fillAmount = (float)currentGrenades / 2; // Si tienes un máximo de 2 granadas
+        if (maxGrenades > 0)
+        {
+            grenadeIcon.fillAmount = (float)currentGrenades / maxGrenades;
+        }
+        else
+        {
+            grenadeIcon.fillAmount = 0;
+        }
     }
 }
