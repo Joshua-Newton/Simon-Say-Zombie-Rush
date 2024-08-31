@@ -34,6 +34,7 @@ public class TimeTrialModeManager : GameManager
     [Header("----- Grenade UI -----")]
     [SerializeField] private Image grenadeIcon;
     [SerializeField] private TMP_Text grenadeCountText;
+    [SerializeField] private List<Sprite> grenadeSprites;  // List of sprites corresponding to each grenade type
     private Player pj;
 
     private int currentGrenades;
@@ -81,11 +82,23 @@ public class TimeTrialModeManager : GameManager
 
                 grenadeCountText.text = $"{currentGrenades}/{maxGrenades}";
                 grenadeIcon.fillAmount = (float)currentGrenades / maxGrenades;
+
+                // Update the grenade icon sprite based on the selected grenade type
+                int grenadeIndex = pj.GetSelectedGrenadeIndex();  // Assuming this method exists to get the index of the selected grenade
+                if (grenadeIndex >= 0 && grenadeIndex < grenadeSprites.Count)
+                {
+                    grenadeIcon.sprite = grenadeSprites[grenadeIndex];
+                }
+                else
+                {
+                    Debug.LogWarning("Grenade sprite index is out of range.");
+                }
             }
             else
             {
                 grenadeCountText.text = "0/0";
                 grenadeIcon.fillAmount = 0;
+                grenadeIcon.sprite = null;  // Clear the icon if no grenade is selected
             }
         }
     }

@@ -5370,6 +5370,9 @@ MonoBehaviour:
   parTimeSeconds: 60
   grenadeIcon: {fileID: 945653316350360632}
   grenadeCountText: {fileID: 4633995666102934382}
+  grenadeSprites:
+  - {fileID: 21300000, guid: 709b45ef36d7d794b8e49d47539c5288, type: 3}
+  - {fileID: 21300000, guid: 3107230d8c70b6b488fde114848d80ea, type: 3}
 --- !u!1 &4428256198308811708
 GameObject:
   m_ObjectHideFlags: 0

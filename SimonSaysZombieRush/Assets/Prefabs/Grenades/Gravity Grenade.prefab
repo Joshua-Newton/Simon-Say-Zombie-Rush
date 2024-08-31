@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionDelay: 1
-  explosionRadius: 20
+  explosionRadius: 2
   attractionDuration: 4
   attractionStrength: 5
   floatHeight: 0.5

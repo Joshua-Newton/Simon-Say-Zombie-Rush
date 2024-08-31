@@ -172,6 +172,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (grenadeTypes.Count > 1)
         {
             selectedGrenadeIndex = (selectedGrenadeIndex + 1) % grenadeTypes.Count;
+
         }
     }
 
@@ -225,6 +226,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             speed /= sprintMultiplier;
             isSprinting = false;
         }
+
     }
 
     void Shooting()
@@ -469,6 +471,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
     #region Public Functions
 
+
     public void UpdateTargetObjective()
     {
         if (TimeTrialModeManager.instance != null)
@@ -495,6 +498,7 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
 
         // Auto-select the new grenade type if it's new
         selectedGrenadeIndex = grenadeTypes.IndexOf(grenadePrefab);
+
 
         UpdatePlayerUI(); // Update UI to reflect the new grenade count
     }
@@ -606,6 +610,11 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         // GameManager.instance.grenadeCountText.text = grenadeInventory[grenadeTypes[selectedGrenadeIndex]].ToString();
     }
 
+    public int GetSelectedGrenadeIndex()
+    {
+        return selectedGrenadeIndex;
+    }
+
     private void ThrowGrenade()
     {
         GameObject selectedGrenade = grenadeTypes[selectedGrenadeIndex];
@@ -629,7 +638,16 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
     public int GetCurrentGrenades()
     {
         GameObject selectedGrenade = grenadeTypes[selectedGrenadeIndex];
-        return grenadeInventory[selectedGrenade];
+
+        // Check if the selected grenade exists in the inventory
+        if (grenadeInventory.ContainsKey(selectedGrenade))
+        {
+            return grenadeInventory[selectedGrenade];
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public GameObject GetSelectedGrenade()

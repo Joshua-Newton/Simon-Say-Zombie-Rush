@@ -16,7 +16,7 @@ public class GravityGrenade : MonoBehaviour
     [SerializeField] ParticleSystem pullEffect;
     [SerializeField] AudioClip pullSound;
     [SerializeField] GameObject explosionEffectAndSound;
-    
+
     public bool hasExploded = false;
     public Rigidbody rb;
     public SphereCollider sphereCollider;
@@ -33,15 +33,34 @@ public class GravityGrenade : MonoBehaviour
 
     void FloatBeforeExplosion()
     {
-        rb.isKinematic = false;
+        // Stop the grenade's movement
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true; // Make the grenade kinematic to stop physics-based movement
         rb.useGravity = false;
-        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, gameObject.transform.position + (Vector3.up * floatHeight), floatLerpDuration * Time.deltaTime);
-        gameObject.transform.rotation = Quaternion.identity;
+
+        // Move the grenade to the floating height over time
+        StartCoroutine(FloatToPosition(transform.position + Vector3.up * floatHeight));
+
         ParticleSystem pullParticle = Instantiate(pullEffect, gameObject.transform.position, Quaternion.identity);
-        
+
         pullParticle.gameObject.transform.localScale.Set(1 / gameObject.transform.localScale.x, 1 / gameObject.transform.localScale.y, 1 / gameObject.transform.localScale.z);
         aud.PlayOneShot(pullSound);
         Destroy(pullParticle, attractionDuration);
+    }
+
+    IEnumerator FloatToPosition(Vector3 targetPosition)
+    {
+        float elapsedTime = 0f;
+        Vector3 startingPosition = transform.position;
+
+        while (elapsedTime < floatLerpDuration)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime / floatLerpDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
     }
 
     IEnumerator ExplodeAfterDelay()
