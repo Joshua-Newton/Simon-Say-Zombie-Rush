@@ -89,10 +89,7 @@ public class TimeTrialModeManager : GameManager
                 {
                     grenadeIcon.sprite = grenadeSprites[grenadeIndex];
                 }
-                else
-                {
-                    Debug.LogWarning("Grenade sprite index is out of range.");
-                }
+
             }
             else
             {

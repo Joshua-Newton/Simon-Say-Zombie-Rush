@@ -91,9 +91,28 @@ public class GravityGrenade : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && hasExploded)
         {
-            Vector3 direction = (transform.position - other.transform.position).normalized;
-            float strength = attractionStrength * Time.deltaTime;
-            other.transform.position += direction * strength;
+            float distanceToEnemy = Vector3.Distance(transform.position, other.transform.position);
+            
+
+            if (distanceToEnemy <= explosionRadius)
+            {
+                
+                Vector3 direction = (transform.position - other.transform.position).normalized;
+                float strength = attractionStrength * Time.deltaTime;
+                other.transform.position += direction * strength;
+            }
+            else
+            {
+                
+            }
         }
+    }
+
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position to represent the explosion radius
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }

@@ -107,7 +107,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0557976
+  m_Radius: 2
   m_Center: {x: -0.00032888632, y: 0.015529772, z: 0.0049468055}
 --- !u!54 &4166589827198485114
 Rigidbody:
@@ -169,10 +169,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39178c295b049b44936a57bc14c9166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionDelay: 1
-  explosionRadius: 2
+  explosionDelay: 0.5
+  explosionRadius: 5
   attractionDuration: 4
-  attractionStrength: 5
+  attractionStrength: 6
   floatHeight: 0.5
   floatDuration: 4
   floatLerpDuration: 0.5
@@ -204,7 +204,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 9.967613
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
