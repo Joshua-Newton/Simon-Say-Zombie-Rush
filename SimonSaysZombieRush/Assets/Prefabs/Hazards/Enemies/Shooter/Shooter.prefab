@@ -1730,7 +1730,6 @@ MonoBehaviour:
   viewAngle: 90
   anim: {fileID: 1914471108281549978}
   animSpeedTransition: 5
-  isGrenadeEffectActive: 0
   sourceWaveSpawner: {fileID: 0}
   sourceRandomSpawner: {fileID: 0}
   audSource: {fileID: -252004994106726426}
@@ -1741,6 +1740,8 @@ MonoBehaviour:
   minTimeBetweenSounds: 8
   timeVariance: 1
   groanVolume: 0.3
+  pitchShiftMin: 0.9
+  pitchShiftMax: 1.1
   canDropItems: 1
   possibleDrops:
   - {fileID: 4017155185005024, guid: 7c5f9b64c4b2d9547b693972afc2ac0b, type: 3}
@@ -1749,10 +1750,14 @@ MonoBehaviour:
   - {fileID: 4014676716666281596, guid: 2be8c153b106f7d4aa9b753ce1f004fe, type: 3}
   - {fileID: 7859658544650437553, guid: d9b39b58b73efdf489811c431948a958, type: 3}
   - {fileID: 5978595989182856764, guid: 8df6f2cc33356504ea15bc8e2dbb7c9e, type: 3}
+  - {fileID: 2495796885104219139, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
+  - {fileID: 7435866850224235906, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
   dropChance: 5
   bullet: {fileID: 4730036690490732152, guid: 44c74124242374f4c9a2bb2cec8609e8, type: 3}
   shootPos: {fileID: 4236647475509864459}
   shootDelay: 0.5
+  shootAudio: {fileID: 0}
+  shootAudioVolume: 0.5
 --- !u!82 &-252004994106726426
 AudioSource:
   m_ObjectHideFlags: 0

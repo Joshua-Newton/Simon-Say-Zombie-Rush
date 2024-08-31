@@ -132,13 +132,13 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
         if (Input.GetButtonDown("Grenade") && currentGrenades > 0)
         {
             // TODO: Re-implement once stable (removing for Beta Milestone)
-            //ThrowGrenade();
+            ThrowGrenade();
         }
 
         if (Input.GetButtonDown("SwitchGrenade"))
         {
             // TODO: Re-implement once stable (removing for Beta Milestone)
-            //SelectNextGrenade(); // Switch to the next grenade type
+            SelectNextGrenade(); // Switch to the next grenade type
         }
 
         if (!GameManager.instance.isPaused)

@@ -4,22 +4,22 @@ using UnityEngine;
 [RequireComponent(typeof(SphereCollider), typeof(BoxCollider))]
 public class GravityGrenade : MonoBehaviour
 {
-    [SerializeField] float explosionDelay;
-    [SerializeField] float explosionRadius;
-    [SerializeField] float attractionDuration;
-    [SerializeField] float attractionStrength;
-    [SerializeField] float floatHeight;
-    [SerializeField] float floatDuration;
-    [SerializeField] float floatLerpDuration = .5f;
+    [SerializeField] public float explosionDelay;
+    [SerializeField] public float explosionRadius;
+    [SerializeField] public float attractionDuration;
+    [SerializeField] public float attractionStrength;
+    [SerializeField] public float floatHeight;
+    [SerializeField] public float floatDuration;
+    [SerializeField] public float floatLerpDuration = .5f;
 
     [SerializeField] AudioSource aud;
     [SerializeField] ParticleSystem pullEffect;
     [SerializeField] AudioClip pullSound;
     [SerializeField] GameObject explosionEffectAndSound;
     
-    private bool hasExploded = false;
-    private Rigidbody rb;
-    private SphereCollider sphereCollider;
+    public bool hasExploded = false;
+    public Rigidbody rb;
+    public SphereCollider sphereCollider;
 
     void Start()
     {

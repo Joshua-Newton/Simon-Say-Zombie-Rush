@@ -218,9 +218,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionDelay: 1
   explosionRadius: 5
+  attractionDuration: 0
+  attractionStrength: 0
+  floatHeight: 0
+  floatDuration: 0
+  floatLerpDuration: 0.5
+  aud: {fileID: 0}
+  pullEffect: {fileID: 0}
+  pullSound: {fileID: 0}
+  explosionEffectAndSound: {fileID: 0}
+  hasExploded: 0
+  rb: {fileID: 7031838335412461409}
+  sphereCollider: {fileID: 8973816595312687799}
   explosionForce: 700
   shrapnelCount: 50
   damage: 3
+  explosionPrefab: {fileID: 9041289702761694404, guid: 7ac727ba91ef46b4f9e59006f4c08ad2, type: 3}
 --- !u!135 &8973816595312687799
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -777,37 +777,6 @@ Transform:
   - {fileID: 2366935794479011157}
   m_Father: {fileID: 6768844016668983484}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2448451327720667209
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3279185987544552613}
-  m_Layer: 0
-  m_Name: granada
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3279185987544552613
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2448451327720667209}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.35999998, y: 0.15999997, z: 0.6000004}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8117207031737159191}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2591185646031443823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,7 +2142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5582588579681054550}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7934217, y: 0.1771101, z: -0.0816404, w: 0.57658386}
+  m_LocalRotation: {x: -0.7934217, y: 0.17711015, z: -0.081640325, w: 0.57658386}
   m_LocalPosition: {x: -0.22192875, y: 0.11497277, z: -0.0715297}
   m_LocalScale: {x: 0.125, y: 0.125, z: 0.125}
   m_ConstrainProportionsScale: 1
@@ -3463,7 +3432,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1919868681844347491}
-  - {fileID: 3279185987544552613}
   - {fileID: 7221969432147436695}
   - {fileID: 667707747609613136}
   m_Father: {fileID: 0}
@@ -3568,7 +3536,7 @@ MonoBehaviour:
   damageRange: 0
   damageDelay: 0
   grenadeInventory: []
-  grenadeSpawnPoint: {fileID: 3279185987544552613}
+  grenadeSpawnPoint: {fileID: 6768844016668983484}
   throwForce: 15
   maxGrenades: 2
   grenadeCooldown: 5

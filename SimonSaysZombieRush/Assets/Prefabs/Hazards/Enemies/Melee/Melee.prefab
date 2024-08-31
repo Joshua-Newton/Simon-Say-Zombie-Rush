@@ -1153,6 +1153,8 @@ MonoBehaviour:
   - {fileID: 4014676716666281596, guid: 2be8c153b106f7d4aa9b753ce1f004fe, type: 3}
   - {fileID: 7859658544650437553, guid: d9b39b58b73efdf489811c431948a958, type: 3}
   - {fileID: 5978595989182856764, guid: 8df6f2cc33356504ea15bc8e2dbb7c9e, type: 3}
+  - {fileID: 7435866850224235906, guid: 7890ac2dfc5242d40b11500a35a26683, type: 3}
+  - {fileID: 2495796885104219139, guid: 6cc2ac0bfbc0a4a46b8a4dafa7a1e2b4, type: 3}
   dropChance: 5
   meleeHitTime: 1.5
   meleeTriggerRange: 1.5
