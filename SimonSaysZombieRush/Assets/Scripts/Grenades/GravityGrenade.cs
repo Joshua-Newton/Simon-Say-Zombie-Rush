@@ -20,8 +20,6 @@ public class GravityGrenade : MonoBehaviour
     public Rigidbody rb;
     public SphereCollider sphereCollider;
 
-    private ParticleSystem pullParticleInstance;
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -48,7 +46,7 @@ public class GravityGrenade : MonoBehaviour
         aud.PlayOneShot(pullSound);
 
         // Start coroutine to destroy the particle effect after the attraction duration
-        StartCoroutine(DestroyPullParticleAfterDuration());
+        StartCoroutine(DestroyPullParticleAfterDuration(pullParticle));
     }
 
     IEnumerator FloatToPosition(Vector3 targetPosition)
@@ -90,15 +88,15 @@ public class GravityGrenade : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator DestroyPullParticleAfterDuration()
+    IEnumerator DestroyPullParticleAfterDuration(ParticleSystem pullParticle)
     {
         yield return new WaitForSeconds(attractionDuration);
 
-        // Destroy the particle effect after the attraction duration
-        if (pullParticleInstance != null)
+        // Stop and destroy the particle effect after the attraction duration
+        if (pullParticle != null)
         {
-            pullParticleInstance.Stop(); // Stop the particle effect
-            Destroy(pullParticleInstance.gameObject, pullParticleInstance.main.duration); // Wait for the particles to die out and then destroy the GameObject
+            pullParticle.Stop(); // Stop the particle effect
+            Destroy(pullParticle.gameObject, pullParticle.main.duration); // Destroy after the particles finish
         }
     }
 
@@ -107,6 +105,7 @@ public class GravityGrenade : MonoBehaviour
         if (other.CompareTag("Enemy") && hasExploded)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, other.transform.position);
+
             if (distanceToEnemy <= explosionRadius)
             {
                 Vector3 direction = (transform.position - other.transform.position).normalized;
