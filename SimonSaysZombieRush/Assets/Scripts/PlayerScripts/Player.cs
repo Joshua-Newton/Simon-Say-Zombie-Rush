@@ -214,6 +214,14 @@ public class Player : MonoBehaviour, IDamage, IJumpPad, ISlowArea
             speed /= sprintMultiplier;
             isSprinting = false;
         }
+        
+        // This fixes a WebGL bug where player could let go of shift when not focused on the game to get a huge speed increase
+        if (isSprinting && !Input.GetButton("Sprint"))
+        {
+            speed /= sprintMultiplier;
+            isSprinting = false;
+        }
+        
     }
 
     void Shooting()
