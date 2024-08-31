@@ -9,7 +9,6 @@ public class GravityGrenade : MonoBehaviour
     [SerializeField] public float attractionDuration;
     [SerializeField] public float attractionStrength;
     [SerializeField] public float floatHeight;
-    [SerializeField] public float floatDuration;
     [SerializeField] public float floatLerpDuration = .5f;
 
     [SerializeField] AudioSource aud;
@@ -20,6 +19,8 @@ public class GravityGrenade : MonoBehaviour
     public bool hasExploded = false;
     public Rigidbody rb;
     public SphereCollider sphereCollider;
+
+    private ParticleSystem pullParticleInstance;
 
     void Start()
     {
@@ -41,11 +42,13 @@ public class GravityGrenade : MonoBehaviour
         // Move the grenade to the floating height over time
         StartCoroutine(FloatToPosition(transform.position + Vector3.up * floatHeight));
 
-        ParticleSystem pullParticle = Instantiate(pullEffect, gameObject.transform.position, Quaternion.identity);
-
-        pullParticle.gameObject.transform.localScale.Set(1 / gameObject.transform.localScale.x, 1 / gameObject.transform.localScale.y, 1 / gameObject.transform.localScale.z);
+        // Instantiate and play the particle effect
+        pullParticleInstance = Instantiate(pullEffect, transform.position, Quaternion.identity);
+        pullParticleInstance.transform.localScale = new Vector3(1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
         aud.PlayOneShot(pullSound);
-        Destroy(pullParticle, attractionDuration);
+
+        // Start coroutine to destroy the particle effect after the attraction duration
+        StartCoroutine(DestroyPullParticleAfterDuration());
     }
 
     IEnumerator FloatToPosition(Vector3 targetPosition)
@@ -87,27 +90,31 @@ public class GravityGrenade : MonoBehaviour
         Destroy(gameObject);
     }
 
+    IEnumerator DestroyPullParticleAfterDuration()
+    {
+        yield return new WaitForSeconds(attractionDuration);
+
+        // Destroy the particle effect after the attraction duration
+        if (pullParticleInstance != null)
+        {
+            pullParticleInstance.Stop(); // Stop the particle effect
+            Destroy(pullParticleInstance.gameObject, pullParticleInstance.main.duration); // Wait for the particles to die out and then destroy the GameObject
+        }
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Enemy") && hasExploded)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, other.transform.position);
-            
-
             if (distanceToEnemy <= explosionRadius)
             {
-                
                 Vector3 direction = (transform.position - other.transform.position).normalized;
                 float strength = attractionStrength * Time.deltaTime;
                 other.transform.position += direction * strength;
             }
-            else
-            {
-                
-            }
         }
     }
-
 
     void OnDrawGizmosSelected()
     {
