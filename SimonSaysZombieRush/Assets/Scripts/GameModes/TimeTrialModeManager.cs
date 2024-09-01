@@ -336,7 +336,7 @@ public class TimeTrialModeManager : GameManager
 
     public void CheckForLossByMissingItems()
     {
-        if (possibleItems.Count <= 0 && totalCollectedItems <= 0)
+        if (possibleItems.Count <= 0 && totalCollectedItems <= 0 && playerInventory.Count <= 0)
         {
             LoseGame("You couldn't collect any resources!");
         }
