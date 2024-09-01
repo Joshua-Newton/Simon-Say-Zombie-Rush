@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class FragGrenade : GravityGrenade
 {
-    [SerializeField] private float explosionForce = 700f; // Force of the explosion
-    [SerializeField] private int shrapnelCount = 50; // Number of shrapnel rays
     [SerializeField] private int damage = 50; // Damage dealt by each shrapnel
     [SerializeField] GameObject explosionPrefab;
 
