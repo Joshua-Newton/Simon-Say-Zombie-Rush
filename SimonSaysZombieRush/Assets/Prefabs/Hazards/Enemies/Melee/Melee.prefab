@@ -414,7 +414,7 @@ MonoBehaviour:
   repeatDamage: 0
   repeatDelay: 0
   damagePlayer: 1
-  damageEnemies: 1
+  damageEnemies: 0
   damageSourceString: 
 --- !u!54 &5349999526822399873
 Rigidbody:
